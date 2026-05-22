@@ -83,3 +83,51 @@ git config --global user.email "your.email@example.com"
 # Optional: set default branch name
 git config --global init.defaultBranch main
 
+Basic Workflow (upload / update)
+bash
+
+# Clone an existing repository
+git clone https://github.com/username/repo.git
+cd repo
+
+# Check status & changes
+git status
+git diff
+
+# Add files to staging area
+git add filename      # single file
+git add .             # all new/modified files
+
+# Commit changes locally
+git commit -m "Your commit message"
+
+# Push (upload) to remote repository
+git push origin main   # main = branch name
+
+# Pull (update) latest changes from remote
+git pull origin main
+
+# If you have not yet set upstream branch:
+git push -u origin main   # sets upstream for future pushes
+
+Other useful Git commands
+bash
+
+git log --oneline               # View commit history
+git branch                      # List local branches
+git checkout -b new-branch      # Create and switch to new branch
+git merge branch-name           # Merge another branch into current
+git remote -v                   # Show configured remotes
+
+4. Pro Tips (Linux)
+
+    Ctrl + C – stop a running command
+
+    Ctrl + Z – suspend, then bg to run in background, fg to bring back
+
+    history – shows last used commands
+
+    Tab completion – type part of command/file and press Tab twice for suggestions
+
+    Always double-check rm commands (no trash can by default)
+```
