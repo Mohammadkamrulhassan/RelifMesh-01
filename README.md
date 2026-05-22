@@ -23,8 +23,8 @@ ID		|	Namw
 ```
 - team name: Team_Skipper
 - roles of project
--- project manager: MD. Kamrul Hassan
--- System Analyst   Abidul Islam
--- UI/UX Design	  : Sayeda Mofatteha Ahmed, Iftekhar Alam Nahid
--- Developer	  : MD. Kamrul Hassan
--- Quality Assurance/ Tester: Abidul Islam (team member), Saifur Rahman (external of team)
+* project manager: MD. Kamrul Hassan
+* System Analyst   Abidul Islam
+* UI/UX Design	  : Sayeda Mofatteha Ahmed, Iftekhar Alam Nahid
+* Developer	  : MD. Kamrul Hassan
+* Quality Assurance/ Tester: Abidul Islam (team member), Saifur Rahman (external of team)
