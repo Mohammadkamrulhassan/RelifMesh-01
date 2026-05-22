@@ -1,5 +1,5 @@
 # Linux + Git + Windows Commands Cheat Sheet
-
+// collected from google
 ## 1. Basic Linux Files (locations & purpose)
 
 | File/Directory | Purpose |
