@@ -13,9 +13,15 @@ inst/idea: Triggered by floods/cyclones (highly relevant to Bangladesh), this sy
 ### Section 1
 # Work progress updated to Course Teacher
 # 1.1 Team formation (time: two week)
+- our course teacher
+```
+MD Mynoddin
+Assistant Professor
+Rangamati Science and Technology University
+```
 - our team have four members
 ```
-ID		|	Namw
+ID		|	Name
 -----------------------------
 2101011001	| Abidul Islam
 2101011005	| MD. Kamrul Hassan
