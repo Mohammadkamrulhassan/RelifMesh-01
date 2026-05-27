@@ -69,7 +69,7 @@ No standardized digital platform exists for UP-level officials to log relief dis
 ### Relevant Technology Context
 - Smartphone penetration in Bangladesh has grown significantly, making mobile-first approaches viable even at union level.
 - GPS tagging via smartphones is a proven low-cost method for geo-locating distribution events.
-- Progressive Web App (PWA) and offline-first architectures (e.g., PouchDB + CouchDB sync) are mature, field-tested solutions for low-connectivity environments.
+- Progressive Web App (PWA) and offline-first architectures (e.g., IndexedDB + custom sync) are mature, field-tested solutions for low-connectivity environments.
 
 ---
 
@@ -113,7 +113,7 @@ To build a lightweight, offline-capable web application that enables Union Paris
 |---|-----------|----------|------------|------------|----------|------------|
 | 1 | Build a household registration system with GPS and photo capture | Yes | ≥ 50 test households registered in prototype | Yes, using browser GPS API | Core feature | By Module 7 |
 | 2 | Implement duplicate detection that flags same-category relief within 7 days | Yes | Accuracy ≥ 90% on test dataset | Yes, rule-based logic | Solves core problem | By Module 8 |
-| 3 | Deliver offline-first data entry with auto-sync | Yes | Sync success rate ≥ 95% on reconnect in test | Yes, using PouchDB | Critical for field use | By Module 9 |
+| 3 | Deliver offline-first data entry with auto-sync | Yes | Sync success rate ≥ 95% on reconnect in test | Yes, using IndexedDB + sync API | Critical for field use | By Module 9 |
 | 4 | Provide a public dashboard showing distribution summary by union/item | Yes | Dashboard loads in ≤ 3 seconds on 3G | Yes, static aggregation | Transparency goal | By Module 10 |
 | 5 | Support 4 distinct user roles with correct access control | Yes | All role-based access tests pass (0 unauthorized access) | Yes, standard auth design | Security requirement | By Module 8 |
 

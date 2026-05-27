@@ -149,7 +149,7 @@ Date: [date] | Time: [time] | Location/Platform: [Discord/Teams/Physical]
 - ...
 
 ### Technical Lessons
-- Offline-first: [reflection on PouchDB/CouchDB experience]
+- Offline-first: [reflection on IndexedDB + custom sync experience]
 - Duplicate detection: [tuning challenges]
 - Team Git workflow: [what worked]
 

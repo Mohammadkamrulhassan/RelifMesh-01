@@ -10,14 +10,14 @@
 | # | Module | Owner | Deadline (Week) | Status |
 |---|--------|-------|-----------------|--------|
 | M1 | Project setup (repo, folder structure, tooling) | Kamrul | Week 1 | [ ] |
-| M2 | Database schema creation (PostgreSQL + CouchDB) | Kamrul | Week 2 | [ ] |
+| M2 | MongoDB schemas + Mongoose models | Kamrul | Week 2 | [ ] |
 | M3 | Authentication API (register, login, JWT) | Kamrul | Week 3 | [ ] |
 | M4 | Household registration API + frontend form | Kamrul (API), Sayeda (UI) | Week 4 | [ ] |
-| M5 | Offline support — PouchDB integration | Kamrul | Week 5 | [ ] |
+| M5 | Offline support — IndexedDB (localforage) | Kamrul | Week 5 | [ ] |
 | M6 | Distribution log API + frontend form | Kamrul (API), Sayeda (UI) | Week 6 | [ ] |
 | M7 | Duplicate detection engine | Kamrul | Week 7 | [ ] |
 | M8 | Duplicate alert UI + override flow | Sayeda, Nahid | Week 8 | [ ] |
-| M9 | Sync engine (PouchDB ↔ CouchDB) + conflict log | Kamrul | Week 9 | [ ] |
+| M9 | Sync engine (push/pull API) + conflict log | Kamrul | Week 9 | [ ] |
 | M10 | Upazila Officer dashboard + jurisdiction filter | Sayeda | Week 10 | [ ] |
 | M11 | Public dashboard + map view | Nahid | Week 11 | [ ] |
 | M12 | Report export (PDF/CSV) | Kamrul | Week 12 | [ ] |
@@ -58,8 +58,7 @@ Docs │ ███████████████████████�
 ```
 Node.js >= 20.x LTS   (https://nodejs.org)
 npm   >= 10.x
-PostgreSQL >= 15.x
-CouchDB >= 3.x
+MongoDB >= 8.x        (or use MongoDB Atlas free tier)
 Git   >= 2.40
 ```
 
@@ -73,25 +72,23 @@ cd relifmesh
 cd backend
 cp ../.env.example .env     # fill in DB credentials, JWT secret
 npm install
-npm run migrate        # creates PostgreSQL tables
-npm run seed         # seeds item categories and test jurisdiction
 
-# Frontend setup
-cd ../../frontend
+# Ensure MongoDB is running, then seed test data
+npm run seed
+
+# Start development server
+npm run dev
+
+# Frontend setup (separate terminal)
+cd ../frontend
 npm install
 npm run dev          # starts Vite dev server at localhost:5173
-
-# CouchDB
-# Start CouchDB locally (or use Cloudant free tier)
-# Create database: relifmesh_sync
-# Update COUCHDB_URL in backend .env
 ```
 
 ### Environment Variables (`.env`)
 ```
 # Database
-DATABASE_URL=postgresql://user:pass@localhost:5432/relifmesh
-COUCHDB_URL=http://admin:pass@localhost:5984/relifmesh_sync
+MONGODB_URI=mongodb://localhost:27017/relifmesh
 
 # Auth
 JWT_SECRET=your-secret-key-here
@@ -130,9 +127,10 @@ NODE_ENV=development
 ### File Structure (Backend — Module-Based)
 ```
 backend/
-├── config/           ← DB, env, CouchDB config
+├── config/           ← DB, env config
 ├── db/
-│   ├── migrations/   ← SQL migration files
+│   ├── status.js     ← database health check
+│   ├── update.js     ← create missing collections
 │   └── seeds/        ← test data seeder
 ├── middleware/        ← shared auth, error handler
 ├── utils/            ← shared helpers

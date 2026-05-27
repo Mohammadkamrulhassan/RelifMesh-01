@@ -82,7 +82,7 @@
 | TC ID | Flow | Steps | Expected | Status |
 |-------|------|-------|----------|--------|
 | TC-17 | Register → Log → Duplicate | 1. Register HH. 2. Log rice. 3. Log rice again same day. | Step 3 triggers duplicate alert | [ ] |
-| TC-18 | Offline queue → sync | 1. Disable network. 2. Register HH in PouchDB. 3. Re-enable network. | Record appears in PostgreSQL after sync | [ ] |
+| TC-18 | Offline queue → sync | 1. Disable network. 2. Register HH in IndexedDB. 3. Re-enable network. | Record appears in MongoDB after sync | [ ] |
 | TC-19 | Role access control | Login as UP Official, call `/reports/export` | 403 Forbidden | [ ] |
 | TC-20 | Public dashboard — no auth | Call `/public/dashboard` without JWT | 200 OK with aggregated data | [ ] |
 | TC-21 | Upazila jurisdiction filter | Upazila Officer from Upazila A queries Union B (different Upazila) | 403 Forbidden | [ ] |
@@ -96,7 +96,7 @@
 **Actor:** Simulated UP Official
 **Scenario:** Register 5 households with photos and GPS in offline mode, then sync.
 **Pass Criteria:**
-- All 5 households appear in PostgreSQL after sync
+- All 5 households appear in MongoDB after sync
 - HH-IDs generated correctly
 - Photos stored in Cloudinary
 - Sync status indicator shows "Synced"

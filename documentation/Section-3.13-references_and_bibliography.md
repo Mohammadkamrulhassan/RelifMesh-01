@@ -34,9 +34,9 @@
 
 ## 3.13.2 Technical References
 
-[11] Apache Software Foundation, "CouchDB Documentation," Apache CouchDB 3.x. [Online]. Available: https://docs.couchdb.org
+[11] MongoDB Inc., "MongoDB Documentation," MongoDB 8.0. [Online]. Available: https://www.mongodb.com/docs/
 
-[12] PouchDB Contributors, "PouchDB: The JavaScript Database that Syncs!" PouchDB Documentation. [Online]. Available: https://pouchdb.com/guides/
+[12] localForage Contributors, "localForage: Offline Storage Library," Mozilla. [Online]. Available: https://localforage.github.io/localForage/
 
 [13] OpenJS Foundation, "Node.js Documentation," Node.js v20 LTS. [Online]. Available: https://nodejs.org/en/docs
 
@@ -44,7 +44,7 @@
 
 [15] Vite Contributors, "Vite Documentation," Vite 5.x. [Online]. Available: https://vitejs.dev/guide/
 
-[16] PostgreSQL Global Development Group, "PostgreSQL 15 Documentation," PostgreSQL. [Online]. Available: https://www.postgresql.org/docs/15/
+[16] MongoDB Inc., "Mongoose ODM Documentation," Mongoose 8.x. [Online]. Available: https://mongoosejs.com/docs/
 
 [17] M. D. Srinath, "STRIDE Threat Modeling," Microsoft SDL Blog, 2007. [Online]. Available: https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats
 

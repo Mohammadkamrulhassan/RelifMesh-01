@@ -188,7 +188,7 @@ Decomposes the system into 5 major processes:
 ### SD-01: Household Registration (Offline)
 
 ```
-UP Official  App (PWA)   Local DB (PouchDB)  Server (CouchDB)
+UP Official  App (PWA)   Local DB (IndexedDB)  Server (MongoDB)
   │        │         │          │
   │──Register──► │         │          │
   │        │──GPS Capture──► │          │

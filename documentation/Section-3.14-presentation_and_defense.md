@@ -21,7 +21,7 @@ Total slides: ~18–22 | Duration: 15–20 minutes | Format: PowerPoint / Google
 | 7 | User Roles | 4 roles diagram with permissions summary | Sayeda |
 | 8 | System Modeling | DFD Level 1 + Use Case diagram | Abidul |
 | 9 | Database Design | ERD overview (simplified) | Abidul |
-| 10 | Offline-First Design | PouchDB ↔ CouchDB sync diagram | Kamrul |
+| 10 | Offline-First Design | IndexedDB → Sync API → MongoDB diagram | Kamrul |
 | 11 | Security Design | RBAC table + threat model summary | Kamrul |
 | 12 | UI Walkthrough | Screenshots of key screens (wireframes or actual) | Sayeda / Nahid |
 | 13 | LIVE DEMO | Working prototype demonstration | Kamrul (driver) |
@@ -100,13 +100,13 @@ Step 6 — Upazila Officer View (1 min)
 A: WhatsApp has no structured data entry, no duplicate detection, no GPS logging, no searchable household registry, and no public transparency layer. It is a messaging tool, not a coordination system. Our system creates an auditable, queryable record.
 
 **Q: How does offline sync handle conflicts if two officers register the same NID household separately offline?**
-A: When both records sync, CouchDB's revision system detects the conflict. Our system saves both versions and flags them in the `sync_conflicts` table. The Upazila Officer can then review and resolve manually. We also use NID uniqueness constraint in PostgreSQL, which catches the conflict at the server level.
+A: Each device stores records in IndexedDB (via localforage). When they reconnect, the sync API pushes queued records to the server. If both devices recorded the same NID, the unique index on the `nid` field in MongoDB catches the duplicate on the second push, and the system flags both versions in the `sync_conflicts` collection for manual review.
 
-**Q: Why PouchDB + CouchDB instead of just localStorage?**
-A: localStorage is limited to 5–10MB, has no query capability, and doesn't support replication. PouchDB is a full document database with indexing, query support, and a built-in CouchDB replication protocol — designed exactly for offline-first sync scenarios.
+**Q: Why IndexedDB + custom sync instead of PouchDB + CouchDB?**
+A: IndexedDB (via localforage) provides a lightweight offline store with a simple key-value API. Instead of maintaining a separate CouchDB server just for sync, we use a single MongoDB database with custom `POST /sync/push` and `GET /sync/pull` endpoints. This eliminates the operational complexity of running two databases while still supporting offline-first functionality.
 
-**Q: Why PostgreSQL AND CouchDB — isn't that redundant?**
-A: They serve different purposes. CouchDB is the offline sync target (it speaks PouchDB's protocol natively). PostgreSQL is the structured query layer for reports, RBAC enforcement, and relational integrity (foreign keys, joins). CouchDB data is streamed into PostgreSQL via a change listener.
+**Q: Why MongoDB instead of a relational database?**
+A: MongoDB offers a flexible schema that suits the semi-structured nature of relief data (GPS coordinates, photos, variable vulnerability flags). Its document model maps directly to our JavaScript objects, and Mongoose provides schema validation. MongoDB Atlas free tier also gives us a zero-cost deployment option with automatic backups.
 
 ### On System Modeling
 

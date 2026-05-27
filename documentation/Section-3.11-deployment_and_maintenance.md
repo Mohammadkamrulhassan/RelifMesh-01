@@ -13,10 +13,9 @@ RelifMesh uses a **zero-cost cloud deployment** strategy appropriate for the pro
 |-----------|----------|------|
 | Frontend (React PWA) | Netlify | Free |
 | Backend (Node.js API) | Railway | Free / Hobby |
-| PostgreSQL | Railway managed DB | Free |
-| CouchDB (sync) | Cloudant (IBM) or Railway Docker | Free |
+| MongoDB | MongoDB Atlas (free cluster) | Free (512MB) |
 | Photo storage | Cloudinary | Free (25GB) |
-| Domain | GitHub Pages subdomain or Netlify default | Free |
+| Domain | Netlify default subdomain | Free |
 
 ---
 
@@ -28,31 +27,34 @@ RelifMesh uses a **zero-cost cloud deployment** strategy appropriate for the pro
 echo ".env" >> .gitignore
 
 # Verify build works locally
-cd frontend && npm run build   # generates dist/ folder
-cd ../backend && node src/server.js # confirm no startup errors
+cd frontend && npm run build     # generates dist/ folder
+cd ../backend && node server.js  # confirm no startup errors
 ```
 
-### Step 2 — Deploy Backend to Railway
+### Step 2 — Set Up MongoDB Atlas
+```
+1. Go to https://www.mongodb.com/atlas → Sign up for free account
+2. Create a free M0 cluster (shared RAM, 512MB storage)
+3. Under Security → Database Access → Add a database user
+4. Under Security → Network Access → Add IP 0.0.0.0/0 (allow all)
+5. Click Connect → Drivers → Copy the connection string:
+   mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/relifmesh?retryWrites=true
+```
+
+### Step 3 — Deploy Backend to Railway
 ```
 1. Go to https://railway.app → New Project → Deploy from GitHub
 2. Select: Team-Skipper/relifmesh → /backend
 3. Set environment variables in Railway dashboard:
-  DATABASE_URL   (auto-provided by Railway PostgreSQL plugin)
-  COUCHDB_URL
-  JWT_SECRET
-  CLOUDINARY_CLOUD_NAME
-  CLOUDINARY_API_KEY
-  CLOUDINARY_API_SECRET
-  NODE_ENV=production
+   MONGODB_URI        (the Atlas connection string from Step 2)
+   JWT_SECRET         (generate a random 32-char string)
+   CLOUDINARY_CLOUD_NAME
+   CLOUDINARY_API_KEY
+   CLOUDINARY_API_SECRET
+   NODE_ENV=production
 4. Railway auto-detects Node.js; runs `npm start`
-5. Note the generated URL: https://relifmesh-api.railway.app
-```
-
-### Step 3 — Run Database Migrations
-```bash
-# SSH into Railway shell or run via Railway CLI
-railway run npm run migrate
-railway run npm run seed
+5. Railway will automatically seed the database on first start
+6. Note the generated URL: https://relifmesh-api.railway.app
 ```
 
 ### Step 4 — Deploy Frontend to Netlify
@@ -62,26 +64,16 @@ railway run npm run seed
 3. Build command: npm run build
 4. Publish directory: dist
 5. Set environment variable:
-  VITE_API_BASE_URL=https://relifmesh-api.railway.app/v1
+   VITE_API_BASE_URL=https://relifmesh-api.railway.app/v1
 6. Deploy → note URL: https://relifmesh.netlify.app
 ```
 
-### Step 5 — Setup CouchDB (Cloudant)
-```
-1. Register at https://www.ibm.com/cloud/cloudant (free Lite plan)
-2. Create database: relifmesh_sync
-3. Create API credentials (username + password)
-4. Update COUCHDB_URL in Railway env vars
-5. Verify PouchDB sync works: open app, register household offline,
-  go online, check Cloudant dashboard for new document
-```
-
-### Step 6 — Verify Deployment
+### Step 5 — Verify Deployment
 ```
 [x] API health check: GET https://relifmesh-api.railway.app/v1/health → { status: "ok" }
 [x] Frontend loads: https://relifmesh.netlify.app
 [x] Login works with seeded test account
-[x] Register a household → sync to CouchDB → appears in PostgreSQL
+[x] Register a household → stored in MongoDB → appears in dashboard
 [x] Public dashboard loads without login
 [x] Lighthouse PWA score ≥ 80
 ```
@@ -92,8 +84,7 @@ railway run npm run seed
 
 | Variable | Used By | Description |
 |----------|---------|-------------|
-| `DATABASE_URL` | Backend | PostgreSQL connection string |
-| `COUCHDB_URL` | Backend | CouchDB with credentials |
+| `MONGODB_URI` | Backend | MongoDB connection string (Atlas or local) |
 | `JWT_SECRET` | Backend | Signing key for JWTs (min 32 chars) |
 | `JWT_EXPIRES_IN` | Backend | Token lifetime (e.g., `7d`) |
 | `CLOUDINARY_CLOUD_NAME` | Backend | Cloudinary account name |
@@ -108,25 +99,18 @@ railway run npm run seed
 ## 3.11.4 Backup & Recovery Plan
 
 ### Database Backup
-- **PostgreSQL:** Railway provides daily automated backups on paid tiers. For prototype, weekly manual export:
+- **MongoDB Atlas** provides automated backups on paid tiers. For prototype, weekly manual export:
 ```bash
-pg_dump $DATABASE_URL > backup_$(date +%Y%m%d).sql
-```
-- **CouchDB:** Cloudant provides export via replication or JSON dump:
-```bash
-curl -X GET "$COUCHDB_URL/_all_docs?include_docs=true" > couchdb_backup.json
+mongodump --uri="$MONGODB_URI" --out=backup_$(date +%Y%m%d)
 ```
 
 ### Recovery Procedure
 ```
-1. Restore PostgreSQL:
-  psql $DATABASE_URL < backup_YYYYMMDD.sql
+1. Restore MongoDB:
+   mongorestore --uri="$MONGODB_URI" backup_YYYYMMDD/
 
-2. Restore CouchDB:
-  Upload JSON back to Cloudant via dashboard or curl bulk_docs
-
-3. Verify integrity:
-  npm run verify-sync  (custom script comparing PG vs CouchDB record counts)
+2. Verify integrity:
+   npm run db:status    (shows document count per collection)
 ```
 
 ### Photo Backup
@@ -140,8 +124,8 @@ curl -X GET "$COUCHDB_URL/_all_docs?include_docs=true" > couchdb_backup.json
 | Limitation | Impact | Reason |
 |-----------|--------|--------|
 | No NID validation against national DB | Cannot verify identity | Government API not accessible |
-| No real-time sync (polling only) | Slight delay in cross-device updates | CouchDB free tier; WebSocket not implemented |
-| CouchDB free tier: 1GB storage, 20 req/sec | Limits scale beyond prototype | Budget constraint |
+| No real-time sync (polling only) | Slight delay in cross-device updates | WebSocket not implemented in prototype |
+| MongoDB Atlas free tier: 512MB storage | Limits scale beyond prototype | Budget constraint |
 | Single-language UI (Bengali/English toggle) | Non-Bengali speakers may struggle | Scope decision |
 | No automated CI/CD pipeline | Manual deploy required | Prototype phase |
 

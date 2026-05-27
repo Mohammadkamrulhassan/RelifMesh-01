@@ -36,7 +36,7 @@ RelifMesh solves this with an offline-first platform for Union Parishad official
 ```
 RelifMesh/
 │
-├── frontend/        # React PWA (Vite + Tailwind + PouchDB)
+├── frontend/        # React PWA (Vite + Tailwind + localforage)
 │  ├── public/       # Static assets, manifest, icons
 │  └── src/
 │    ├── pages/     # Route-level page components
@@ -85,6 +85,33 @@ RelifMesh/
 ├── .env.example      # Environment variable template
 └── .gitignore
 ```
+
+---
+
+## API Reference
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|:----:|-------------|
+| GET | `/v1/health` | No | Health check |
+| POST | `/v1/auth/login` | No | Login, returns JWT |
+| POST | `/v1/auth/register` | Upazila Officer | Create user account |
+| GET | `/v1/households` | Yes | List households (filtered by jurisdiction) |
+| GET | `/v1/households/search?q=` | Yes | Search by name or NID |
+| POST | `/v1/households` | UP Official | Register household |
+| GET | `/v1/households/:id` | Yes | Get household details |
+| PUT | `/v1/households/:id` | UP Official | Update household |
+| GET | `/v1/distributions` | Yes | List distribution logs |
+| POST | `/v1/distributions` | UP/NGO | Log distribution |
+| GET | `/v1/distributions/duplicate-check` | Yes | Check duplicates before logging |
+| GET | `/v1/alerts` | Yes | List duplicate alerts |
+| PUT | `/v1/alerts/:id/resolve` | Yes | Resolve an alert |
+| GET | `/v1/reports/export` | Upazila Officer | Export CSV/PDF report |
+| GET | `/v1/public/dashboard` | No | Public aggregated stats |
+| GET | `/v1/public/map` | No | Public map data |
+| POST | `/v1/sync/push` | Yes | Push offline records |
+| GET | `/v1/sync/pull` | Yes | Pull new records |
+
+All protected endpoints use `Authorization: Bearer <token>` header.
 
 ---
 

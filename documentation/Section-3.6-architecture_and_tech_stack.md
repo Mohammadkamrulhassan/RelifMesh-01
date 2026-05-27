@@ -7,54 +7,58 @@
 
 ## 3.6.1 System Architecture Overview
 
-RelifMesh uses a **Progressive Web App (PWA) + REST API + Offline Sync** architecture.
+RelifMesh uses a **Progressive Web App (PWA) + REST API + MongoDB** architecture.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│            CLIENT LAYER               │
-│                                 │
-│ ┌──────────────────────────────┐  ┌────────────────────────┐ │
-│ │   PWA (React / Vite)    │  │  Public Dashboard   │ │
-│ │ - Household Registration  │  │  (Read-only, no auth) │ │
-│ │ - Distribution Logging   │  │  - Aggregated stats  │ │
-│ │ - Offline queue (PouchDB)  │  │  - Map view      │ │
-│ │ - Role-based UI views    │  └────────────────────────┘ │
-│ └──────────────┬───────────────┘                │
-│         │ HTTPS / REST API               │
+│                     CLIENT LAYER                                 │
+│                                                                  │
+│  ┌──────────────────────────────┐   ┌────────────────────────┐  │
+│  │     PWA (React / Vite)       │   │   Public Dashboard     │  │
+│  │  - Household Registration    │   │   (Read-only, no auth) │  │
+│  │  - Distribution Logging      │   │   - Aggregated stats   │  │
+│  │  - Offline queue (localforage)│  │   - Map view           │  │
+│  │  - Role-based UI views       │   └────────────────────────┘  │
+│  └──────────────┬───────────────┘                                │
+│                 │ HTTPS / REST API                               │
 └─────────────────┼───────────────────────────────────────────────┘
-         │
+                  │
 ┌─────────────────▼───────────────────────────────────────────────┐
-│            SERVER LAYER               │
-│                                 │
-│ ┌─────────────────────────────────────────────────────────┐  │
-│ │       Node.js + Express.js API Server       │  │
-│ │                             │  │
-│ │ /auth    → JWT authentication            │  │
-│ │ /households → CRUD household records          │  │
-│ │ /distributions → Log and query distributions      │  │
-│ │ /alerts   → Duplicate detection engine        │  │
-│ │ /reports  → PDF/CSV generation            │  │
-│ │ /public   → Aggregated public dashboard data     │  │
-│ │ /sync    → CouchDB sync endpoint (PouchDB protocol) │  │
-│ └──────────────────────────┬──────────────────────────────┘  │
-│               │                  │
+│                      SERVER LAYER                                │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │              Node.js + Express.js API Server              │   │
+│  │                                                          │   │
+│  │  /auth         → JWT authentication                      │   │
+│  │  /households   → CRUD household records                  │   │
+│  │  /distributions → Log and query distributions            │   │
+│  │  /alerts       → Duplicate detection engine              │   │
+│  │  /reports      → PDF/CSV generation                      │   │
+│  │  /public       → Aggregated public dashboard data        │   │
+│  │  /sync         → Offline push/pull sync API              │   │
+│  └──────────────────────────┬───────────────────────────────┘   │
+│                             │                                    │
 └─────────────────────────────┼───────────────────────────────────┘
-               │
+                              │
 ┌─────────────────────────────▼───────────────────────────────────┐
-│            DATA LAYER                │
-│                                 │
-│ ┌──────────────────────┐   ┌───────────────────────────┐   │
-│ │  PostgreSQL (main) │   │  CouchDB (sync target)  │   │
-│ │  - Users      │   │  - Distribution logs   │   │
-│ │  - Jurisdictions  │   │  - Household records   │   │
-│ │  - Item categories │   │  (offline-first sync)  │   │
-│ └──────────────────────┘   └───────────────────────────┘   │
-│                                 │
-│ ┌──────────────────────┐                    │
-│ │  File Storage    │                    │
-│ │  (Local / S3-compat) │                   │
-│ │  - Photos      │                    │
-│ └──────────────────────┘                    │
+│                        DATA LAYER                                │
+│                                                                  │
+│  ┌──────────────────────────────────────┐                       │
+│  │           MongoDB (single DB)        │                       │
+│  │  - Users                             │                       │
+│  │  - Jurisdictions                     │                       │
+│  │  - Households                        │                       │
+│  │  - Distribution Logs                 │                       │
+│  │  - Item Categories                   │                       │
+│  │  - Duplicate Alerts                  │                       │
+│  │  - Sync Conflicts                    │                       │
+│  └──────────────────────────────────────┘                       │
+│                                                                  │
+│  ┌──────────────────────┐                                        │
+│  │   File Storage       │                                        │
+│  │   (Local / Cloudinary)│                                       │
+│  │   - Photos           │                                        │
+│  └──────────────────────┘                                        │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -68,7 +72,7 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + Offline Sync** archite
 | React.js | 18.x | Component-based UI; team familiarity; strong ecosystem |
 | Vite | 5.x | Fast build tool; PWA plugin support |
 | Tailwind CSS | 3.x | Rapid UI styling; mobile-first utility classes |
-| PouchDB | 9.x | In-browser offline database; native CouchDB sync protocol |
+| localforage | 1.x | In-browser IndexedDB wrapper; lightweight offline storage |
 | Leaflet.js | 1.9.x | Open-source map library; no API key required |
 | vite-plugin-pwa | latest | PWA manifest, service worker, offline caching |
 
@@ -77,6 +81,7 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + Offline Sync** archite
 |-----------|---------|---------------|
 | Node.js | 20.x LTS | JavaScript full-stack; team already knows JS |
 | Express.js | 4.x | Lightweight REST API; minimal boilerplate |
+| Mongoose | 8.x | MongoDB ODM with schema validation and query building |
 | JWT (jsonwebtoken) | 9.x | Stateless auth; works well with mobile clients |
 | bcrypt | 5.x | Secure password hashing |
 | Multer | 1.x | Photo upload handling (multipart/form-data) |
@@ -85,15 +90,14 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + Offline Sync** archite
 ### Database
 | Technology | Justification |
 |-----------|---------------|
-| PostgreSQL 15 | Relational integrity for users, jurisdictions, item categories; ACID compliant |
-| CouchDB 3.x | Offline-sync target for PouchDB; native replication protocol |
+| MongoDB 8.x | Flexible document model; maps directly to JS objects; Mongoose ODM for schema enforcement; free Atlas tier for deployment |
 | Cloudinary / Local FS | Photo storage; Cloudinary free tier for prototype |
 
 ### DevOps & Tooling
 | Tool | Purpose |
 |------|---------|
 | Git + GitHub | Version control, branching, pull requests |
-| Railway / Render | Free-tier cloud deployment (Node.js + PostgreSQL) |
+| Railway / Render | Free-tier cloud deployment (Node.js + MongoDB) |
 | Docker (optional) | Local dev environment consistency |
 | Postman | API testing during development |
 | draw.io | diagrams/ (DFD, UML, ERD) |
@@ -104,30 +108,31 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + Offline Sync** archite
 ## 3.6.3 Offline-First Architecture Design
 
 ### Strategy
-RelifMesh uses a **dual-database offline-first pattern**:
-- **PouchDB** runs entirely in the browser — all writes go here first.
-- **CouchDB** on the server is the sync target.
-- When the device reconnects, PouchDB automatically replicates to CouchDB using the built-in sync protocol.
-- CouchDB changes are then picked up by the Node.js API and written into PostgreSQL (the source of truth for structured queries and reports).
+RelifMesh uses a **single-database offline-first pattern**:
+- **localforage (IndexedDB)** runs in the browser — offline writes are queued here.
+- When the device reconnects, queued records are pushed to the Express API via `POST /sync/push`.
+- New records from other devices are pulled via `GET /sync/pull?since=<timestamp>`.
+- **MongoDB** is the single source of truth — no separate sync database needed.
 
 ### Sync Flow
 ```
 [Field Device — Offline]
-   │
-   │ Write to PouchDB (local)
-   ▼
- PouchDB (browser)
-   │
-   │ [Network restored]
-   │
-   ▼
- CouchDB (server) ──► Node.js change listener ──► PostgreSQL
+     │
+     │ Write to localforage (IndexedDB)
+     ▼
+ localforage (browser)
+     │
+     │ [Network restored]
+     │
+     ▼
+ Express API ──POST /sync/push──►  MongoDB
+     ◄──GET /sync/pull───
 ```
 
 ### Conflict Resolution
-- **Detection:** CouchDB's built-in revision tracking (`_rev`) detects write conflicts.
+- **Detection:** The sync endpoint checks for duplicate records by NID or log ID.
 - **Default Resolution:** Last-write-wins (by timestamp).
-- **Conflict Log:** Both versions are saved in `sync_conflicts` table; flagged for manual review.
+- **Conflict Log:** Conflicting versions are saved in `syncconflicts` collection; flagged for manual review.
 - **Officer Notification:** App displays "X records had sync conflicts" with a review link.
 
 ---
@@ -151,6 +156,8 @@ Base URL: `https://api.relifmesh.app/v1`
 | GET | `/reports/export` | Upazila Officer | Export CSV/PDF report |
 | GET | `/public/dashboard` | No | Aggregated public data |
 | GET | `/public/map` | No | Union-level map data |
+| POST | `/sync/push` | Yes | Push offline queued records to server |
+| GET | `/sync/pull` | Yes | Pull new records since last sync |
 
 All protected endpoints require `Authorization: Bearer <JWT>` header.
 
@@ -160,26 +167,25 @@ All protected endpoints require `Authorization: Bearer <JWT>` header.
 
 ```
 [GitHub Repository]
-    │
-    │ Push to main branch
-    ▼
+        │
+        │  Push to main branch
+        ▼
 [Railway / Render — Auto Deploy]
-    │
-    ├── Node.js API Server (Express)
-    │    └── ENV vars: DB_URL, JWT_SECRET, CLOUDINARY_KEY
-    │
-    ├── PostgreSQL (Railway managed DB)
-    │
-    └── CouchDB (Railway Docker service or Cloudant free tier)
+        │
+        ├── Node.js API Server (Express)
+        │       └── ENV vars: MONGODB_URI, JWT_SECRET, CLOUDINARY_KEY
+        │
+        └── MongoDB Atlas (free tier: 512MB)
+                └── Single collection per entity (7 collections)
 
 [Cloudinary]
-    └── Photo uploads (free tier: 25GB)
+        └── Photo uploads (free tier: 25GB)
 
-[GitHub Pages / Netlify]
-    └── React PWA frontend (static hosting, free tier)
+[Netlify]
+        └── React PWA frontend (static hosting, free tier)
 ```
 
-**Zero-cost deployment confirmed:** Railway free tier, Netlify, Cloudinary free — all within prototype requirements.
+**Zero-cost deployment confirmed:** MongoDB Atlas free tier, Netlify, Cloudinary free — all within prototype requirements.
 
 ---
 

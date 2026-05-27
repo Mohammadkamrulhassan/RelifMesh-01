@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
+const os = require('os')
 const rateLimit = require('express-rate-limit')
 const connectDB = require('./config/database')
 const env = require('./config/environment')
@@ -33,9 +34,27 @@ app.get('/v1/health', (req, res) => res.json({ status: 'ok' }))
 
 app.use(errorHandler)
 
+function getNetworkIP() {
+  const ifaces = os.networkInterfaces()
+  for (const name of Object.keys(ifaces)) {
+    for (const iface of ifaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) return iface.address
+    }
+  }
+  return 'localhost'
+}
+
 connectDB().then(() => {
   app.listen(env.port, () => {
-    console.log(`RelifMesh API running on port ${env.port}`)
+    const local = `http://localhost:${env.port}`
+    const network = `http://${getNetworkIP()}:${env.port}`
+    console.log()
+    console.log('  RelifMesh API is running')
+    console.log('  ──────────────────────')
+    console.log(`  Local:   ${local}`)
+    console.log(`  Network: ${network}`)
+    console.log(`  Health:  ${local}/v1/health`)
+    console.log()
   })
 })
 
