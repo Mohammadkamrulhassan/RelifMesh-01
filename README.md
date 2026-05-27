@@ -1,84 +1,128 @@
-# RelifMesh-01
-# Project Name: RelifMesh- Disaster Relief Corrdination System for Local Government
+# RelifMesh — Disaster Relief Coordination System for Local Government
 
-inst/idea: Triggered by floods/cyclones (highly relevant to Bangladesh), this system lets union-level officials register affected families, log distributed lelief items (rice, water tarp) per household with photo+GPS, and prevents duplicate distribution across overlapping NEO/govt teams operation in the same area. Public dashboard shows what was given where, increasing transparency.
-# key SAD focus areas:
+> *"One mesh. No duplicates. No household left behind."*
+
+**Course:** CSE-3208 System Analysis & Design Lab  
+**Team:** Team_Skipper | **Project:** #6 ReliefMesh  
+**Supervisor:** MD Mynoddin, Assistant Professor, RMSTU
+
+---
+
+## Team
+
+| ID | Name | Role |
+|----|------|------|
+| 2101011001 | Abidul Islam | System Analyst / QA Tester |
+| 2101011005 | MD. Kamrul Hassan | Project Manager / Developer |
+| 2101011013 | Sayeda Mofatteha Ahmed | UI/UX Designer |
+| 2101011038 | Iftekhar Alam Nahid | UI/UX Designer |
+
+---
+
+## Problem
+
+During floods and cyclones in Bangladesh, relief distribution suffers from:
+- **Duplicate aid** — same household served multiple times
+- **Missed households** — vulnerable families skipped
+- **No real-time tracking** — paper-based logs, late consolidation
+- **Inter-agency opacity** — NGOs and government teams operate independently
+
+RelifMesh solves this with an offline-first platform for Union Parishad officials, NGO workers, and Upazila officers to jointly register households, log item-level distributions, prevent duplicates, and expose a public transparency dashboard.
+
+---
+
+## Project Structure
+
 ```
-1. Real-world problem analysis (duplicate relief, missed households),
-2. offline-first requirements
-3. sync conflict resoluaation
-4. public/private data separation
-5. authority-hierarchy modeling.
-```
-### Section 1
-# Work progress updated to Course Teacher
-# 1.1 Team formation (time: two week)
-- our course teacher
-```
-MD Mynoddin
-Assistant Professor
-Rangamati Science and Technology University
-```
-- our team have four members
-```
-ID		|	Name
------------------------------
-2101011001	| Abidul Islam
-2101011005	| MD. Kamrul Hassan
-2101011013	| Sayeda Mofatteha Ahmed
-2101011038	| Iftekhar Alam Nahid
-```
-1 team name: Team_Skipper
-2 roles of project
-* project manager : MD. Kamrul Hassan
-* System Analyst  : Abidul Islam
-* UI/UX Design	  : Sayeda Mofatteha Ahmed, Iftekhar Alam Nahid
-* Developer	  : MD. Kamrul Hassan
-* Quality Assurance/ Tester: Abidul Islam (team member), MD Mynoddin (course Teacher), Saifur Rahman (external of team)
-
-
-# 1.2 Project Selection
-we got the project 6 by random selection process.
-the project name is "RelifMesh- Disaster Relief Corrdination System for Local Government"
-
-# 1.3 Submission Requirements
-1. complete project report (hard copy and soft copy) covering all 14 modules in section 3.
-2. working product prototype demonstration all must-have requirements.
-3. souse code repository link (Github/GitLab) with clean commit history.
-4. Demo video (3-5 minutes) of the working prototype.
-5. Presentation Slides for the final defense.
-6. Individual contribution statement signed by every team member.
-
-work distributed in team:
-```
-Hard copy -> create+optimize+organize	: Sayeda
-Soft copy -> create+optimize+organize   : Kamrul
-Video	  -> Nahid
-Presentation -> Abid
-Individual contribution statament -> Nahid
+RelifMesh/
+│
+├── frontend/               # React PWA (Vite + Tailwind + PouchDB)
+│   ├── public/             # Static assets, manifest, icons
+│   └── src/
+│       ├── pages/          # Route-level page components
+│       ├── components/     # Reusable UI components
+│       ├── services/       # API client, auth, offline sync
+│       ├── hooks/          # Custom React hooks
+│       ├── store/          # State management
+│       ├── utils/          # Helper functions
+│       └── styles/         # Global styles
+│
+├── backend/                # Node.js + Express REST API
+│   ├── src/
+│   │   ├── routes/         # API route definitions
+│   │   ├── controllers/    # Business logic
+│   │   ├── models/         # Database queries
+│   │   ├── middleware/      # Auth, validation, error handling
+│   │   ├── utils/          # Helpers (duplicate check, PDF gen)
+│   │   ├── db/             # Migrations and seeds
+│   │   └── config/         # Environment config
+│   └── tests/              # Jest test files
+│
+├── documentation/          # 14 SAD module deliverables
+│   ├── Section-3.1-...
+│   ├── Section-3.2-...
+│   └── ... (13 more)
+│
+├── diagrams/               # draw.io / UML / ERD files
+│   ├── sequence-diagrams/
+│   └── activity-diagrams/
+│
+├── designs/                # Figma exports
+│   ├── wireframes/
+│   ├── mockups/
+│   └── style-guide/
+│
+├── reports/                # PM artifacts
+│   ├── meeting-minutes/
+│   └── weekly-progress/
+│
+├── submission/             # Final deliverables
+│   ├── demo-video/
+│   ├── presentation-slides/
+│   └── individual-contributions/
+│
+├── assets/                 # Shared media
+├── .env.example            # Environment variable template
+└── .gitignore
 ```
 
-# 1.4 Evaluation Criteria
-- Quality and completeness of SAD documentaion (SRS, DFDs, UML, ERD): 40%
-- Working prototype and demo: 25%
-- Final report quality, structure, and referance: 15%
-- Presentation and viva performance: 15%
-- Teamwork, version control decipline, weekly progress: 5%
+---
 
-# 1.5 Academic Integrity
-- All written content must be orginal. Cite every external source.
-- Plagiarism in the report or copying code form other teams will result in seto marks.
+## Quick Start
 
+```bash
+# Backend
+cd backend
+cp ../.env.example .env    # fill in your values
+npm install
+npm run migrate
+npm run seed
+npm run dev
 
-
-### Section 2
-# Project Name: RelifMesh- Disaster Relief Corrdination System for Local Government
-
-inst/idea: Triggered by floods/cyclones (highly relevant to Bangladesh), this system lets union-level officials register affected families, log distributed lelief items (rice, water tarp) p>
-# key SAD focus areas:
+# Frontend (separate terminal)
+cd frontend
+npm install
+npm run dev
 ```
-1. Real-world problem analysis (duplicate relief, missed households),
-2. offline-first requirements
-3. sync conflict resoluaation
-4. public/private data separation
-5. authority-hierarchy modeling.
+
+---
+
+## Deliverables Status
+
+| Module | Document | Status |
+|--------|----------|--------|
+| 3.1 | Project Initiation & Problem Definition | ✅ Complete |
+| 3.2 | Stakeholder Analysis | ✅ Complete |
+| 3.3 | Requirements Engineering (SRS) | ✅ Complete |
+| 3.4 | System Modeling (DFD & UML) | ✅ Complete |
+| 3.5 | Database Design (ERD) | ✅ Complete |
+| 3.6 | Architecture & Tech Stack | ✅ Complete |
+| 3.7 | UI/UX Design | ✅ Complete |
+| 3.8 | Implementation Plan | ✅ Complete |
+| 3.9 | Testing & QA | ✅ Complete |
+| 3.10 | Security & Access Control | ✅ Complete |
+| 3.11 | Deployment & Maintenance | ✅ Complete |
+| 3.12 | Project Management | ✅ Complete |
+| 3.13 | References & Bibliography | ✅ Complete |
+| 3.14 | Presentation & Defense | ✅ Complete |
+| **Prototype** | Frontend + Backend code | 🔜 In Progress |
