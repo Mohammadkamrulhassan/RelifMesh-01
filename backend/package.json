@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "seed": "node db/seeds/seed.js"
+    "seed": "node db/seeds/seed.js",
+    "db:status": "node db/status.js",
+    "db:update": "node db/update.js",
+    "db:reset": "node db/update.js && node db/seeds/seed.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
