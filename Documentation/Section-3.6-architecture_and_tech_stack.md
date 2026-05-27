@@ -11,50 +11,50 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + Offline Sync** archite
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CLIENT LAYER                             │
-│                                                                 │
-│  ┌──────────────────────────────┐   ┌────────────────────────┐  │
-│  │     PWA (React / Vite)       │   │   Public Dashboard     │  │
-│  │  - Household Registration    │   │   (Read-only, no auth) │  │
-│  │  - Distribution Logging      │   │   - Aggregated stats   │  │
-│  │  - Offline queue (PouchDB)   │   │   - Map view           │  │
-│  │  - Role-based UI views       │   └────────────────────────┘  │
-│  └──────────────┬───────────────┘                               │
-│                 │ HTTPS / REST API                              │
+│            CLIENT LAYER               │
+│                                 │
+│ ┌──────────────────────────────┐  ┌────────────────────────┐ │
+│ │   PWA (React / Vite)    │  │  Public Dashboard   │ │
+│ │ - Household Registration  │  │  (Read-only, no auth) │ │
+│ │ - Distribution Logging   │  │  - Aggregated stats  │ │
+│ │ - Offline queue (PouchDB)  │  │  - Map view      │ │
+│ │ - Role-based UI views    │  └────────────────────────┘ │
+│ └──────────────┬───────────────┘                │
+│         │ HTTPS / REST API               │
 └─────────────────┼───────────────────────────────────────────────┘
-                  │
+         │
 ┌─────────────────▼───────────────────────────────────────────────┐
-│                       SERVER LAYER                              │
-│                                                                 │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │              Node.js + Express.js API Server             │    │
-│  │                                                         │    │
-│  │  /auth       → JWT authentication                       │    │
-│  │  /households → CRUD household records                   │    │
-│  │  /distributions → Log and query distributions           │    │
-│  │  /alerts     → Duplicate detection engine               │    │
-│  │  /reports    → PDF/CSV generation                       │    │
-│  │  /public     → Aggregated public dashboard data         │    │
-│  │  /sync       → CouchDB sync endpoint (PouchDB protocol) │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
-│                             │                                   │
+│            SERVER LAYER               │
+│                                 │
+│ ┌─────────────────────────────────────────────────────────┐  │
+│ │       Node.js + Express.js API Server       │  │
+│ │                             │  │
+│ │ /auth    → JWT authentication            │  │
+│ │ /households → CRUD household records          │  │
+│ │ /distributions → Log and query distributions      │  │
+│ │ /alerts   → Duplicate detection engine        │  │
+│ │ /reports  → PDF/CSV generation            │  │
+│ │ /public   → Aggregated public dashboard data     │  │
+│ │ /sync    → CouchDB sync endpoint (PouchDB protocol) │  │
+│ └──────────────────────────┬──────────────────────────────┘  │
+│               │                  │
 └─────────────────────────────┼───────────────────────────────────┘
-                              │
+               │
 ┌─────────────────────────────▼───────────────────────────────────┐
-│                       DATA LAYER                                │
-│                                                                 │
-│  ┌──────────────────────┐     ┌───────────────────────────┐     │
-│  │   PostgreSQL (main)  │     │   CouchDB (sync target)   │     │
-│  │   - Users            │     │   - Distribution logs     │     │
-│  │   - Jurisdictions    │     │   - Household records     │     │
-│  │   - Item categories  │     │   (offline-first sync)    │     │
-│  └──────────────────────┘     └───────────────────────────┘     │
-│                                                                 │
-│  ┌──────────────────────┐                                       │
-│  │   File Storage       │                                       │
-│  │   (Local / S3-compat) │                                      │
-│  │   - Photos           │                                       │
-│  └──────────────────────┘                                       │
+│            DATA LAYER                │
+│                                 │
+│ ┌──────────────────────┐   ┌───────────────────────────┐   │
+│ │  PostgreSQL (main) │   │  CouchDB (sync target)  │   │
+│ │  - Users      │   │  - Distribution logs   │   │
+│ │  - Jurisdictions  │   │  - Household records   │   │
+│ │  - Item categories │   │  (offline-first sync)  │   │
+│ └──────────────────────┘   └───────────────────────────┘   │
+│                                 │
+│ ┌──────────────────────┐                    │
+│ │  File Storage    │                    │
+│ │  (Local / S3-compat) │                   │
+│ │  - Photos      │                    │
+│ └──────────────────────┘                    │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -113,14 +113,14 @@ RelifMesh uses a **dual-database offline-first pattern**:
 ### Sync Flow
 ```
 [Field Device — Offline]
-     │
-     │  Write to PouchDB (local)
-     ▼
+   │
+   │ Write to PouchDB (local)
+   ▼
  PouchDB (browser)
-     │
-     │  [Network restored]
-     │
-     ▼
+   │
+   │ [Network restored]
+   │
+   ▼
  CouchDB (server) ──► Node.js change listener ──► PostgreSQL
 ```
 
@@ -160,23 +160,23 @@ All protected endpoints require `Authorization: Bearer <JWT>` header.
 
 ```
 [GitHub Repository]
-        │
-        │  Push to main branch
-        ▼
+    │
+    │ Push to main branch
+    ▼
 [Railway / Render — Auto Deploy]
-        │
-        ├── Node.js API Server (Express)
-        │       └── ENV vars: DB_URL, JWT_SECRET, CLOUDINARY_KEY
-        │
-        ├── PostgreSQL (Railway managed DB)
-        │
-        └── CouchDB (Railway Docker service or Cloudant free tier)
+    │
+    ├── Node.js API Server (Express)
+    │    └── ENV vars: DB_URL, JWT_SECRET, CLOUDINARY_KEY
+    │
+    ├── PostgreSQL (Railway managed DB)
+    │
+    └── CouchDB (Railway Docker service or Cloudant free tier)
 
 [Cloudinary]
-        └── Photo uploads (free tier: 25GB)
+    └── Photo uploads (free tier: 25GB)
 
 [GitHub Pages / Netlify]
-        └── React PWA frontend (static hosting, free tier)
+    └── React PWA frontend (static hosting, free tier)
 ```
 
 **Zero-cost deployment confirmed:** Railway free tier, Netlify, Cloudinary free — all within prototype requirements.

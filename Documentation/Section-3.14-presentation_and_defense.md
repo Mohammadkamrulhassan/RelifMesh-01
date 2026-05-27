@@ -44,41 +44,41 @@ Total slides: ~18–22 | Duration: 15–20 minutes | Format: PowerPoint / Google
 
 ```
 Step 1 — Show Public Dashboard (1 min)
-   → Open https://relifmesh.netlify.app (no login)
-   → Show map with union markers
-   → Show distribution summary cards
-   → Click on one union to show item breakdown
+  → Open https://relifmesh.netlify.app (no login)
+  → Show map with union markers
+  → Show distribution summary cards
+  → Click on one union to show item breakdown
 
 Step 2 — Login as UP Official (30 sec)
-   → Login with test credentials (prepared beforehand)
-   → Show home dashboard with stats
+  → Login with test credentials (prepared beforehand)
+  → Show home dashboard with stats
 
 Step 3 — Register a Household (1.5 min)
-   → Tap "New Household"
-   → Fill form: name, NID (use test NID), family size
-   → Check vulnerability flags
-   → Take photo (or use pre-captured test photo)
-   → Save → show HH-ID generated
-   → Switch to OFFLINE mode (Chrome DevTools → Network → Offline)
-   → Register one more household → shows "queued offline"
+  → Tap "New Household"
+  → Fill form: name, NID (use test NID), family size
+  → Check vulnerability flags
+  → Take photo (or use pre-captured test photo)
+  → Save → show HH-ID generated
+  → Switch to OFFLINE mode (Chrome DevTools → Network → Offline)
+  → Register one more household → shows "queued offline"
 
 Step 4 — Log a Distribution (1.5 min)
-   → Tap "Log Distribution"
-   → Search for previously registered household
-   → Select Rice (Food), 10 kg
-   → Take photo → Submit
-   → Re-enable network → show sync happening
-   → Check public dashboard updated
+  → Tap "Log Distribution"
+  → Search for previously registered household
+  → Select Rice (Food), 10 kg
+  → Take photo → Submit
+  → Re-enable network → show sync happening
+  → Check public dashboard updated
 
 Step 5 — Trigger Duplicate Alert (1 min)
-   → Log Rice again for the same household
-   → System shows duplicate warning with prior distribution details
-   → Demo: cancel → then override with reason
+  → Log Rice again for the same household
+  → System shows duplicate warning with prior distribution details
+  → Demo: cancel → then override with reason
 
 Step 6 — Upazila Officer View (1 min)
-   → Logout → Login as Upazila Officer
-   → Show all unions in jurisdiction
-   → Export PDF report → open downloaded PDF
+  → Logout → Login as Upazila Officer
+  → Show all unions in jurisdiction
+  → Export PDF report → open downloaded PDF
 ```
 
 ### Pre-Demo Checklist
@@ -166,7 +166,7 @@ Approximate contribution to overall project: [X]%
 I declare that all my contributions are original and that I have not
 plagiarized any content or code from other sources without proper citation.
 
-Signature: _______________________   Date: ___________
+Signature: _______________________  Date: ___________
 ```
 
 ---

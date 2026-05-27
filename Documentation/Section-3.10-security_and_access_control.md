@@ -26,29 +26,29 @@ STRIDE is a standard threat classification framework: **S**poofing, **T**amperin
 
 **Login Flow:**
 ```
-Client                          Server
-  │                               │
-  │──POST /auth/login─────────────►│
-  │  { email, password }           │
-  │                               │──Lookup user by email
-  │                               │──Compare password with bcrypt hash
-  │                               │──Generate JWT (payload: user_id, role, jurisdiction_id)
-  │◄──{ token: "eyJ..." }─────────│
-  │                               │
-  │──GET /households (with JWT)───►│
-  │  Authorization: Bearer eyJ... │──Decode JWT → extract role + jurisdiction
-  │                               │──Check permission
-  │◄──{ households: [...] }───────│
+Client             Server
+ │                │
+ │──POST /auth/login─────────────►│
+ │ { email, password }      │
+ │                │──Lookup user by email
+ │                │──Compare password with bcrypt hash
+ │                │──Generate JWT (payload: user_id, role, jurisdiction_id)
+ │◄──{ token: "eyJ..." }─────────│
+ │                │
+ │──GET /households (with JWT)───►│
+ │ Authorization: Bearer eyJ... │──Decode JWT → extract role + jurisdiction
+ │                │──Check permission
+ │◄──{ households: [...] }───────│
 ```
 
 **JWT Payload Structure:**
 ```json
 {
-  "sub": "user-uuid-here",
-  "role": "UP_OFFICIAL",
-  "jurisdiction_id": "union-uuid-here",
-  "iat": 1748300000,
-  "exp": 1748904800
+ "sub": "user-uuid-here",
+ "role": "UP_OFFICIAL",
+ "jurisdiction_id": "union-uuid-here",
+ "iat": 1748300000,
+ "exp": 1748904800
 }
 ```
 
@@ -66,16 +66,16 @@ Client                          Server
 
 | Permission | Public | UP Official | NGO Worker | Upazila Officer |
 |-----------|:------:|:-----------:|:----------:|:---------------:|
-| View public dashboard | ✅ | ✅ | ✅ | ✅ |
-| Register household | ❌ | ✅ | ❌ | ❌ |
-| Log distribution | ❌ | ✅ | ✅ | ❌ |
-| Override duplicate | ❌ | ✅ | ✅ | ❌ |
-| View own union data | ❌ | ✅ | ✅ | ✅ |
-| View all unions (jurisdiction) | ❌ | ❌ | ❌ | ✅ |
-| Export reports | ❌ | ❌ | ❌ | ✅ |
-| Manage user accounts | ❌ | ❌ | ❌ | ✅ |
-| Review sync conflicts | ❌ | ✅ (own) | ✅ (own) | ✅ (all) |
-| View duplicate alert log | ❌ | ✅ (own) | ✅ (own) | ✅ (all) |
+| View public dashboard | [x] | [x] | [x] | [x] |
+| Register household | [ ] | [x] | [ ] | [ ] |
+| Log distribution | [ ] | [x] | [x] | [ ] |
+| Override duplicate | [ ] | [x] | [x] | [ ] |
+| View own union data | [ ] | [x] | [x] | [x] |
+| View all unions (jurisdiction) | [ ] | [ ] | [ ] | [x] |
+| Export reports | [ ] | [ ] | [ ] | [x] |
+| Manage user accounts | [ ] | [ ] | [ ] | [x] |
+| Review sync conflicts | [ ] | [x] (own) | [x] (own) | [x] (all) |
+| View duplicate alert log | [ ] | [x] (own) | [x] (own) | [x] (all) |
 
 ### Jurisdiction Enforcement
 Beyond role, every data query is filtered by `jurisdiction_id`:
@@ -87,14 +87,14 @@ Beyond role, every data query is filtered by `jurisdiction_id`:
 ```javascript
 // middleware/authorize.js
 function authorize(...allowedRoles) {
-  return (req, res, next) => {
-    const { role, jurisdiction_id } = req.user; // decoded from JWT
-    if (!allowedRoles.includes(role)) {
-      return res.status(403).json({ error: 'Forbidden' });
-    }
-    req.userJurisdiction = jurisdiction_id;
-    next();
-  };
+ return (req, res, next) => {
+  const { role, jurisdiction_id } = req.user; // decoded from JWT
+  if (!allowedRoles.includes(role)) {
+   return res.status(403).json({ error: 'Forbidden' });
+  }
+  req.userJurisdiction = jurisdiction_id;
+  next();
+ };
 }
 
 // Usage in routes
@@ -137,11 +137,11 @@ router.get('/reports/export', authenticate, authorize('UPAZILA_OFFICER'), export
 const { body, validationResult } = require('express-validator');
 
 const validateHousehold = [
-  body('head_name').trim().isLength({ min: 2, max: 100 }).escape(),
-  body('nid').trim().matches(/^[0-9]{10,17}$/),
-  body('family_size').isInt({ min: 1, max: 50 }),
-  body('gps_lat').isFloat({ min: -90, max: 90 }),
-  body('gps_lng').isFloat({ min: -180, max: 180 }),
+ body('head_name').trim().isLength({ min: 2, max: 100 }).escape(),
+ body('nid').trim().matches(/^[0-9]{10,17}$/),
+ body('family_size').isInt({ min: 1, max: 50 }),
+ body('gps_lat').isFloat({ min: -90, max: 90 }),
+ body('gps_lng').isFloat({ min: -180, max: 180 }),
 ];
 ```
 
@@ -150,13 +150,13 @@ const validateHousehold = [
 ```javascript
 // Safe
 const result = await db.query(
-  'SELECT * FROM households WHERE jurisdiction_id = $1',
-  [jurisdictionId]
+ 'SELECT * FROM households WHERE jurisdiction_id = $1',
+ [jurisdictionId]
 );
 
 // Never
 const result = await db.query(
-  `SELECT * FROM households WHERE jurisdiction_id = '${jurisdictionId}'`
+ `SELECT * FROM households WHERE jurisdiction_id = '${jurisdictionId}'`
 );
 ```
 
@@ -175,9 +175,9 @@ app.use(helmet()); // Sets: X-Frame-Options, X-Content-Type-Options, HSTS, CSP
 ```javascript
 const rateLimit = require('express-rate-limit');
 app.use('/api/', rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200,                  // max 200 requests per window per IP
-  message: { error: 'Too many requests, slow down.' }
+ windowMs: 15 * 60 * 1000, // 15 minutes
+ max: 200,         // max 200 requests per window per IP
+ message: { error: 'Too many requests, slow down.' }
 }));
 ```
 

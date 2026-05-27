@@ -28,8 +28,8 @@ RelifMesh uses a **zero-cost cloud deployment** strategy appropriate for the pro
 echo ".env" >> .gitignore
 
 # Verify build works locally
-cd frontend && npm run build     # generates dist/ folder
-cd ../backend && node src/server.js  # confirm no startup errors
+cd frontend && npm run build   # generates dist/ folder
+cd ../backend && node src/server.js # confirm no startup errors
 ```
 
 ### Step 2 — Deploy Backend to Railway
@@ -37,13 +37,13 @@ cd ../backend && node src/server.js  # confirm no startup errors
 1. Go to https://railway.app → New Project → Deploy from GitHub
 2. Select: Team-Skipper/relifmesh → /backend
 3. Set environment variables in Railway dashboard:
-   DATABASE_URL     (auto-provided by Railway PostgreSQL plugin)
-   COUCHDB_URL
-   JWT_SECRET
-   CLOUDINARY_CLOUD_NAME
-   CLOUDINARY_API_KEY
-   CLOUDINARY_API_SECRET
-   NODE_ENV=production
+  DATABASE_URL   (auto-provided by Railway PostgreSQL plugin)
+  COUCHDB_URL
+  JWT_SECRET
+  CLOUDINARY_CLOUD_NAME
+  CLOUDINARY_API_KEY
+  CLOUDINARY_API_SECRET
+  NODE_ENV=production
 4. Railway auto-detects Node.js; runs `npm start`
 5. Note the generated URL: https://relifmesh-api.railway.app
 ```
@@ -62,7 +62,7 @@ railway run npm run seed
 3. Build command: npm run build
 4. Publish directory: dist
 5. Set environment variable:
-   VITE_API_BASE_URL=https://relifmesh-api.railway.app/v1
+  VITE_API_BASE_URL=https://relifmesh-api.railway.app/v1
 6. Deploy → note URL: https://relifmesh.netlify.app
 ```
 
@@ -73,17 +73,17 @@ railway run npm run seed
 3. Create API credentials (username + password)
 4. Update COUCHDB_URL in Railway env vars
 5. Verify PouchDB sync works: open app, register household offline,
-   go online, check Cloudant dashboard for new document
+  go online, check Cloudant dashboard for new document
 ```
 
 ### Step 6 — Verify Deployment
 ```
-✅ API health check: GET https://relifmesh-api.railway.app/v1/health → { status: "ok" }
-✅ Frontend loads: https://relifmesh.netlify.app
-✅ Login works with seeded test account
-✅ Register a household → sync to CouchDB → appears in PostgreSQL
-✅ Public dashboard loads without login
-✅ Lighthouse PWA score ≥ 80
+[x] API health check: GET https://relifmesh-api.railway.app/v1/health → { status: "ok" }
+[x] Frontend loads: https://relifmesh.netlify.app
+[x] Login works with seeded test account
+[x] Register a household → sync to CouchDB → appears in PostgreSQL
+[x] Public dashboard loads without login
+[x] Lighthouse PWA score ≥ 80
 ```
 
 ---
@@ -120,13 +120,13 @@ curl -X GET "$COUCHDB_URL/_all_docs?include_docs=true" > couchdb_backup.json
 ### Recovery Procedure
 ```
 1. Restore PostgreSQL:
-   psql $DATABASE_URL < backup_YYYYMMDD.sql
+  psql $DATABASE_URL < backup_YYYYMMDD.sql
 
 2. Restore CouchDB:
-   Upload JSON back to Cloudant via dashboard or curl bulk_docs
+  Upload JSON back to Cloudant via dashboard or curl bulk_docs
 
 3. Verify integrity:
-   npm run verify-sync    (custom script comparing PG vs CouchDB record counts)
+  npm run verify-sync  (custom script comparing PG vs CouchDB record counts)
 ```
 
 ### Photo Backup

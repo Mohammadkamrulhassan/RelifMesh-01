@@ -53,18 +53,18 @@ These stakeholders receive outputs or are affected by decisions but do not use t
 
 ```
 HIGH POWER
-    │
-    │   District Committee        UP Officials
-    │   DDM                       Upazila Officers
-    │
-    │──────────────────────────────────────────────
-    │
-    │   Course Teacher            NGO Field Workers
-    │   External QA               General Public
-    │                             Affected Households
+  │
+  │  District Committee    UP Officials
+  │  DDM            Upazila Officers
+  │
+  │──────────────────────────────────────────────
+  │
+  │  Course Teacher      NGO Field Workers
+  │  External QA        General Public
+  │               Affected Households
 LOW POWER
-    └──────────────────────────────────────────────
-         LOW INTEREST              HIGH INTEREST
+  └──────────────────────────────────────────────
+     LOW INTEREST       HIGH INTEREST
 ```
 
 | Quadrant | Strategy | Stakeholders |

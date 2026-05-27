@@ -14,28 +14,28 @@
 RelifMesh
 │
 ├── Public (no login)
-│   └── /dashboard          → Public distribution summary + map
+│  └── /dashboard     → Public distribution summary + map
 │
-├── Login                   → /login
+├── Login          → /login
 │
 ├── UP Official / NGO Worker
-│   ├── /home               → Personal dashboard (today's logs, sync status)
-│   ├── /households
-│   │   ├── /households/new → Register new household
-│   │   ├── /households     → Search / list households
-│   │   └── /households/:id → Household detail + distribution history
-│   ├── /distributions
-│   │   ├── /distributions/new → Log new distribution
-│   │   └── /distributions     → My distribution logs
-│   └── /sync-status        → Offline queue status, conflict review
+│  ├── /home        → Personal dashboard (today's logs, sync status)
+│  ├── /households
+│  │  ├── /households/new → Register new household
+│  │  ├── /households   → Search / list households
+│  │  └── /households/:id → Household detail + distribution history
+│  ├── /distributions
+│  │  ├── /distributions/new → Log new distribution
+│  │  └── /distributions   → My distribution logs
+│  └── /sync-status    → Offline queue status, conflict review
 │
 └── Upazila Officer
-    ├── /home               → Jurisdiction overview dashboard
-    ├── /unions             → List of unions under jurisdiction
-    ├── /unions/:id         → Union-level distribution detail
-    ├── /reports            → Generate and export PDF/CSV reports
-    ├── /alerts             → Duplicate alert review log
-    └── /accounts           → Manage UP Official accounts
+  ├── /home        → Jurisdiction overview dashboard
+  ├── /unions       → List of unions under jurisdiction
+  ├── /unions/:id     → Union-level distribution detail
+  ├── /reports      → Generate and export PDF/CSV reports
+  ├── /alerts       → Duplicate alert review log
+  └── /accounts      → Manage UP Official accounts
 ```
 
 ---
@@ -57,9 +57,9 @@ RelifMesh
 → [Search Household by HH-ID / Name]
 → [Select Household]
 → [System checks duplicates]
-    → [No duplicate: proceed]
-    → [Duplicate found: show warning]
-        → [Override with reason] / [Cancel]
+  → [No duplicate: proceed]
+  → [Duplicate found: show warning]
+    → [Override with reason] / [Cancel]
 → [Select item, quantity] → [Take photo] → [Confirm GPS]
 → [Submit]
 → [Online: sync] / [Offline: queue]
@@ -93,22 +93,22 @@ RelifMesh
 ### Screen 2 — Home Dashboard (UP Official)
 ```
 ┌─────────────────────────────┐
-│  🟢 RelifMesh   [Sync: OK]  │
-│  Welcome, Rahim Uddin        │
-│  Char Fasson Union           │
+│ [*] RelifMesh  [Sync: OK] │
+│ Welcome, Rahim Uddin    │
+│ Char Fasson Union      │
 ├─────────────────────────────┤
-│  ┌───────────┐ ┌───────────┐│
-│  │ Today's   │ │ Pending   ││
-│  │ Logs: 12  │ │ Sync: 3   ││
-│  └───────────┘ └───────────┘│
-│  ┌───────────┐ ┌───────────┐│
-│  │Households │ │  Alerts   ││
-│  │ Reg: 48   │ │    2      ││
-│  └───────────┘ └───────────┘│
+│ ┌───────────┐ ┌───────────┐│
+│ │ Today's  │ │ Pending  ││
+│ │ Logs: 12 │ │ Sync: 3  ││
+│ └───────────┘ └───────────┘│
+│ ┌───────────┐ ┌───────────┐│
+│ │Households │ │ Alerts  ││
+│ │ Reg: 48  │ │  2   ││
+│ └───────────┘ └───────────┘│
 ├─────────────────────────────┤
-│  [+ New Household]          │
-│  [Log Distribution]         │
-│  [Search Household]         │
+│ [+ New Household]     │
+│ [Log Distribution]     │
+│ [Search Household]     │
 └─────────────────────────────┘
 ```
 
@@ -117,29 +117,29 @@ RelifMesh
 ### Screen 3 — Household Registration Form
 ```
 ┌─────────────────────────────┐
-│ ← Register Household        │
+│ ← Register Household    │
 ├─────────────────────────────┤
-│ Head of Household Name *    │
-│ [________________________]  │
-│                             │
-│ NID Number *                │
-│ [________________________]  │
-│                             │
-│ Family Size *               │
-│ [__]                        │
-│                             │
-│ Vulnerability Flags:        │
-│ ☐ Elderly  ☐ Disabled       │
-│ ☐ Pregnant                  │
-│                             │
-│ GPS Location                │
-│ [📍 Auto-detected: 22.3°N]  │
-│                             │
-│ Photo *                     │
-│ [📷 Take Photo]             │
-│ [preview thumbnail]         │
-│                             │
-│ [        SAVE        ]      │
+│ Head of Household Name *  │
+│ [________________________] │
+│               │
+│ NID Number *        │
+│ [________________________] │
+│               │
+│ Family Size *        │
+│ [__]            │
+│               │
+│ Vulnerability Flags:    │
+│ [ ] Elderly [ ] Disabled    │
+│ [ ] Pregnant         │
+│               │
+│ GPS Location        │
+│ [[GPS] Auto-detected: 22.3°N] │
+│               │
+│ Photo *           │
+│ [[CAM] Take Photo]       │
+│ [preview thumbnail]     │
+│               │
+│ [    SAVE    ]   │
 └─────────────────────────────┘
 ```
 
@@ -148,28 +148,28 @@ RelifMesh
 ### Screen 4 — Log Distribution
 ```
 ┌─────────────────────────────┐
-│ ← Log Distribution          │
+│ ← Log Distribution     │
 ├─────────────────────────────┤
-│ Search Household            │
+│ Search Household      │
 │ [HH-ID or Name ___________] │
-│                             │
+│               │
 │ ┌─────────────────────────┐ │
-│ │ ✓ Rahim Uddin           │ │
-│ │   HH-2024-001 | 5 members│ │
+│ │ ✓ Rahim Uddin      │ │
+│ │  HH-2024-001 | 5 members│ │
 │ └─────────────────────────┘ │
-│                             │
-│ Item Category *             │
-│ [▼ Food — Rice             ]│
-│                             │
-│ Quantity *   Unit           │
-│ [______]     [▼ kg        ] │
-│                             │
-│ Photo *                     │
-│ [📷 Take Photo]             │
-│                             │
-│ GPS: [📍 Auto]              │
-│                             │
-│ [       SUBMIT       ]      │
+│               │
+│ Item Category *       │
+│ [▼ Food — Rice       ]│
+│               │
+│ Quantity *  Unit      │
+│ [______]   [▼ kg    ] │
+│               │
+│ Photo *           │
+│ [[CAM] Take Photo]       │
+│               │
+│ GPS: [[GPS] Auto]       │
+│               │
+│ [    SUBMIT    ]   │
 └─────────────────────────────┘
 ```
 
@@ -178,19 +178,19 @@ RelifMesh
 ### Screen 5 — Duplicate Warning
 ```
 ┌─────────────────────────────┐
-│ ⚠️  Duplicate Alert          │
+│ [!] Duplicate Alert     │
 ├─────────────────────────────┤
-│ This household already      │
-│ received Rice (Food)        │
-│                             │
-│ Previous distribution:      │
-│ 📅 3 days ago               │
-│ 👤 By: NGO Worker (BRAC)    │
-│ 📦 Rice — 10 kg             │
-│                             │
-│ Do you want to proceed?     │
+│ This household already   │
+│ received Rice (Food)    │
+│               │
+│ Previous distribution:   │
+│ [Date] 3 days ago        │
+│ By: NGO Worker (BRAC)  │
+│ [Item] Rice — 10 kg       │
+│               │
+│ Do you want to proceed?   │
 ├─────────────────────────────┤
-│ [Cancel]  [Override + Reason]│
+│ [Cancel] [Override + Reason]│
 └─────────────────────────────┘
 ```
 
@@ -199,24 +199,24 @@ RelifMesh
 ### Screen 6 — Public Dashboard
 ```
 ┌─────────────────────────────────────────────┐
-│  RelifMesh — Public Relief Tracker          │
-│  Sylhet Flood Response 2026                 │
+│ RelifMesh — Public Relief Tracker     │
+│ Sylhet Flood Response 2026         │
 ├─────────────────────────────────────────────┤
-│  ┌──────────┐ ┌──────────┐ ┌─────────────┐ │
-│  │Households│ │ Logs     │ │ Unions      │ │
-│  │  1,240   │ │  3,891   │ │  Covered 12 │ │
-│  └──────────┘ └──────────┘ └─────────────┘ │
+│ ┌──────────┐ ┌──────────┐ ┌─────────────┐ │
+│ │Households│ │ Logs   │ │ Unions   │ │
+│ │ 1,240  │ │ 3,891  │ │ Covered 12 │ │
+│ └──────────┘ └──────────┘ └─────────────┘ │
 ├─────────────────────────────────────────────┤
-│  [MAP — union markers with distribution     │
-│   density heat indicators]                  │
-│                                             │
+│ [MAP — union markers with distribution   │
+│  density heat indicators]         │
+│                       │
 ├─────────────────────────────────────────────┤
-│  Distribution by Item (last 7 days)         │
-│  Rice ████████████ 1,200 kg                 │
-│  Water ██████ 600 L                         │
-│  Tarp ████ 240 pcs                          │
+│ Distribution by Item (last 7 days)     │
+│ Rice ████████████ 1,200 kg         │
+│ Water ██████ 600 L             │
+│ Tarp ████ 240 pcs             │
 ├─────────────────────────────────────────────┤
-│  Filter by: [Union ▼] [Date range]          │
+│ Filter by: [Union ▼] [Date range]     │
 └─────────────────────────────────────────────┘
 ```
 

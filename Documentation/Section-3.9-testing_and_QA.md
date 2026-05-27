@@ -43,37 +43,37 @@
 
 | TC ID | Test Case | Input | Expected Output | Status |
 |-------|-----------|-------|-----------------|--------|
-| TC-01 | Valid login returns JWT | Correct email + password | `{ token: "..." }`, 200 OK | ⬜ |
-| TC-02 | Invalid password rejected | Wrong password | 401 Unauthorized | ⬜ |
-| TC-03 | Non-existent user rejected | Unknown email | 401 Unauthorized | ⬜ |
-| TC-04 | Role embedded correctly in JWT | Login as UP Official | Decoded role = `UP_OFFICIAL` | ⬜ |
+| TC-01 | Valid login returns JWT | Correct email + password | `{ token: "..." }`, 200 OK | [ ] |
+| TC-02 | Invalid password rejected | Wrong password | 401 Unauthorized | [ ] |
+| TC-03 | Non-existent user rejected | Unknown email | 401 Unauthorized | [ ] |
+| TC-04 | Role embedded correctly in JWT | Login as UP Official | Decoded role = `UP_OFFICIAL` | [ ] |
 
 ### Household Registration
 
 | TC ID | Test Case | Input | Expected Output | Status |
 |-------|-----------|-------|-----------------|--------|
-| TC-05 | Valid registration saves HH-ID | Valid form data | Household saved, unique HH-ID returned | ⬜ |
-| TC-06 | Duplicate NID is rejected | NID already registered | 409 Conflict with message | ⬜ |
-| TC-07 | Missing required field fails validation | name="" | 400 Bad Request, field error | ⬜ |
-| TC-08 | GPS coordinates stored correctly | lat=22.3, lng=91.8 | Stored with 6 decimal precision | ⬜ |
+| TC-05 | Valid registration saves HH-ID | Valid form data | Household saved, unique HH-ID returned | [ ] |
+| TC-06 | Duplicate NID is rejected | NID already registered | 409 Conflict with message | [ ] |
+| TC-07 | Missing required field fails validation | name="" | 400 Bad Request, field error | [ ] |
+| TC-08 | GPS coordinates stored correctly | lat=22.3, lng=91.8 | Stored with 6 decimal precision | [ ] |
 
 ### Distribution Logging
 
 | TC ID | Test Case | Input | Expected Output | Status |
 |-------|-----------|-------|-----------------|--------|
-| TC-09 | Valid distribution log saved | Valid HH-ID + item + qty | Log saved, 201 Created | ⬜ |
-| TC-10 | Unknown HH-ID rejected | Non-existent HH-ID | 404 Not Found | ⬜ |
-| TC-11 | Quantity must be positive | quantity = -5 | 400 Bad Request | ⬜ |
+| TC-09 | Valid distribution log saved | Valid HH-ID + item + qty | Log saved, 201 Created | [ ] |
+| TC-10 | Unknown HH-ID rejected | Non-existent HH-ID | 404 Not Found | [ ] |
+| TC-11 | Quantity must be positive | quantity = -5 | 400 Bad Request | [ ] |
 
 ### Duplicate Detection
 
 | TC ID | Test Case | Input | Expected Output | Status |
 |-------|-----------|-------|-----------------|--------|
-| TC-12 | Same item within 7 days → duplicate | Same HH, same item, 3 days later | Alert returned with prior log details | ⬜ |
-| TC-13 | Same item after 8 days → no duplicate | Same HH, same item, 8 days later | No alert, log proceeds | ⬜ |
-| TC-14 | Different item → no duplicate | Same HH, different item category | No alert | ⬜ |
-| TC-15 | Override accepted with reason | Duplicate + reason provided | Log saved with `is_override=true` | ⬜ |
-| TC-16 | Override rejected without reason | Duplicate, no reason | 400 Bad Request | ⬜ |
+| TC-12 | Same item within 7 days → duplicate | Same HH, same item, 3 days later | Alert returned with prior log details | [ ] |
+| TC-13 | Same item after 8 days → no duplicate | Same HH, same item, 8 days later | No alert, log proceeds | [ ] |
+| TC-14 | Different item → no duplicate | Same HH, different item category | No alert | [ ] |
+| TC-15 | Override accepted with reason | Duplicate + reason provided | Log saved with `is_override=true` | [ ] |
+| TC-16 | Override rejected without reason | Duplicate, no reason | 400 Bad Request | [ ] |
 
 ---
 
@@ -81,12 +81,12 @@
 
 | TC ID | Flow | Steps | Expected | Status |
 |-------|------|-------|----------|--------|
-| TC-17 | Register → Log → Duplicate | 1. Register HH. 2. Log rice. 3. Log rice again same day. | Step 3 triggers duplicate alert | ⬜ |
-| TC-18 | Offline queue → sync | 1. Disable network. 2. Register HH in PouchDB. 3. Re-enable network. | Record appears in PostgreSQL after sync | ⬜ |
-| TC-19 | Role access control | Login as UP Official, call `/reports/export` | 403 Forbidden | ⬜ |
-| TC-20 | Public dashboard — no auth | Call `/public/dashboard` without JWT | 200 OK with aggregated data | ⬜ |
-| TC-21 | Upazila jurisdiction filter | Upazila Officer from Upazila A queries Union B (different Upazila) | 403 Forbidden | ⬜ |
-| TC-22 | Conflict detection on sync | Two devices log same HH, same item offline; both sync | Both records saved; conflict flagged in `sync_conflicts` | ⬜ |
+| TC-17 | Register → Log → Duplicate | 1. Register HH. 2. Log rice. 3. Log rice again same day. | Step 3 triggers duplicate alert | [ ] |
+| TC-18 | Offline queue → sync | 1. Disable network. 2. Register HH in PouchDB. 3. Re-enable network. | Record appears in PostgreSQL after sync | [ ] |
+| TC-19 | Role access control | Login as UP Official, call `/reports/export` | 403 Forbidden | [ ] |
+| TC-20 | Public dashboard — no auth | Call `/public/dashboard` without JWT | 200 OK with aggregated data | [ ] |
+| TC-21 | Upazila jurisdiction filter | Upazila Officer from Upazila A queries Union B (different Upazila) | 403 Forbidden | [ ] |
+| TC-22 | Conflict detection on sync | Two devices log same HH, same item offline; both sync | Both records saved; conflict flagged in `sync_conflicts` | [ ] |
 
 ---
 
@@ -165,14 +165,14 @@
 
 | TC ID | NFR | Test Method | Target | Status |
 |-------|-----|-------------|--------|--------|
-| NF-01 | Dashboard load time | Lighthouse + Chrome DevTools | < 3 seconds on 3G throttle | ⬜ |
-| NF-02 | API response time | Postman timer on `/distributions` | < 2 seconds | ⬜ |
-| NF-03 | PWA offline capability | Chrome DevTools → Offline mode | Core features functional | ⬜ |
-| NF-04 | Offline sync reliability | 20 records queued, re-sync | ≥ 19/20 synced correctly | ⬜ |
-| NF-05 | Password hashing | DB inspection | bcrypt hash stored, not plain text | ⬜ |
-| NF-06 | HTTPS enforcement | HTTP request to API | Redirected to HTTPS | ⬜ |
-| NF-07 | Unauthorized access | Call protected endpoint without JWT | 401 Unauthorized | ⬜ |
-| NF-08 | Mobile usability | Manual test on Android phone | Core flows in ≤ 5 taps | ⬜ |
+| NF-01 | Dashboard load time | Lighthouse + Chrome DevTools | < 3 seconds on 3G throttle | [ ] |
+| NF-02 | API response time | Postman timer on `/distributions` | < 2 seconds | [ ] |
+| NF-03 | PWA offline capability | Chrome DevTools → Offline mode | Core features functional | [ ] |
+| NF-04 | Offline sync reliability | 20 records queued, re-sync | ≥ 19/20 synced correctly | [ ] |
+| NF-05 | Password hashing | DB inspection | bcrypt hash stored, not plain text | [ ] |
+| NF-06 | HTTPS enforcement | HTTP request to API | Redirected to HTTPS | [ ] |
+| NF-07 | Unauthorized access | Call protected endpoint without JWT | 401 Unauthorized | [ ] |
+| NF-08 | Mobile usability | Manual test on Android phone | Core flows in ≤ 5 taps | [ ] |
 
 ---
 

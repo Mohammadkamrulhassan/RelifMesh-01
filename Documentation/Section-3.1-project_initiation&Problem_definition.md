@@ -50,15 +50,15 @@ Bangladesh is among the world's most disaster-prone nations. Floods affect appro
 The **Department of Disaster Management (DDM)** under the Ministry of Disaster Management and Relief is the central coordinating authority. Below it, the hierarchy runs:
 ```
 Ministry of Disaster Management & Relief
-        |
+    |
 Department of Disaster Management (DDM) — National
-        |
+    |
 District Disaster Management Committee
-        |
+    |
 Upazila Disaster Management Committee
-        |
+    |
 Union Parishad (UP) — Local Ground Level
-        |
+    |
 Ward/Village Level
 ```
 Despite this hierarchy, field research consistently shows that the institutional framework suffers from a lack of functioning partnerships at the operational level.

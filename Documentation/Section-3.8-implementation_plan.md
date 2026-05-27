@@ -9,45 +9,45 @@
 
 | # | Module | Owner | Deadline (Week) | Status |
 |---|--------|-------|-----------------|--------|
-| M1 | Project setup (repo, folder structure, tooling) | Kamrul | Week 1 | ⬜ |
-| M2 | Database schema creation (PostgreSQL + CouchDB) | Kamrul | Week 2 | ⬜ |
-| M3 | Authentication API (register, login, JWT) | Kamrul | Week 3 | ⬜ |
-| M4 | Household registration API + frontend form | Kamrul (API), Sayeda (UI) | Week 4 | ⬜ |
-| M5 | Offline support — PouchDB integration | Kamrul | Week 5 | ⬜ |
-| M6 | Distribution log API + frontend form | Kamrul (API), Sayeda (UI) | Week 6 | ⬜ |
-| M7 | Duplicate detection engine | Kamrul | Week 7 | ⬜ |
-| M8 | Duplicate alert UI + override flow | Sayeda, Nahid | Week 8 | ⬜ |
-| M9 | Sync engine (PouchDB ↔ CouchDB) + conflict log | Kamrul | Week 9 | ⬜ |
-| M10 | Upazila Officer dashboard + jurisdiction filter | Sayeda | Week 10 | ⬜ |
-| M11 | Public dashboard + map view | Nahid | Week 11 | ⬜ |
-| M12 | Report export (PDF/CSV) | Kamrul | Week 12 | ⬜ |
-| M13 | Testing (unit + integration + UAT) | Abidul | Week 13–14 | ⬜ |
-| M14 | Bug fixes + final polish | All | Week 15 | ⬜ |
-| M15 | Demo video + presentation prep | Nahid, Abid | Week 16 | ⬜ |
+| M1 | Project setup (repo, folder structure, tooling) | Kamrul | Week 1 | [ ] |
+| M2 | Database schema creation (PostgreSQL + CouchDB) | Kamrul | Week 2 | [ ] |
+| M3 | Authentication API (register, login, JWT) | Kamrul | Week 3 | [ ] |
+| M4 | Household registration API + frontend form | Kamrul (API), Sayeda (UI) | Week 4 | [ ] |
+| M5 | Offline support — PouchDB integration | Kamrul | Week 5 | [ ] |
+| M6 | Distribution log API + frontend form | Kamrul (API), Sayeda (UI) | Week 6 | [ ] |
+| M7 | Duplicate detection engine | Kamrul | Week 7 | [ ] |
+| M8 | Duplicate alert UI + override flow | Sayeda, Nahid | Week 8 | [ ] |
+| M9 | Sync engine (PouchDB ↔ CouchDB) + conflict log | Kamrul | Week 9 | [ ] |
+| M10 | Upazila Officer dashboard + jurisdiction filter | Sayeda | Week 10 | [ ] |
+| M11 | Public dashboard + map view | Nahid | Week 11 | [ ] |
+| M12 | Report export (PDF/CSV) | Kamrul | Week 12 | [ ] |
+| M13 | Testing (unit + integration + UAT) | Abidul | Week 13–14 | [ ] |
+| M14 | Bug fixes + final polish | All | Week 15 | [ ] |
+| M15 | Demo video + presentation prep | Nahid, Abid | Week 16 | [ ] |
 
 ---
 
 ## 3.8.2 Gantt Chart
 
 ```
-Week  │ 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
+Week │ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
 ──────┼────────────────────────────────────────────────
-M1    │ ██
-M2    │    ██
-M3    │       ██
-M4    │          ██
-M5    │             ██
-M6    │                ██
-M7    │                   ██
-M8    │                      ██
-M9    │                         ██
-M10   │                            ██
-M11   │                               ██
-M12   │                                  ██
-M13   │                                     ████
-M14   │                                         ██
-M15   │                                            ██
-Docs  │ ████████████████████████████████████████████████  (ongoing)
+M1  │ ██
+M2  │  ██
+M3  │    ██
+M4  │     ██
+M5  │       ██
+M6  │        ██
+M7  │          ██
+M8  │           ██
+M9  │             ██
+M10  │              ██
+M11  │                ██
+M12  │                 ██
+M13  │                   ████
+M14  │                     ██
+M15  │                      ██
+Docs │ ████████████████████████████████████████████████ (ongoing)
 ```
 
 ---
@@ -56,11 +56,11 @@ Docs  │ ███████████████████████�
 
 ### Prerequisites
 ```
-Node.js  >= 20.x LTS      (https://nodejs.org)
-npm      >= 10.x
+Node.js >= 20.x LTS   (https://nodejs.org)
+npm   >= 10.x
 PostgreSQL >= 15.x
-CouchDB  >= 3.x
-Git      >= 2.40
+CouchDB >= 3.x
+Git   >= 2.40
 ```
 
 ### Initial Setup
@@ -71,15 +71,15 @@ cd relifmesh
 
 # Backend setup
 cd backend
-cp ../.env.example .env          # fill in DB credentials, JWT secret
+cp ../.env.example .env     # fill in DB credentials, JWT secret
 npm install
-npm run migrate               # creates PostgreSQL tables
-npm run seed                  # seeds item categories and test jurisdiction
+npm run migrate        # creates PostgreSQL tables
+npm run seed         # seeds item categories and test jurisdiction
 
 # Frontend setup
 cd ../../frontend
 npm install
-npm run dev                   # starts Vite dev server at localhost:5173
+npm run dev          # starts Vite dev server at localhost:5173
 
 # CouchDB
 # Start CouchDB locally (or use Cloudant free tier)
@@ -131,12 +131,12 @@ NODE_ENV=development
 ```
 backend/
 ├── src/
-│   ├── routes/          ← route definitions only (thin)
-│   ├── controllers/     ← business logic
-│   ├── models/          ← DB query functions (no ORM)
-│   ├── middleware/       ← auth, validation, error handler
-│   ├── utils/           ← helpers (duplicate checker, PDF gen)
-│   └── server.js        ← app entry point
+│  ├── routes/     ← route definitions only (thin)
+│  ├── controllers/   ← business logic
+│  ├── models/     ← DB query functions (no ORM)
+│  ├── middleware/    ← auth, validation, error handler
+│  ├── utils/      ← helpers (duplicate checker, PDF gen)
+│  └── server.js    ← app entry point
 ```
 
 ### Error Handling
@@ -150,14 +150,14 @@ backend/
 
 ### Branch Structure
 ```
-main           ← production-ready code only; protected branch
-  └── develop  ← integration branch; all features merge here
-        ├── feature/household-registration
-        ├── feature/distribution-log
-        ├── feature/duplicate-detection
-        ├── feature/offline-sync
-        ├── feature/public-dashboard
-        └── fix/sync-conflict-resolution
+main      ← production-ready code only; protected branch
+ └── develop ← integration branch; all features merge here
+    ├── feature/household-registration
+    ├── feature/distribution-log
+    ├── feature/duplicate-detection
+    ├── feature/offline-sync
+    ├── feature/public-dashboard
+    └── fix/sync-conflict-resolution
 ```
 
 ### Rules

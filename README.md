@@ -2,8 +2,8 @@
 
 > *"One mesh. No duplicates. No household left behind."*
 
-**Course:** CSE-3208 System Analysis & Design Lab  
-**Team:** Team_Skipper | **Project:** #6 ReliefMesh  
+**Course:** CSE-3208 System Analysis & Design Lab 
+**Team:** Team_Skipper | **Project:** #6 ReliefMesh 
 **Supervisor:** MD Mynoddin, Assistant Professor, RMSTU
 
 ---
@@ -36,53 +36,53 @@ RelifMesh solves this with an offline-first platform for Union Parishad official
 ```
 RelifMesh/
 │
-├── frontend/               # React PWA (Vite + Tailwind + PouchDB)
-│   ├── public/             # Static assets, manifest, icons
-│   └── src/
-│       ├── pages/          # Route-level page components
-│       ├── components/     # Reusable UI components
-│       ├── services/       # API client, auth, offline sync
-│       ├── hooks/          # Custom React hooks
-│       ├── store/          # State management
-│       ├── utils/          # Helper functions
-│       └── styles/         # Global styles
+├── frontend/        # React PWA (Vite + Tailwind + PouchDB)
+│  ├── public/       # Static assets, manifest, icons
+│  └── src/
+│    ├── pages/     # Route-level page components
+│    ├── components/   # Reusable UI components
+│    ├── services/    # API client, auth, offline sync
+│    ├── hooks/     # Custom React hooks
+│    ├── store/     # State management
+│    ├── utils/     # Helper functions
+│    └── styles/     # Global styles
 │
-├── backend/                # Node.js + Express REST API
-│   ├── src/
-│   │   ├── routes/         # API route definitions
-│   │   ├── controllers/    # Business logic
-│   │   ├── models/         # Database queries
-│   │   ├── middleware/      # Auth, validation, error handling
-│   │   ├── utils/          # Helpers (duplicate check, PDF gen)
-│   │   ├── db/             # Migrations and seeds
-│   │   └── config/         # Environment config
-│   └── tests/              # Jest test files
+├── backend/        # Node.js + Express REST API
+│  ├── src/
+│  │  ├── routes/     # API route definitions
+│  │  ├── controllers/  # Business logic
+│  │  ├── models/     # Database queries
+│  │  ├── middleware/   # Auth, validation, error handling
+│  │  ├── utils/     # Helpers (duplicate check, PDF gen)
+│  │  ├── db/       # Migrations and seeds
+│  │  └── config/     # Environment config
+│  └── tests/       # Jest test files
 │
-├── documentation/          # 14 SAD module deliverables
-│   ├── Section-3.1-...
-│   ├── Section-3.2-...
-│   └── ... (13 more)
+├── documentation/     # 14 SAD module deliverables
+│  ├── Section-3.1-...
+│  ├── Section-3.2-...
+│  └── ... (13 more)
 │
-├── diagrams/               # draw.io / UML / ERD files
-│   ├── sequence-diagrams/
-│   └── activity-diagrams/
+├── diagrams/        # draw.io / UML / ERD files
+│  ├── sequence-diagrams/
+│  └── activity-diagrams/
 │
-├── designs/                # Figma exports
-│   ├── wireframes/
-│   ├── mockups/
-│   └── style-guide/
+├── designs/        # Figma exports
+│  ├── wireframes/
+│  ├── mockups/
+│  └── style-guide/
 │
-├── reports/                # PM artifacts
-│   ├── meeting-minutes/
-│   └── weekly-progress/
+├── reports/        # PM artifacts
+│  ├── meeting-minutes/
+│  └── weekly-progress/
 │
-├── submission/             # Final deliverables
-│   ├── demo-video/
-│   ├── presentation-slides/
-│   └── individual-contributions/
+├── submission/       # Final deliverables
+│  ├── demo-video/
+│  ├── presentation-slides/
+│  └── individual-contributions/
 │
-├── assets/                 # Shared media
-├── .env.example            # Environment variable template
+├── assets/         # Shared media
+├── .env.example      # Environment variable template
 └── .gitignore
 ```
 
@@ -93,7 +93,7 @@ RelifMesh/
 ```bash
 # Backend
 cd backend
-cp ../.env.example .env    # fill in your values
+cp ../.env.example .env  # fill in your values
 npm install
 npm run migrate
 npm run seed
@@ -111,18 +111,18 @@ npm run dev
 
 | Module | Document | Status |
 |--------|----------|--------|
-| 3.1 | Project Initiation & Problem Definition | ✅ Complete |
-| 3.2 | Stakeholder Analysis | ✅ Complete |
-| 3.3 | Requirements Engineering (SRS) | ✅ Complete |
-| 3.4 | System Modeling (DFD & UML) | ✅ Complete |
-| 3.5 | Database Design (ERD) | ✅ Complete |
-| 3.6 | Architecture & Tech Stack | ✅ Complete |
-| 3.7 | UI/UX Design | ✅ Complete |
-| 3.8 | Implementation Plan | ✅ Complete |
-| 3.9 | Testing & QA | ✅ Complete |
-| 3.10 | Security & Access Control | ✅ Complete |
-| 3.11 | Deployment & Maintenance | ✅ Complete |
-| 3.12 | Project Management | ✅ Complete |
-| 3.13 | References & Bibliography | ✅ Complete |
-| 3.14 | Presentation & Defense | ✅ Complete |
-| **Prototype** | Frontend + Backend code | 🔜 In Progress |
+| 3.1 | Project Initiation & Problem Definition | [x] Complete |
+| 3.2 | Stakeholder Analysis | [x] Complete |
+| 3.3 | Requirements Engineering (SRS) | [x] Complete |
+| 3.4 | System Modeling (DFD & UML) | [x] Complete |
+| 3.5 | Database Design (ERD) | [x] Complete |
+| 3.6 | Architecture & Tech Stack | [x] Complete |
+| 3.7 | UI/UX Design | [x] Complete |
+| 3.8 | Implementation Plan | [x] Complete |
+| 3.9 | Testing & QA | [x] Complete |
+| 3.10 | Security & Access Control | [x] Complete |
+| 3.11 | Deployment & Maintenance | [x] Complete |
+| 3.12 | Project Management | [x] Complete |
+| 3.13 | References & Bibliography | [x] Complete |
+| 3.14 | Presentation & Defense | [x] Complete |
+| **Prototype** | Frontend + Backend code | >> In Progress |

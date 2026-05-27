@@ -22,67 +22,67 @@
 ## 3.5.2 Entity-Relationship Diagram (Crow's Foot Notation)
 
 ```
-┌───────────────────┐          ┌───────────────────────┐
-│    Jurisdiction   │          │         User           │
-├───────────────────┤          ├───────────────────────┤
-│ PK jurisdiction_id│          │ PK user_id             │
-│    name           │◄─────────│ FK jurisdiction_id     │
-│    level (enum)   │ 1      * │    name                │
-│    parent_id (FK) │          │    email               │
-└───────────────────┘          │    password_hash       │
-         │ 1                   │    role (enum)         │
-         │                     │    organization        │
-         │ *                   │    is_active           │
-         │                     │    created_at          │
-┌────────┴──────────┐          └───────────┬────────────┘
-│    Household      │                      │ 1
-├───────────────────┤                      │ registers
-│ PK hh_id          │                      │ *
-│ FK jurisdiction_id│          ┌───────────▼────────────┐
-│    head_name      │          │    DistributionLog      │
-│    nid            │◄─────────├───────────────────────┤
-│    gps_lat        │ 1      * │ PK log_id              │
-│    gps_lng        │          │ FK hh_id               │
-│    family_size    │          │ FK officer_id (User)   │
-│    is_elderly     │          │ FK item_category_id    │
-│    is_disabled    │          │    quantity            │
-│    is_pregnant    │          │    unit                │
-│    photo_url      │          │    gps_lat             │
-│    registered_by  │          │    gps_lng             │
-│    created_at     │          │    photo_url           │
-└───────────────────┘          │    timestamp           │
-                               │    sync_status (enum)  │
-                               │    is_override         │
-                               │    override_reason     │
-                               │    created_at          │
-                               └───────────┬────────────┘
-                                           │ 1
-                                           │ triggers
-                                           │ 0..1
-                               ┌───────────▼────────────┐
-                               │    DuplicateAlert       │
-                               ├───────────────────────┤
-                               │ PK alert_id            │
-                               │ FK hh_id               │
-                               │ FK prior_log_id        │
-                               │ FK triggered_log_id    │
-                               │    item_category_id    │
-                               │    is_resolved         │
-                               │    resolved_by         │
-                               │    override_reason     │
-                               │    created_at          │
-                               └────────────────────────┘
+┌───────────────────┐     ┌───────────────────────┐
+│  Jurisdiction  │     │     User      │
+├───────────────────┤     ├───────────────────────┤
+│ PK jurisdiction_id│     │ PK user_id       │
+│  name      │◄─────────│ FK jurisdiction_id   │
+│  level (enum)  │ 1   * │  name        │
+│  parent_id (FK) │     │  email        │
+└───────────────────┘     │  password_hash    │
+     │ 1          │  role (enum)     │
+     │           │  organization    │
+     │ *          │  is_active      │
+     │           │  created_at     │
+┌────────┴──────────┐     └───────────┬────────────┘
+│  Household   │           │ 1
+├───────────────────┤           │ registers
+│ PK hh_id     │           │ *
+│ FK jurisdiction_id│     ┌───────────▼────────────┐
+│  head_name   │     │  DistributionLog   │
+│  nid      │◄─────────├───────────────────────┤
+│  gps_lat    │ 1   * │ PK log_id       │
+│  gps_lng    │     │ FK hh_id        │
+│  family_size  │     │ FK officer_id (User)  │
+│  is_elderly   │     │ FK item_category_id  │
+│  is_disabled  │     │  quantity      │
+│  is_pregnant  │     │  unit        │
+│  photo_url   │     │  gps_lat       │
+│  registered_by │     │  gps_lng       │
+│  created_at   │     │  photo_url      │
+└───────────────────┘     │  timestamp      │
+                │  sync_status (enum) │
+                │  is_override     │
+                │  override_reason   │
+                │  created_at     │
+                └───────────┬────────────┘
+                      │ 1
+                      │ triggers
+                      │ 0..1
+                ┌───────────▼────────────┐
+                │  DuplicateAlert    │
+                ├───────────────────────┤
+                │ PK alert_id      │
+                │ FK hh_id        │
+                │ FK prior_log_id    │
+                │ FK triggered_log_id  │
+                │  item_category_id  │
+                │  is_resolved     │
+                │  resolved_by     │
+                │  override_reason   │
+                │  created_at     │
+                └────────────────────────┘
 
-┌───────────────────┐          ┌───────────────────────┐
-│   ItemCategory    │          │     SyncConflict       │
-├───────────────────┤          ├───────────────────────┤
-│ PK item_cat_id    │          │ PK conflict_id         │
-│    name           │          │ FK log_id_a            │
-│    parent_cat_id  │          │ FK log_id_b            │
-│    is_active      │          │    resolution_status   │
-└───────────────────┘          │    reviewed_by         │
-                               │    created_at          │
-                               └────────────────────────┘
+┌───────────────────┐     ┌───────────────────────┐
+│  ItemCategory  │     │   SyncConflict    │
+├───────────────────┤     ├───────────────────────┤
+│ PK item_cat_id  │     │ PK conflict_id     │
+│  name      │     │ FK log_id_a      │
+│  parent_cat_id │     │ FK log_id_b      │
+│  is_active   │     │  resolution_status  │
+└───────────────────┘     │  reviewed_by     │
+                │  created_at     │
+                └────────────────────────┘
 ```
 
 ---

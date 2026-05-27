@@ -71,7 +71,7 @@ Date: [date] | Time: [time] | Location/Platform: [Discord/Teams/Physical]
 ### Module Completion Status
 | Module | Status | % Done |
 |--------|--------|--------|
-| 3.1 | ✅ | 100% |
+| 3.1 | [x] | 100% |
 | 3.2 | 🔄 | 60% |
 | ... | | |
 
@@ -91,12 +91,12 @@ Date: [date] | Time: [time] | Location/Platform: [Discord/Teams/Physical]
 |--------|---------|-----------|---------|---------|
 | `main` | Production | Kamrul | — | — |
 | `develop` | Integration | Kamrul | — | — |
-| `feature/household-registration` | M4 | Kamrul | ⬜ | — |
-| `feature/distribution-log` | M6 | Kamrul | ⬜ | — |
-| `feature/duplicate-detection` | M7 | Kamrul | ⬜ | — |
-| `feature/offline-sync` | M5/M9 | Kamrul | ⬜ | — |
-| `feature/public-dashboard` | M11 | Nahid | ⬜ | — |
-| `feature/upazila-dashboard` | M10 | Sayeda | ⬜ | — |
+| `feature/household-registration` | M4 | Kamrul | [ ] | — |
+| `feature/distribution-log` | M6 | Kamrul | [ ] | — |
+| `feature/duplicate-detection` | M7 | Kamrul | [ ] | — |
+| `feature/offline-sync` | M5/M9 | Kamrul | [ ] | — |
+| `feature/public-dashboard` | M11 | Nahid | [ ] | — |
+| `feature/upazila-dashboard` | M10 | Sayeda | [ ] | — |
 
 ### Git Discipline Rules Followed
 - [ ] No direct commits to `main`
@@ -124,9 +124,9 @@ Date: [date] | Time: [time] | Location/Platform: [Discord/Teams/Physical]
 **Description:** [what change is proposed]
 **Reason:** [why it is needed]
 **Impact Assessment:**
-  - Scope: [expand / reduce / no change]
-  - Timeline: [adds X days / no impact]
-  - Risk: [low / medium / high]
+ - Scope: [expand / reduce / no change]
+ - Timeline: [adds X days / no impact]
+ - Risk: [low / medium / high]
 **Decision:** [Approved / Rejected / Deferred]
 **Approved By:** [PM + Supervisor if major]
 ```
