@@ -127,16 +127,25 @@ NODE_ENV=development
 | Constants | UPPER_SNAKE | `SYNC_STATUS` |
 | API routes | kebab-case | `/distribution-logs` |
 
-### File Structure (Backend)
+### File Structure (Backend — Module-Based)
 ```
 backend/
-├── src/
-│  ├── routes/     ← route definitions only (thin)
-│  ├── controllers/   ← business logic
-│  ├── models/     ← DB query functions (no ORM)
-│  ├── middleware/    ← auth, validation, error handler
-│  ├── utils/      ← helpers (duplicate checker, PDF gen)
-│  └── server.js    ← app entry point
+├── config/           ← DB, env, CouchDB config
+├── db/
+│   ├── migrations/   ← SQL migration files
+│   └── seeds/        ← test data seeder
+├── middleware/        ← shared auth, error handler
+├── utils/            ← shared helpers
+├── modules/
+│   ├── auth/         ← controller, routes, model, validation, tests
+│   ├── households/   ← controller, routes, model, validation, tests
+│   ├── distributions/← controller, routes, model, validation, tests
+│   ├── alerts/       ← controller, routes, model, engine, tests
+│   ├── reports/      ← controller, routes, generator, tests
+│   ├── public/       ← controller, routes, model, tests
+│   └── sync/         ← controller, routes, service, tests
+├── server.js         ← app entry point
+└── package.json
 ```
 
 ### Error Handling
