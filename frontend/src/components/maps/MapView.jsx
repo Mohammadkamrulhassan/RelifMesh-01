@@ -9,7 +9,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 })
 
-export default function MapView({ markers = [], center = [23.8, 90.4], zoom = 8, className = '' }) {
+export default function MapView({ markers = [], center = [22.6512, 92.1712], zoom = 10, className = '' }) {
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
 

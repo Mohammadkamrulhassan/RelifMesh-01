@@ -1,7 +1,7 @@
 # Section 3.5 — Database Design (ERD)
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 ---
 
@@ -16,6 +16,8 @@
 | **ItemCategory** | Lookup table for predefined relief item types |
 | **DuplicateAlert** | Alert generated when duplicate distribution is detected |
 | **SyncConflict** | Log of offline sync conflicts pending manual review |
+| **Feedback** | User-submitted feedback/complaints with response |
+| **Inventory** | Stock tracking per item category (total, distributed, remaining) |
 
 ---
 
@@ -99,6 +101,8 @@
 | ItemCategory → DistributionLog | 1 : Many | One item category used in many logs |
 | DistributionLog → DuplicateAlert | 1 : 0..1 | A log may trigger one duplicate alert |
 | DistributionLog → SyncConflict | 1 : 0..1 | A log may have one conflict record |
+| ItemCategory → Inventory | 1 : 1 | Each item category has one inventory record |
+| User → Feedback | 1 : Many | One user responds to many feedback entries |
 
 ---
 
@@ -197,6 +201,32 @@
 | resolved_by | UUID | FK → users, NULLABLE | Officer who resolved |
 | override_reason | TEXT | NULLABLE | Reason if overridden |
 | created_at | TIMESTAMP | NOT NULL | Alert generation time |
+
+### Table: `feedbacks`
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| feedback_id | UUID | PK, NOT NULL | Unique feedback ID |
+| name | VARCHAR(100) | NOT NULL | Submitter's name |
+| contact | VARCHAR(100) | NULLABLE | Phone or email |
+| category | ENUM | NOT NULL | COMPLAINT / SUGGESTION / INQUIRY / APPRECIATION / OTHER |
+| message | TEXT | NOT NULL | Feedback message body |
+| is_read | BOOLEAN | DEFAULT FALSE | Admin read flag |
+| response | TEXT | NULLABLE | Admin response |
+| responded_by | UUID | FK → users, NULLABLE | Responding officer |
+| responded_at | TIMESTAMP | NULLABLE | When response was sent |
+| created_at | TIMESTAMP | NOT NULL | Submission time |
+
+### Table: `inventories`
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| inventory_id | UUID | PK, NOT NULL | Unique inventory ID |
+| item_category_id | UUID | FK → item_categories, UNIQUE | Linked item category |
+| total_quantity | DECIMAL(10,2) | NOT NULL, MIN 0 | Total stock |
+| unit | VARCHAR(20) | NOT NULL | kg, litre, piece, etc. |
+| distributed_quantity | DECIMAL(10,2) | DEFAULT 0, MIN 0 | Already distributed amount |
+| last_restocked_at | TIMESTAMP | NULLABLE | Last restock time |
+| notes | TEXT | NULLABLE | Any notes |
+| created_at | TIMESTAMP | NOT NULL | Record creation |
 
 ### Table: `sync_conflicts`
 | Column | Type | Constraints | Description |

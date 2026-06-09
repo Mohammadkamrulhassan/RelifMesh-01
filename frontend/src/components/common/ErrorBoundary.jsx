@@ -13,11 +13,18 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center py-12">
-          <h2 className="text-lg font-semibold text-red-600 mb-2">Something went wrong</h2>
-          <p className="text-gray-500 text-sm mb-4">{this.state.error?.message}</p>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '48px 0',
+          gap: 'var(--space-3)',
+        }}>
+          <h2 style={{ fontWeight: 600, color: 'var(--color-danger)' }}>Something went wrong</h2>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>{this.state.error?.message}</p>
           <button
-            className="btn-primary"
+            className="btn btn-primary btn-md"
             onClick={() => this.setState({ hasError: false, error: null })}
           >
             Try again

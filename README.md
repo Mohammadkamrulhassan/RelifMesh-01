@@ -31,6 +31,21 @@ RelifMesh solves this with an offline-first platform for Union Parishad official
 
 ---
 
+## Key Features
+
+- **Household Registration** — GPS + photo + vulnerability flags, works offline
+- **Distribution Logging** — item-level tracking with duplicate detection
+- **Duplicate Alert Engine** — flags same household + same item within 7 days
+- **Offline-First Sync** — localforage queue + auto-sync on reconnect
+- **Role-Based Access** — UP Official, NGO Worker, Upazila Officer
+- **Public Dashboard** — aggregated distribution stats + map (no login)
+- **Feedback System** — public submissions, Upazila Officer management
+- **Inventory Tracking** — stock levels per item category
+- **User Profiles** — view/edit name and organization
+- **Pagination & Search** — paginated lists with live search across modules
+
+---
+
 ## Project Structure
 
 ```
@@ -39,51 +54,27 @@ RelifMesh/
 ├── frontend/        # React PWA (Vite + Tailwind + localforage)
 │  ├── public/       # Static assets, manifest, icons
 │  └── src/
-│    ├── pages/     # Route-level page components
-│    ├── components/   # Reusable UI components
-│    ├── services/    # API client, auth, offline sync
-│    ├── hooks/     # Custom React hooks
-│    ├── store/     # State management
-│    ├── utils/     # Helper functions
+│    ├── modules/    # Per-feature page components
+│    ├── components/ # Reusable UI components
+│    ├── services/   # API client, auth, offline sync
+│    ├── hooks/      # Custom React hooks
+│    ├── constants/  # Nav items, enums
+│    ├── utils/      # Formatters, validators
 │    └── styles/     # Global styles
 │
 ├── backend/        # Node.js + Express REST API
-│  ├── src/
-│  │  ├── routes/     # API route definitions
-│  │  ├── controllers/  # Business logic
-│  │  ├── models/     # Database queries
-│  │  ├── middleware/   # Auth, validation, error handling
-│  │  ├── utils/     # Helpers (duplicate check, PDF gen)
-│  │  ├── db/       # Migrations and seeds
-│  │  └── config/     # Environment config
-│  └── tests/       # Jest test files
+│  ├── modules/     # Feature modules (auth, households, distributions, etc.)
+│  ├── middleware/   # Auth, validation, error handling
+│  ├── config/      # Environment config
+│  ├── db/          # Migrations and seeds
+│  └── tests/       # Helpers
 │
-├── documentation/     # 14 SAD module deliverables
-│  ├── Section-3.1-...
-│  ├── Section-3.2-...
-│  └── ... (13 more)
-│
-├── diagrams/        # draw.io / UML / ERD files
-│  ├── sequence-diagrams/
-│  └── activity-diagrams/
-│
-├── designs/        # Figma exports
-│  ├── wireframes/
-│  ├── mockups/
-│  └── style-guide/
-│
-├── reports/        # PM artifacts
-│  ├── meeting-minutes/
-│  └── weekly-progress/
-│
-├── submission/       # Final deliverables
-│  ├── demo-video/
-│  ├── presentation-slides/
-│  └── individual-contributions/
-│
-├── assets/         # Shared media
-├── .env.example      # Environment variable template
-└── .gitignore
+├── documentation/  # 14 SAD module deliverables (Sections 3.1–3.14)
+├── diagrams/       # draw.io / UML / ERD files
+├── designs/        # Figma exports (wireframes, mockups)
+├── reports/        # PM artifacts (meeting minutes, weekly progress)
+├── submission/     # Final deliverables (demo video, slides)
+└── assets/         # Shared media
 ```
 
 ---
@@ -95,21 +86,30 @@ RelifMesh/
 | GET | `/v1/health` | No | Health check |
 | POST | `/v1/auth/login` | No | Login, returns JWT |
 | POST | `/v1/auth/register` | Upazila Officer | Create user account |
-| GET | `/v1/households` | Yes | List households (filtered by jurisdiction) |
-| GET | `/v1/households/search?q=` | Yes | Search by name or NID |
+| GET | `/v1/auth/profile` | Yes | Get profile |
+| PUT | `/v1/auth/profile` | Yes | Update profile |
+| GET | `/v1/auth/users` | Yes | List users |
+| GET | `/v1/households` | Yes | List households (paginated, searchable) |
 | POST | `/v1/households` | UP Official | Register household |
 | GET | `/v1/households/:id` | Yes | Get household details |
 | PUT | `/v1/households/:id` | UP Official | Update household |
-| GET | `/v1/distributions` | Yes | List distribution logs |
+| GET | `/v1/distributions` | Yes | List distributions (paginated, filterable) |
 | POST | `/v1/distributions` | UP/NGO | Log distribution |
-| GET | `/v1/distributions/duplicate-check` | Yes | Check duplicates before logging |
 | GET | `/v1/alerts` | Yes | List duplicate alerts |
 | PUT | `/v1/alerts/:id/resolve` | Yes | Resolve an alert |
-| GET | `/v1/reports/export` | Upazila Officer | Export CSV/PDF report |
+| GET | `/v1/reports/export` | Upazila Officer | Export CSV/PDF |
 | GET | `/v1/public/dashboard` | No | Public aggregated stats |
+| GET | `/v1/public/admin-dashboard` | Yes | Enhanced dashboard |
 | GET | `/v1/public/map` | No | Public map data |
 | POST | `/v1/sync/push` | Yes | Push offline records |
 | GET | `/v1/sync/pull` | Yes | Pull new records |
+| POST | `/v1/feedback` | No | Submit feedback |
+| GET | `/v1/feedback` | Yes | List feedback entries |
+| PUT | `/v1/feedback/:id/respond` | Yes | Respond to feedback |
+| GET | `/v1/inventory` | Yes | List inventory items |
+| POST | `/v1/inventory` | Upazila Officer | Create inventory item |
+| PUT | `/v1/inventory/:id` | Upazila Officer | Update inventory item |
+| POST | `/v1/uploads/image` | Yes | Upload photo (multipart, 5MB, image only) |
 
 All protected endpoints use `Authorization: Bearer <token>` header.
 
@@ -152,4 +152,4 @@ npm run dev
 | 3.12 | Project Management | [x] Complete |
 | 3.13 | References & Bibliography | [x] Complete |
 | 3.14 | Presentation & Defense | [x] Complete |
-| **Prototype** | Frontend + Backend code | >> In Progress |
+| **Prototype** | Frontend + Backend code | [x] Complete (v2.0) |

@@ -1,7 +1,7 @@
 # Section 3.3 — Requirements Engineering (SRS)
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 ---
 
@@ -68,6 +68,28 @@
 | FR-25 | The system shall queue all offline actions (registration, distribution log) in local storage. |
 | FR-26 | On reconnection, the system shall sync queued data to the server automatically. |
 | FR-27 | The system shall detect and log sync conflicts; default resolution is last-write-wins with a manual review flag. |
+
+### Feedback & Communication
+
+| ID | Requirement |
+|----|-------------|
+| FR-28 | The system shall allow any user to submit feedback/complaints (name, contact, category, message) without authentication. |
+| FR-29 | The system shall support feedback categories: Complaint, Suggestion, Inquiry, Appreciation, Other. |
+| FR-30 | Authorized users (Upazila Officer) shall be able to view and respond to feedback submissions. |
+
+### Inventory & Stock Tracking
+
+| ID | Requirement |
+|----|-------------|
+| FR-31 | The system shall track inventory levels per item category (total quantity, distributed quantity, remaining). |
+| FR-32 | Upazila Officers shall be able to create and update inventory items with quantities and unit. |
+| FR-33 | All authenticated users shall be able to view current inventory levels. |
+
+### User Profile
+
+| ID | Requirement |
+|----|-------------|
+| FR-34 | The system shall allow authenticated users to view and update their profile (name, organization). |
 
 ---
 
@@ -200,6 +222,9 @@
 - FR-23 to FR-24 (export reports)
 - FR-21 (map view on public dashboard)
 - FR-27 (conflict detection and flagging)
+- FR-28 to FR-30 (feedback module)
+- FR-31 to FR-33 (inventory tracking)
+- FR-34 (user profile)
 - NFR-01, NFR-02 (performance targets)
 
 ### Could Have
@@ -237,6 +262,12 @@
 | FR-26 | Sync | UC-04 | TC-14 |
 | FR-27 | Sync | UC-04 | TC-15 |
 | FR-23 | Reports | UC-05 | TC-16 |
+| FR-28 | Feedback | — | TC-FB01 |
+| FR-29 | Feedback | — | TC-FB02 |
+| FR-30 | Feedback | — | TC-FB03 |
+| FR-31 | Inventory | — | TC-INV01 |
+| FR-32 | Inventory | — | TC-INV02 |
+| FR-34 | Auth | — | — |
 
 *(Test cases defined in full in Section 3.9)*
 

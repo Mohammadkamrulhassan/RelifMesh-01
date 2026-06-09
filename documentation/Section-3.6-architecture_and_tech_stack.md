@@ -1,7 +1,7 @@
 # Section 3.6 — Architecture & Technology Stack
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 ---
 
@@ -36,6 +36,9 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + MongoDB** architecture
 │  │  /reports      → PDF/CSV generation                      │   │
 │  │  /public       → Aggregated public dashboard data        │   │
 │  │  /sync         → Offline push/pull sync API              │   │
+│  │  /feedback     → Public feedback submission + management  │   │
+│  │  /inventory    → Stock/warehouse tracking                 │   │
+│  │  /auth/profile → User profile management                  │   │
 │  └──────────────────────────┬───────────────────────────────┘   │
 │                             │                                    │
 └─────────────────────────────┼───────────────────────────────────┘
@@ -52,6 +55,8 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + MongoDB** architecture
 │  │  - Item Categories                   │                       │
 │  │  - Duplicate Alerts                  │                       │
 │  │  - Sync Conflicts                    │                       │
+│  │  - Feedback Entries                  │                       │
+│  │  - Inventory Records                 │                       │
 │  └──────────────────────────────────────┘                       │
 │                                                                  │
 │  ┌──────────────────────┐                                        │
@@ -91,7 +96,7 @@ RelifMesh uses a **Progressive Web App (PWA) + REST API + MongoDB** architecture
 | Technology | Justification |
 |-----------|---------------|
 | MongoDB 8.x | Flexible document model; maps directly to JS objects; Mongoose ODM for schema enforcement; free Atlas tier for deployment |
-| Cloudinary / Local FS | Photo storage; Cloudinary free tier for prototype |
+| Local FS (multer) / Cloudinary | Photo upload handled via `POST /v1/uploads/image` (multer, 5MB limit, image-only). Stored in `backend/uploads/` and served as static files. Cloudinary integration available for production. |
 
 ### DevOps & Tooling
 | Tool | Purpose |
@@ -146,18 +151,31 @@ Base URL: `https://api.relifmesh.app/v1`
 | POST | `/auth/login` | No | Login; returns JWT |
 | POST | `/auth/register` | Upazila Officer | Create new user account |
 | GET | `/households` | Yes | List households (filtered by jurisdiction) |
-| POST | `/households` | UP Official, NGO | Register new household |
+| GET | `/households/search?q=` | Yes | Search households by name or NID |
+| POST | `/households` | UP Official | Register new household |
 | GET | `/households/:id` | Yes | Get household by HH-ID |
 | PUT | `/households/:id` | UP Official | Update household record |
 | GET | `/distributions` | Yes | List distribution logs |
 | POST | `/distributions` | UP Official, NGO | Create distribution log |
 | GET | `/distributions/duplicate-check` | Yes | Check for duplicates before logging |
 | GET | `/alerts` | Yes | List duplicate alerts |
+| PUT | `/alerts/:id/resolve` | Yes | Resolve a duplicate alert |
 | GET | `/reports/export` | Upazila Officer | Export CSV/PDF report |
 | GET | `/public/dashboard` | No | Aggregated public data |
 | GET | `/public/map` | No | Union-level map data |
 | POST | `/sync/push` | Yes | Push offline queued records to server |
 | GET | `/sync/pull` | Yes | Pull new records since last sync |
+| POST | `/uploads/image` | Yes | Upload photo (multipart, 5MB max, jpg/png/gif/webp) |
+| GET | `/auth/profile` | Yes | Get authenticated user profile |
+| PUT | `/auth/profile` | Yes | Update user profile (name, organization) |
+| GET | `/auth/users` | Yes | List users (Upazila Officer) |
+| POST | `/v1/feedback` | No | Submit public feedback |
+| GET | `/v1/feedback` | Yes | List feedback entries |
+| PUT | `/v1/feedback/:id/respond` | Yes | Respond to feedback |
+| GET | `/v1/inventory` | Yes | List inventory items |
+| POST | `/v1/inventory` | Upazila Officer | Create inventory item |
+| PUT | `/v1/inventory/:id` | Upazila Officer | Update inventory item |
+| GET | `/public/admin-dashboard` | Yes | Enhanced dashboard with feedback + sync stats |
 
 All protected endpoints require `Authorization: Bearer <JWT>` header.
 
@@ -176,6 +194,7 @@ All protected endpoints require `Authorization: Bearer <JWT>` header.
         │       └── ENV vars: MONGODB_URI, JWT_SECRET, CLOUDINARY_KEY
         │
         └── MongoDB Atlas (free tier: 512MB)
+                └── Single collection per entity (9 collections)
                 └── Single collection per entity (7 collections)
 
 [Cloudinary]

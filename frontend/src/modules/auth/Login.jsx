@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
-import InputField from '../../components/forms/InputField'
+import Input from '../../components/ui/Input'
 import Button from '../../components/common/Button'
 
 export default function Login() {
@@ -32,22 +32,68 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary-800">RelifMesh</h1>
-          <p className="text-gray-500 mt-1">Disaster Relief Coordination System</p>
+    <div className="auth-layout">
+      <div className="auth-brand-panel" aria-hidden="true">
+        <div>
+          <p className="auth-brand-logo">
+            Relif<span className="auth-brand-accent">Mesh</span>
+          </p>
+          <p className="auth-brand-tagline">
+            Disaster relief coordination system with{' '}
+            <span className="auth-brand-accent">offline-first sync</span>
+            {' '}— ensuring every distribution is tracked, even in the field.
+          </p>
         </div>
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-800">Sign In</h2>
-          {error && <div className="bg-red-50 text-red-700 text-sm px-4 py-2 rounded-lg">{error}</div>}
-          <InputField label="Email" name="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-          <InputField label="Password" name="password" type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-          <Button type="submit" disabled={submitting} className="w-full">{submitting ? 'Signing in...' : 'Sign In'}</Button>
-        </form>
-        <p className="text-center text-xs text-gray-400 mt-4">
-          Test: upazila@relifmesh.test / upofficial@relifmesh.test / ngo@relifmesh.test
-        </p>
+      </div>
+      <div className="auth-panel">
+        <div className="auth-card">
+          <h1 className="auth-card-title">Welcome back</h1>
+          <p className="auth-card-sub">Sign in to your RelifMesh account</p>
+
+          {error && (
+            <div style={{ marginBottom: '20px' }}>
+              <div className="badge badge-danger" style={{ padding: '8px 12px', borderRadius: 'var(--radius-md)', width: '100%', fontSize: '0.8rem' }}>
+                {error}
+              </div>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} noValidate aria-label="Login form">
+            <div style={{ marginBottom: '16px' }}>
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                disabled={submitting}
+                required
+                autoComplete="username"
+              />
+            </div>
+            <div style={{ marginBottom: '24px' }}>
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                disabled={submitting}
+                required
+                autoComplete="current-password"
+              />
+            </div>
+            <Button type="submit" variant="primary" size="md" fullWidth loading={submitting} disabled={submitting || !email || !password}>
+              {submitting ? 'Signing in...' : 'Sign In'}
+            </Button>
+          </form>
+
+          <p style={{ marginTop: '24px', fontSize: '0.75rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+            Test: upazila@relifmesh.test / upofficial@relifmesh.test / ngo@relifmesh.test
+          </p>
+        </div>
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 # Section 3.13 — References & Bibliography
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 > All references follow **IEEE citation style** as required by the course.
 > Add new references as they are used across all modules.

@@ -16,17 +16,17 @@ export default function PhotoCapture({ onCapture, currentUrl }) {
   }
 
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Photo</label>
-      <div className="flex items-center gap-4">
+    <div>
+      <p className="input-label" style={{ marginBottom: 'var(--space-2)' }}>Photo</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
         {preview && (
-          <img src={preview} alt="Preview" className="w-20 h-20 object-cover rounded-lg border" />
+          <img src={preview} alt="Preview" style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }} />
         )}
-        <button type="button" className="btn-secondary text-sm" onClick={() => inputRef.current?.click()}>
+        <button type="button" className="btn btn-secondary btn-sm" onClick={() => inputRef.current?.click()}>
           {preview ? 'Change Photo' : 'Capture Photo'}
         </button>
       </div>
-      <input ref={inputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleChange} />
+      <input ref={inputRef} type="file" accept="image/*" capture="environment" style={{ display: 'none' }} onChange={handleChange} />
     </div>
   )
 }

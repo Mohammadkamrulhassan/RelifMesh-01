@@ -5,7 +5,7 @@ export function listUsers() {
 }
 
 export function resolveAlert(id, reason) {
-  return put(`/alerts/${id}/resolve`, { overrideReason: reason })
+  return put(`/alerts/${id}/resolve`, { reason })
 }
 
 export function listAlerts() {

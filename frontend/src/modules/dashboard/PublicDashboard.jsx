@@ -21,33 +21,35 @@ export default function PublicDashboard() {
   }, [])
 
   if (loading) return <Loading message="Loading dashboard..." />
-  if (error) return <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg">{error}</div>
+  if (error) return <div className="page-section"><p style={{ color: 'var(--color-danger)' }}>{error}</p></div>
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-primary-800">RelifMesh</h1>
-        <p className="text-gray-500 mt-1">Disaster Relief Coordination Dashboard</p>
+    <div>
+      <div className="page-header">
+        <div>
+          <h1 className="page-header-title">Dashboard</h1>
+          <p className="page-header-subtitle">Disaster Relief Coordination Overview</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
         <Card className="text-center">
-          <p className="text-3xl font-bold text-primary-600">{stats?.totalHouseholds || 0}</p>
-          <p className="text-sm text-gray-500 mt-1">Households Registered</p>
+          <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>{stats?.totalHouseholds || 0}</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: 'var(--space-1)' }}>Households Registered</p>
         </Card>
         <Card className="text-center">
-          <p className="text-3xl font-bold text-primary-600">{stats?.totalDistributions || 0}</p>
-          <p className="text-sm text-gray-500 mt-1">Distributions Logged</p>
+          <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>{stats?.totalDistributions || 0}</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: 'var(--space-1)' }}>Distributions Logged</p>
         </Card>
         <Card className="text-center">
-          <p className="text-3xl font-bold text-primary-600">{stats?.unions?.length || 0}</p>
-          <p className="text-sm text-gray-500 mt-1">Item Categories</p>
+          <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>{stats?.unions?.length || 0}</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: 'var(--space-1)' }}>Item Categories</p>
         </Card>
       </div>
 
       <Card>
-        <h2 className="font-semibold mb-3">Distribution Map</h2>
-        <MapView markers={mapData.map(d => ({ lat: 23.8, lng: 90.4, popup: `${d.count} distributions` }))} />
+        <h2 className="page-section-title">Distribution Map</h2>
+        <MapView markers={mapData.map((d, i) => ({ lat: 22.6512 + (i % 5) * 0.008, lng: 92.1712 + Math.floor(i / 5) * 0.008, popup: `${d.count} distributions` }))} />
       </Card>
     </div>
   )

@@ -11,16 +11,16 @@ export default function SyncStatus() {
   }, [isOffline])
 
   if (isOffline) {
-    return <span className="text-xs bg-yellow-500 text-yellow-900 px-2 py-0.5 rounded-full font-medium">Offline</span>
+    return <span className="badge badge-warning">Offline</span>
   }
 
   if (syncing) {
-    return <span className="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full font-medium">Syncing...</span>
+    return <span className="badge badge-info">Syncing...</span>
   }
 
   if (syncStatus === 'error') {
-    return <span className="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full font-medium">Sync Error</span>
+    return <span className="badge badge-danger">Sync Error</span>
   }
 
-  return <span className="text-xs bg-green-500 text-white px-2 py-0.5 rounded-full font-medium">Online</span>
+  return <span className="badge badge-success">Online</span>
 }

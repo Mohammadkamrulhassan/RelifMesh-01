@@ -1,6 +1,10 @@
 import { get } from '../../services/api'
 
 export function getDashboard() {
+  return get('/public/admin-dashboard')
+}
+
+export function getStats() {
   return get('/public/dashboard')
 }
 

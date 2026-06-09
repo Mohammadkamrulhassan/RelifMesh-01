@@ -10,9 +10,20 @@ async function create(req, res, next) {
 
 async function list(req, res, next) {
   try {
+    const { page = 1, limit = 20, q } = req.query
     const filter = { jurisdictionId: req.user.jurisdictionId }
-    const households = await Household.find(filter).sort({ createdAt: -1 })
-    res.json({ households })
+    if (q) {
+      filter.$or = [
+        { headName: { $regex: q, $options: 'i' } },
+        { nid: { $regex: q, $options: 'i' } },
+      ]
+    }
+    const skip = (parseInt(page) - 1) * parseInt(limit)
+    const [households, total] = await Promise.all([
+      Household.find(filter).sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit)),
+      Household.countDocuments(filter),
+    ])
+    res.json({ households, total, page: parseInt(page), pages: Math.ceil(total / parseInt(limit)) })
   } catch (err) { next(err) }
 }
 

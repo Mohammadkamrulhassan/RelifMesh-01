@@ -1,7 +1,7 @@
 # Section 3.7 — UI/UX Design
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 **Primary Designer:** Sayeda Mofatteha Ahmed, Iftekhar Alam Nahid
 
 > **Note:** High-fidelity mockups are in `designs/mockups/` (Figma exports). This document covers information architecture, user flows, wireframe descriptions, and the design system.
@@ -238,34 +238,164 @@ RelifMesh
 
 ## 3.7.5 Design System
 
-### Color Palette
+### Color Palette (Implemented — Result09 Design System)
+
+#### Light Theme
 | Token | Hex | Usage |
 |-------|-----|-------|
-| Primary | `#1A6B3C` | Buttons, active states, header |
-| Primary Light | `#D4EDDA` | Card backgrounds, success states |
-| Warning | `#E67E22` | Duplicate alerts, pending sync |
-| Danger | `#C0392B` | Errors, conflict alerts |
-| Neutral Dark | `#2C3E50` | Body text |
-| Neutral Light | `#F5F6FA` | Page backgrounds |
-| White | `#FFFFFF` | Cards, input backgrounds |
+| Primary | `#2563eb` | Buttons, active states, links |
+| Primary Hover | `#1d4ed8` | Button hover state |
+| Primary Light | `#eff6ff` | Light card backgrounds |
+| Surface | `#ffffff` | Cards, input backgrounds |
+| Surface 2 | `#f8fafc` | Subtle page backgrounds |
+| Border | `#e2e8f0` | Card borders, dividers |
+| Border Strong | `#cbd5e1` | Active borders, inputs |
+| Text Primary | `#1e293b` | Body text |
+| Text Secondary | `#64748b` | Secondary text, captions |
+| Text Muted | `#94a3b8` | Placeholder text |
+| Danger | `#ef4444` | Errors, delete actions |
+| Danger Light | `#fef2f2` | Error backgrounds |
+| Warning | `#f59e0b` | Alerts, pending states |
+| Warning Light | `#fffbeb` | Alert backgrounds |
+| Success | `#22c55e` | Success states |
+| Success Light | `#f0fdf4` | Success backgrounds |
 
-### Typography
+#### Dark Theme
+| Token | Hex | Usage |
+|-------|-----|-------|
+| Surface | `#0f172a` | Page background |
+| Surface 1 | `#1e293b` | Card backgrounds |
+| Surface 2 | `#334155` | Elevated surfaces |
+| Border | `#334155` | Card borders |
+| Border Strong | `#475569` | Active borders |
+| Text Primary | `#f1f5f9` | Body text |
+| Text Secondary | `#94a3b8` | Secondary text |
+| Text Muted | `#64748b` | Placeholder text |
+
+#### Sidebar (Dark)
+| Token | Usage |
+|-------|-------|
+| `#0f172a` | Sidebar background |
+| `#1e293b` | Hover/active item background |
+| `#3b82f6` | Active item text/indicator |
+| `#94a3b8` | Default item text |
+
+### Typography (Implemented)
 | Level | Font | Size | Weight |
 |-------|------|------|--------|
-| App Title | System sans-serif | 22px | 700 |
-| Section Header | System sans-serif | 18px | 600 |
-| Body | System sans-serif | 16px | 400 |
-| Caption | System sans-serif | 13px | 400 |
-| Button Label | System sans-serif | 16px | 600 |
+| App Title | Inter | 22px | 700 |
+| Section Header | Inter | 18px | 600 |
+| Body | Inter | 16px | 400 |
+| Caption | Inter | 13px | 400 |
+| Button Label | Inter | 16px | 600 |
 
-*(System sans-serif = Roboto on Android, SF Pro on iOS — no custom font load for performance)*
+*Google Fonts: Inter (400, 500, 600, 700) loaded via `index.html`.*
+*Monospace: JetBrains Mono (if needed) for code/metrics display.*
 
-### Component Standards
-- All buttons: min height 48px, border-radius 8px
-- All input fields: min height 44px, clear label above field
-- Cards: white background, 4px border-radius, subtle shadow
-- Form sections: grouped in collapsible cards with section title
-- Loading state: skeleton placeholders (no spinners that block interaction)
+### Component Standards (Implemented)
+- All buttons: min height 40px (sm 32px, lg 48px), border-radius 8px, 6 variants (primary, secondary, danger, success, warning, ghost)
+- All input fields: min height 44px, clear label above field, error/hint/success states
+- Cards: surface background, 12px border-radius, 1px border, subtle shadow
+- Form sections: grouped in `.page-section` containers with section title
+- Loading state: centered spinner with message (`.page-section` wrapper)
+- Data tables: full-width, striped rows, sticky header with sort indicators
+- Sidebar: fixed dark panel, collapsible, mobile overlay with slide-in
+- Topbar: fixed header with breadcrumbs, theme toggle, sync status indicator
+
+---
+
+### Screen 7 — Profile Page (Authenticated)
+```
+┌─────────────────────────────┐
+│ ← My Profile          │
+├─────────────────────────────┤
+│ Account Information      │
+│ ┌───────────────────────────┐│
+│ │ Email: user@up.gov.bd  ││
+│ │ Role: UP Official    ││
+│ │ Organization: N/A    ││
+│ │ Active: Yes         ││
+│ └───────────────────────────┘│
+│               │
+│ Edit Profile          │
+│ ┌───────────────────────────┐│
+│ │ Full Name *        ││
+│ │ [________________]  ││
+│ │ Organization       ││
+│ │ [________________]  ││
+│ │               ││
+│ │ [Save Changes]    ││
+│ └───────────────────────────┘│
+└─────────────────────────────┘
+```
+
+### Screen 8 — Feedback Form (Public)
+```
+┌─────────────────────────────┐
+│ Send Feedback          │
+│ We value your opinion      │
+├─────────────────────────────┤
+│ Your Name *           │
+│ [________________________] │
+│               │
+│ Contact (optional)      │
+│ [________________________] │
+│               │
+│ Category *           │
+│ [▼ Complaint         ]│
+│               │
+│ Message *           │
+│ ┌─────────────────────────┐ │
+│ │                   │ │
+│ │                   │ │
+│ │                   │ │
+│ └─────────────────────────┘ │
+│                   0/1000  │
+│               │
+│ [Submit Feedback]      │
+└─────────────────────────────┘
+```
+
+### Screen 9 — Feedback Management (Upazila Officer)
+```
+┌─────────────────────────────┐
+│ Feedback — 5 entries    │
+├─────────────────────────────┤
+│ ┌─────────────────────────┐ │
+│ │ [!] New  Kamrul     │ │
+│ │ Complaint | 2 hours ago│ │
+│ │ "Need more rice..."│ │
+│ │ [Respond]         │ │
+│ └─────────────────────────┘ │
+│ ┌─────────────────────────┐ │
+│ │ Abidul (Suggestion)  │ │
+│ │ 1 day ago          │ │
+│ │ Response: Thanks!    │ │
+│ └─────────────────────────┘ │
+│ ◄Prev 1 2 Next►       │
+└─────────────────────────────┘
+```
+
+### Screen 10 — Inventory Tracking (Upazila Officer)
+```
+┌─────────────────────────────┐
+│ Inventory Stock          │
+├─────────────────────────────┤
+│ ┌─────────────────────────┐ │
+│ │ Rice        1000 kg │ │
+│ │ Distributed: 230 kg   │ │
+│ │ Remaining: 770 kg   │ │
+│ │ [Update Stock]       │ │
+│ └─────────────────────────┘ │
+│ ┌─────────────────────────┐ │
+│ │ Water        500 L  │ │
+│ │ Distributed: 120 L   │ │
+│ │ Remaining: 380 L   │ │
+│ │ [Update Stock]       │ │
+│ └─────────────────────────┘ │
+│ [+ New Inventory Item]  │
+└─────────────────────────────┘
+```
 
 ---
 

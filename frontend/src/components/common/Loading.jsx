@@ -1,8 +1,17 @@
+import Spinner from '../ui/Spinner'
+
 export default function Loading({ message = 'Loading...' }) {
   return (
-    <div className="flex flex-col items-center justify-center py-12">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mb-3" />
-      <p className="text-gray-500 text-sm">{message}</p>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '48px 0',
+      gap: 'var(--space-3)',
+    }}>
+      <Spinner size={32} />
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>{message}</p>
     </div>
   )
 }

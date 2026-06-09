@@ -1,7 +1,7 @@
 # Section 3.10 — Security & Access Control
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 ---
 
@@ -76,6 +76,11 @@ Client             Server
 | Manage user accounts | [ ] | [ ] | [ ] | [x] |
 | Review sync conflicts | [ ] | [x] (own) | [x] (own) | [x] (all) |
 | View duplicate alert log | [ ] | [x] (own) | [x] (own) | [x] (all) |
+| Submit feedback | [x] | [x] | [x] | [x] |
+| Manage feedback | [ ] | [ ] | [ ] | [x] |
+| View inventory | [ ] | [x] | [x] | [x] |
+| Manage inventory | [ ] | [ ] | [ ] | [x] |
+| View/update own profile | [ ] | [x] | [x] | [x] |
 
 ### Jurisdiction Enforcement
 Beyond role, every data query is filtered by `jurisdiction_id`:

@@ -55,6 +55,18 @@ async function updateDatabase() {
       operations.push('syncconflicts')
     }
 
+    if (!collections.includes('feedbacks')) {
+      console.log('  [CREATE] feedbacks collection')
+      await db.createCollection('feedbacks')
+      operations.push('feedbacks')
+    }
+
+    if (!collections.includes('inventories')) {
+      console.log('  [CREATE] inventories collection')
+      await db.createCollection('inventories')
+      operations.push('inventories')
+    }
+
     if (operations.length > 0) {
       console.log('\nCreated', operations.length, 'missing collection(s).')
       console.log('Run  npm run seed  to populate with test data.')

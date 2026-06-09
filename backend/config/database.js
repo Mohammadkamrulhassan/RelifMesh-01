@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const env = require('./environment')
 
-const REQUIRED_COLLECTIONS = ['users', 'jurisdictions', 'households', 'distributionlogs', 'itemcategories', 'duplicatealerts', 'syncconflicts']
+const REQUIRED_COLLECTIONS = ['users', 'jurisdictions', 'households', 'distributionlogs', 'itemcategories', 'duplicatealerts', 'syncconflicts', 'feedbacks', 'inventories']
 
 async function checkDatabase() {
   const db = mongoose.connection.db

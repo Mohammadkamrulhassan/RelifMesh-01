@@ -1,10 +1,14 @@
 const DistributionLog = require('../distributions/distributionModel')
+const Household = require('../households/householdModel')
 const { generatePDF, generateCSV } = require('./reportGenerator')
 
 async function exportReport(req, res, next) {
   try {
     const filter = {}
-    if (req.query.unionId) filter['householdId'] = req.query.unionId
+    if (req.query.unionId) {
+      const householdIds = await Household.find({ jurisdictionId: req.query.unionId }).distinct('_id')
+      filter.householdId = { $in: householdIds }
+    }
     if (req.query.startDate) filter.distributedAt = { $gte: new Date(req.query.startDate) }
     if (req.query.endDate) {
       filter.distributedAt = { ...filter.distributedAt, $lte: new Date(req.query.endDate) }

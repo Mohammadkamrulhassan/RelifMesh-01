@@ -1,7 +1,7 @@
 # Section 3.11 — Deployment & Maintenance
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 ---
 
@@ -14,7 +14,7 @@ RelifMesh uses a **zero-cost cloud deployment** strategy appropriate for the pro
 | Frontend (React PWA) | Netlify | Free |
 | Backend (Node.js API) | Railway | Free / Hobby |
 | MongoDB | MongoDB Atlas (free cluster) | Free (512MB) |
-| Photo storage | Cloudinary | Free (25GB) |
+| Photo storage | Local FS (multer) / Cloudinary (optional) | Local for prototype |
 | Domain | Netlify default subdomain | Free |
 
 ---
@@ -75,6 +75,10 @@ cd ../backend && node server.js  # confirm no startup errors
 [x] Login works with seeded test account
 [x] Register a household → stored in MongoDB → appears in dashboard
 [x] Public dashboard loads without login
+[x] Feedback submission works (POST /v1/feedback)
+[x] Inventory items viewable (GET /v1/inventory)
+[x] Profile page loads and updates correctly
+[x] Pagination works on household and distribution lists
 [x] Lighthouse PWA score ≥ 80
 ```
 

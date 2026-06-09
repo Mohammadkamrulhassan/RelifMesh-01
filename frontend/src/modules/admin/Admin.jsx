@@ -4,6 +4,7 @@ import { formatDateTime } from '../../utils/formatters'
 import Card from '../../components/common/Card'
 import Loading from '../../components/common/Loading'
 import Button from '../../components/common/Button'
+import Input from '../../components/ui/Input'
 
 export default function Admin() {
   const [alerts, setAlerts] = useState([])
@@ -31,33 +32,45 @@ export default function Admin() {
   }
 
   if (loading) return <Loading message="Loading admin..." />
-  if (error) return <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg">{error}</div>
+  if (error) return <div className="page-section"><p style={{ color: 'var(--color-danger)' }}>{error}</p></div>
 
   const unresolved = alerts.filter(a => !a.isResolved)
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Admin</h1>
+      <div className="page-header">
+        <div>
+          <h1 className="page-header-title">Admin</h1>
+          <p className="page-header-subtitle">Duplicate alert management</p>
+        </div>
+      </div>
       <Card>
-        <h2 className="font-semibold mb-4">Duplicate Alerts ({unresolved.length})</h2>
+        <h2 className="page-section-title">Duplicate Alerts <span className="badge badge-warning">{unresolved.length}</span></h2>
         {unresolved.length === 0 ? (
-          <p className="text-gray-500 text-center py-4">No unresolved alerts.</p>
+          <p className="data-table-empty">No unresolved alerts.</p>
         ) : (
-          <div className="space-y-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {unresolved.map(alert => (
-              <div key={alert._id} className="border border-gray-200 rounded-lg p-4">
-                <p className="text-sm text-gray-600">
-                  Household: <span className="font-medium text-gray-800">{alert.householdId}</span>
+              <div key={alert._id} className="page-section" style={{ marginBottom: 0 }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                  Household: <span style={{ fontWeight: 500, color: 'var(--color-text-primary)' }}>{alert.householdId?.headName || alert.householdId}</span>
                 </p>
-                <p className="text-xs text-gray-400 mt-1">{formatDateTime(alert.createdAt)}</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 'var(--space-1)' }}>{formatDateTime(alert.createdAt)}</p>
                 {resolveId === alert._id ? (
-                  <div className="mt-3 flex gap-2">
-                    <input className="input-field flex-1" value={reason} onChange={e => setReason(e.target.value)} placeholder="Override reason..." />
+                  <div style={{ marginTop: 'var(--space-3)', display: 'flex', gap: 'var(--space-2)' }}>
+                    <div style={{ flex: 1 }}>
+                      <Input
+                        name="reason"
+                        placeholder="Override reason..."
+                        value={reason}
+                        onChange={e => setReason(e.target.value)}
+                      />
+                    </div>
                     <Button onClick={() => handleResolve(alert._id)} disabled={!reason}>Resolve</Button>
                     <Button variant="ghost" onClick={() => setResolveId(null)}>Cancel</Button>
                   </div>
                 ) : (
-                  <Button variant="secondary" size="sm" className="mt-2" onClick={() => setResolveId(alert._id)}>Resolve</Button>
+                  <Button variant="secondary" size="sm" style={{ marginTop: 'var(--space-2)' }} onClick={() => setResolveId(alert._id)}>Resolve</Button>
                 )}
               </div>
             ))}

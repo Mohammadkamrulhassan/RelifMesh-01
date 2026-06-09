@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
+import { ToastProvider } from './components/ui/Toast'
 import Layout from './components/layout/Layout'
 import Login from './modules/auth/Login'
 import Households from './modules/households/Households'
@@ -8,8 +9,12 @@ import HouseholdDetail from './modules/households/HouseholdDetail'
 import Distributions from './modules/distributions/Distributions'
 import DistributionForm from './modules/distributions/DistributionForm'
 import PublicDashboard from './modules/dashboard/PublicDashboard'
+import Dashboard from './modules/dashboard/Dashboard'
 import Reports from './modules/reports/Reports'
 import Admin from './modules/admin/Admin'
+import Profile from './modules/profile/Profile'
+import FeedbackForm from './modules/feedback/FeedbackForm'
+import FeedbackList from './modules/feedback/FeedbackList'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -24,7 +29,8 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/public" element={<PublicDashboard />} />
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route index element={<Navigate to="/households" replace />} />
+        <Route index element={<Navigate to="/dashboard" replace />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="households" element={<Households />} />
         <Route path="households/new" element={<HouseholdForm />} />
         <Route path="households/:id" element={<HouseholdDetail />} />
@@ -33,6 +39,9 @@ function AppRoutes() {
         <Route path="distributions/new" element={<DistributionForm />} />
         <Route path="reports" element={<Reports />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="feedback" element={<FeedbackForm />} />
+        <Route path="feedback/manage" element={<FeedbackList />} />
       </Route>
     </Routes>
   )
@@ -41,7 +50,9 @@ function AppRoutes() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppRoutes />
+      <ToastProvider>
+        <AppRoutes />
+      </ToastProvider>
     </AuthProvider>
   )
 }

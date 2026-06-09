@@ -30,4 +30,32 @@ async function register(req, res, next) {
   } catch (err) { next(err) }
 }
 
-module.exports = { login, register }
+async function getProfile(req, res, next) {
+  try {
+    const user = await User.findById(req.user.sub).populate('jurisdictionId')
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    res.json({ user })
+  } catch (err) { next(err) }
+}
+
+async function updateProfile(req, res, next) {
+  try {
+    const { name, organization } = req.body
+    const updates = {}
+    if (name) updates.name = name
+    if (organization !== undefined) updates.organization = organization
+    const user = await User.findByIdAndUpdate(req.user.sub, updates, { new: true })
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    res.json({ user })
+  } catch (err) { next(err) }
+}
+
+async function listUsers(req, res, next) {
+  try {
+    const filter = { jurisdictionId: req.user.jurisdictionId }
+    const users = await User.find(filter).sort({ createdAt: -1 })
+    res.json({ users })
+  } catch (err) { next(err) }
+}
+
+module.exports = { login, register, getProfile, updateProfile, listUsers }

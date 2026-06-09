@@ -12,3 +12,7 @@ export function createDistribution(data) {
 export function duplicateCheck(householdId, itemCategoryId) {
   return get(`/distributions/duplicate-check?householdId=${householdId}&itemCategoryId=${itemCategoryId}`)
 }
+
+export function listCategories() {
+  return get('/public/item-categories')
+}

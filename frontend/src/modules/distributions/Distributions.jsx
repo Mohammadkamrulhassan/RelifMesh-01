@@ -2,65 +2,103 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { listDistributions } from './distributionService'
 import { formatDateTime } from '../../utils/formatters'
+import { useAuth } from '../../hooks/useAuth'
+import { useToast } from '../../components/ui/Toast'
 import Button from '../../components/common/Button'
 import Card from '../../components/common/Card'
 import Loading from '../../components/common/Loading'
+import Pagination from '../../components/ui/Pagination'
+import Input from '../../components/ui/Input'
+import SelectField from '../../components/forms/SelectField'
 
 export default function Distributions() {
+  const { user } = useAuth()
+  const { addToast } = useToast()
+  const canCreate = user?.role === 'UP_OFFICIAL' || user?.role === 'NGO_WORKER'
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
 
   useEffect(() => {
-    listDistributions()
-      .then(data => setLogs(data.logs))
-      .catch(err => setError(err.error || 'Failed to load'))
+    setLoading(true)
+    const params = new URLSearchParams({ page, limit: '20' })
+    if (search) params.set('q', search)
+    if (statusFilter) params.set('syncStatus', statusFilter)
+    listDistributions(`?${params.toString()}`)
+      .then(data => {
+        setLogs(data.logs)
+        setTotalPages(data.pages || 1)
+      })
+      .catch(err => {
+        setError(err.error || 'Failed to load')
+        addToast('Failed to load distributions', 'error')
+      })
       .finally(() => setLoading(false))
-  }, [])
+  }, [page, search, statusFilter])
 
   if (loading) return <Loading message="Loading distributions..." />
-  if (error) return <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg">{error}</div>
+  if (error) return <div className="page-section"><p style={{ color: 'var(--color-danger)' }}>{error}</p></div>
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Distributions</h1>
-        <Link to="/distributions/new"><Button>Log Distribution</Button></Link>
+      <div className="page-header">
+        <div>
+          <h1 className="page-header-title">Distributions</h1>
+          <p className="page-header-subtitle">{logs.length} log{logs.length !== 1 ? 's' : ''} recorded</p>
+        </div>
+        {canCreate && <Link to="/distributions/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>Log Distribution</Button></Link>}
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--space-3)', marginBottom: 'var(--space-4)', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: '200px', maxWidth: '320px' }}>
+          <Input name="search" placeholder="Search by household or item..." value={search} onChange={e => setSearch(e.target.value)} />
+        </div>
+        <div style={{ minWidth: '140px' }}>
+          <SelectField label="" name="statusFilter" value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1) }}>
+            <option value="">All Status</option>
+            <option value="SYNCED">Synced</option>
+            <option value="PENDING">Pending</option>
+          </SelectField>
+        </div>
       </div>
       {logs.length === 0 ? (
-        <Card><p className="text-gray-500 text-center py-8">No distributions recorded yet.</p></Card>
+        <Card><p style={{ color: 'var(--color-text-muted)', textAlign: 'center', padding: '32px 0' }}>No distributions recorded yet.</p></Card>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Household</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Item</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Qty</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Date</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map(log => (
-                <tr key={log._id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="py-3 px-4 font-medium">{log.householdId?.headName || log.householdId}</td>
-                  <td className="py-3 px-4">{log.unit}</td>
-                  <td className="py-3 px-4">{log.quantity}</td>
-                  <td className="py-3 px-4 text-gray-500">{formatDateTime(log.distributedAt)}</td>
-                  <td className="py-3 px-4">
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                      log.syncStatus === 'SYNCED' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                    }`}>
-                      {log.syncStatus}
-                    </span>
-                  </td>
+        <Card style={{ padding: 0, overflow: 'hidden' }}>
+          <div className="data-table-wrapper">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Household</th>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {logs.map(log => (
+                  <tr key={log._id}>
+                    <td style={{ fontWeight: 500 }}>{log.householdId?.headName || log.householdId}</td>
+                    <td>{log.itemCategoryId?.name || log.unit}</td>
+                    <td>{log.quantity}</td>
+                    <td style={{ color: 'var(--color-text-secondary)' }}>{formatDateTime(log.distributedAt)}</td>
+                    <td>
+                      <span className={`badge ${log.syncStatus === 'SYNCED' ? 'badge-success' : 'badge-warning'}`}>
+                        {log.syncStatus}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
       )}
+      <Pagination page={page} pages={totalPages} onPageChange={setPage} />
     </div>
   )
 }

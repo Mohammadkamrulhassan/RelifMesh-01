@@ -1,7 +1,7 @@
 # Section 3.4 — System Modeling (DFD & UML)
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 > **Note:** All diagrams referenced here are stored as `.drawio` files in `/Diagrams/`. This document describes each diagram in text for the written report. Render diagrams using draw.io or Lucidchart and export as PNG/PDF for the final report appendix.
 
@@ -70,6 +70,8 @@ Decomposes the system into 5 major processes:
 | D2 | Household Registry | HH-ID, NID, name, GPS, family size, vulnerability flags, photo |
 | D3 | Distribution Log | Log ID, HH-ID, item category, quantity, officer ID, GPS, timestamp, photo, sync status |
 | D4 | Conflict Log | Conflicting record pairs, timestamps, resolution status |
+| D5 | Feedback Store | Feedback entries with name, contact, category, message, response |
+| D6 | Inventory Store | Stock levels per item category, distributed quantities |
 
 ---
 
@@ -175,6 +177,10 @@ Decomposes the system into 5 major processes:
 │ sync()        │
 └──────────────────────┘
 ```
+
+**Additional Classes (Feedback & Inventory):**
+- **Feedback**: feedbackId, name, contact, category (COMPLAINT/SUGGESTION/INQUIRY/APPRECIATION/OTHER), message, isRead, response, respondedBy, respondedAt
+- **Inventory**: inventoryId, itemCategoryId (FK), totalQuantity, distributedQuantity, remainingQuantity (virtual), unit, lastRestockedAt
 
 **Enums:**
 - `Role`: UP_OFFICIAL, UPAZILA_OFFICER, NGO_WORKER, PUBLIC

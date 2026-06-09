@@ -1,7 +1,7 @@
 # Section 3.8 — Implementation Plan
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 
 ---
 
@@ -9,21 +9,26 @@
 
 | # | Module | Owner | Deadline (Week) | Status |
 |---|--------|-------|-----------------|--------|
-| M1 | Project setup (repo, folder structure, tooling) | Kamrul | Week 1 | [ ] |
-| M2 | MongoDB schemas + Mongoose models | Kamrul | Week 2 | [ ] |
-| M3 | Authentication API (register, login, JWT) | Kamrul | Week 3 | [ ] |
-| M4 | Household registration API + frontend form | Kamrul (API), Sayeda (UI) | Week 4 | [ ] |
-| M5 | Offline support — IndexedDB (localforage) | Kamrul | Week 5 | [ ] |
-| M6 | Distribution log API + frontend form | Kamrul (API), Sayeda (UI) | Week 6 | [ ] |
-| M7 | Duplicate detection engine | Kamrul | Week 7 | [ ] |
-| M8 | Duplicate alert UI + override flow | Sayeda, Nahid | Week 8 | [ ] |
-| M9 | Sync engine (push/pull API) + conflict log | Kamrul | Week 9 | [ ] |
-| M10 | Upazila Officer dashboard + jurisdiction filter | Sayeda | Week 10 | [ ] |
-| M11 | Public dashboard + map view | Nahid | Week 11 | [ ] |
-| M12 | Report export (PDF/CSV) | Kamrul | Week 12 | [ ] |
-| M13 | Testing (unit + integration + UAT) | Abidul | Week 13–14 | [ ] |
-| M14 | Bug fixes + final polish | All | Week 15 | [ ] |
+| M1 | Project setup (repo, folder structure, tooling) | Kamrul | Week 1 | [x] |
+| M2 | MongoDB schemas + Mongoose models | Kamrul | Week 2 | [x] |
+| M3 | Authentication API (register, login, JWT) | Kamrul | Week 3 | [x] |
+| M4 | Household registration API + frontend form | Kamrul (API), Sayeda (UI) | Week 4 | [x] |
+| M5 | Offline support — IndexedDB (localforage) | Kamrul | Week 5 | [x] |
+| M6 | Distribution log API + frontend form | Kamrul (API), Sayeda (UI) | Week 6 | [x] |
+| M7 | Duplicate detection engine | Kamrul | Week 7 | [x] |
+| M8 | Duplicate alert UI + override flow | Sayeda, Nahid | Week 8 | [x] |
+| M9 | Sync engine (push/pull API) + conflict log | Kamrul | Week 9 | [x] |
+| M10 | Upazila Officer dashboard + jurisdiction filter | Sayeda | Week 10 | [x] |
+| M11 | Public dashboard + map view | Nahid | Week 11 | [x] |
+| M12 | Report export (PDF/CSV) | Kamrul | Week 12 | [x] |
+| M13 | Testing (unit + integration + UAT) | Abidul | Week 13–14 | [x] (36 test cases implemented across 10 suites) |
+| M14 | Bug fixes + final polish | All | Week 15 | [~] (in progress) |
 | M15 | Demo video + presentation prep | Nahid, Abid | Week 16 | [ ] |
+| M16 | Feedback module (model, API, form, list, tests) | Kamrul (API), Sayeda (UI) | Week 14 | [x] |
+| M17 | Inventory/stock tracking module (model, API, tests) | Kamrul | Week 15 | [x] |
+| M18 | User profile management (API + frontend page) | Kamrul (API), Nahid (UI) | Week 15 | [x] |
+| M19 | Pagination + search across list views | Kamrul | Week 15 | [x] |
+| M20 | Enhanced dashboard (feedback stats, alerts, recent logs) | Kamrul | Week 15 | [x] |
 
 ---
 
@@ -141,7 +146,9 @@ backend/
 │   ├── alerts/       ← controller, routes, model, engine, tests
 │   ├── reports/      ← controller, routes, generator, tests
 │   ├── public/       ← controller, routes, model, tests
-│   └── sync/         ← controller, routes, service, tests
+│   ├── sync/         ← controller, routes, service, tests
+│   ├── feedback/     ← controller, routes, model, tests
+│   └── inventory/    ← controller, routes, model, tests
 ├── server.js         ← app entry point
 └── package.json
 ```

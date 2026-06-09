@@ -10,3 +10,4 @@ coverage/
 .couchdb/
 *.sql
 backup_*.sql
+uploads/

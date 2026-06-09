@@ -3,7 +3,7 @@ const env = require('../config/environment')
 
 const REQUIRED_COLLECTIONS = [
   'users', 'jurisdictions', 'households',
-  'distributionlogs', 'itemcategories', 'duplicatealerts', 'syncconflicts'
+  'distributionlogs', 'itemcategories', 'duplicatealerts', 'syncconflicts', 'feedbacks', 'inventories'
 ]
 
 async function showStatus() {

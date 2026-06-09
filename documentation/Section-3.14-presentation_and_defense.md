@@ -1,7 +1,7 @@
 # Section 3.14 — Presentation & Defense
 **Project:** RelifMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-06-09
 **Presentation Lead:** Iftekhar Alam Nahid | **Slides:** Abidul Islam
 
 ---
@@ -79,6 +79,14 @@ Step 6 — Upazila Officer View (1 min)
   → Logout → Login as Upazila Officer
   → Show all unions in jurisdiction
   → Export PDF report → open downloaded PDF
+
+Step 7 — Bonus: New Features (1.5 min)
+  → [Feedback] Open /feedback, submit a test message without login
+  → [Feedback Manage] Login as Upazila Officer, view feedback list, respond
+  → [Inventory] View inventory stock levels, create a new inventory entry
+  → [Profile] Update profile name/organization
+  → [Pagination] Show paginated household list with search filtering
+  → [Enhanced Dashboard] Show new stat cards (Feedbacks, Pending Sync, Alerts)
 ```
 
 ### Pre-Demo Checklist

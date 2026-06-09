@@ -22,35 +22,58 @@ export default function HouseholdDetail() {
   }, [id])
 
   if (loading) return <Loading message="Loading household..." />
-  if (error) return <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg">{error}</div>
-  if (!household) return <div className="text-gray-500">Household not found</div>
+  if (error) return <div className="page-section"><p style={{ color: 'var(--color-danger)' }}>{error}</p></div>
+  if (!household) return <div className="page-section"><p style={{ color: 'var(--color-text-muted)' }}>Household not found</p></div>
 
   const markers = household.gps?.lat ? [{ lat: household.gps.lat, lng: household.gps.lng, popup: household.headName }] : []
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{household.headName}</h1>
-        <div className="flex gap-2">
+    <div style={{ maxWidth: '720px' }}>
+      <div className="page-header">
+        <div>
+          <h1 className="page-header-title">{household.headName}</h1>
+          <p className="page-header-subtitle">Household Details</p>
+        </div>
+        <div className="page-actions">
           <Link to={`/households/${id}/edit`}><Button variant="secondary">Edit</Button></Link>
           <Button variant="ghost" onClick={() => navigate('/households')}>Back</Button>
         </div>
       </div>
 
-      <Card className="mb-6">
-        <dl className="grid grid-cols-2 gap-4">
-          <div><dt className="text-xs text-gray-500 uppercase">NID</dt><dd className="font-medium">{household.nid}</dd></div>
-          <div><dt className="text-xs text-gray-500 uppercase">Family Size</dt><dd className="font-medium">{household.familySize}</dd></div>
-          <div><dt className="text-xs text-gray-500 uppercase">GPS</dt><dd className="font-medium text-sm">{household.gps ? `${household.gps.lat}, ${household.gps.lng}` : 'Not set'}</dd></div>
-          <div><dt className="text-xs text-gray-500 uppercase">Registered</dt><dd className="font-medium text-sm">{formatDateTime(household.createdAt)}</dd></div>
-        </dl>
+      <Card style={{ marginBottom: 'var(--space-4)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
+          <div><p style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.08em' }}>NID</p><p style={{ fontWeight: 500 }}>{household.nid}</p></div>
+          <div><p style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.08em' }}>Family Size</p><p style={{ fontWeight: 500 }}>{household.familySize}</p></div>
+          <div><p style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.08em' }}>GPS</p><p style={{ fontWeight: 500, fontSize: '0.875rem' }}>{household.gps ? `${household.gps.lat}, ${household.gps.lng}` : 'Not set'}</p></div>
+          <div><p style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--color-text-muted)', letterSpacing: '0.08em' }}>Registered</p><p style={{ fontWeight: 500, fontSize: '0.875rem' }}>{formatDateTime(household.createdAt)}</p></div>
+        </div>
       </Card>
 
-      <Card className="mb-6">
-        <h2 className="font-semibold mb-3">Vulnerability Flags</h2>
-        <div className="flex gap-3">
+      {household.familyMembers?.length > 0 && (
+        <Card style={{ marginBottom: 'var(--space-4)' }}>
+          <h2 className="page-section-title">Family Members ({household.familyMembers.length})</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            {household.familyMembers.map((m, i) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-2) 0', borderBottom: i < household.familyMembers.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                <div>
+                  <p style={{ fontWeight: 500 }}>{m.name}</p>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>Age: {m.age}</p>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <span className="badge badge-info" style={{ fontSize: '0.7rem' }}>{m.idType}</span>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '2px' }}>{m.idNumber}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      <Card style={{ marginBottom: 'var(--space-4)' }}>
+        <h2 className="page-section-title">Vulnerability Flags</h2>
+        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
           {['elderly', 'disabled', 'pregnant'].map(f => (
-            <span key={f} className={`px-3 py-1 rounded-full text-xs font-medium ${household.vulnerabilityFlags?.[f] ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-500'}`}>
+            <span key={f} className={`badge ${household.vulnerabilityFlags?.[f] ? 'badge-danger' : 'badge-neutral'}`}>
               {f}
             </span>
           ))}
@@ -58,15 +81,15 @@ export default function HouseholdDetail() {
       </Card>
 
       {household.photoUrl && (
-        <Card className="mb-6">
-          <h2 className="font-semibold mb-3">Photo</h2>
-          <img src={household.photoUrl} alt="Household" className="max-w-sm rounded-lg border" />
+        <Card style={{ marginBottom: 'var(--space-4)' }}>
+          <h2 className="page-section-title">Photo</h2>
+          <img src={household.photoUrl} alt="Household" style={{ maxWidth: '320px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }} />
         </Card>
       )}
 
       {markers.length > 0 && (
         <Card>
-          <h2 className="font-semibold mb-3">Location</h2>
+          <h2 className="page-section-title">Location</h2>
           <MapView markers={markers} center={[household.gps.lat, household.gps.lng]} zoom={15} />
         </Card>
       )}

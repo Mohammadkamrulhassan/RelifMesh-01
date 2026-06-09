@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
-import { post, get } from '../services/api'
-import { getPending, clearPending, removePending } from '../services/offline'
+import { post, put, get } from '../services/api'
+import { getPending, removePending } from '../services/offline'
 
 export function useSync() {
   const [syncing, setSyncing] = useState(false)
@@ -14,13 +14,16 @@ export function useSync() {
       for (let i = pending.length - 1; i >= 0; i--) {
         const op = pending[i]
         try {
-          await post('/sync/push', { key: op.key, data: op.data })
+          if (op.data.method === 'POST') {
+            await post(op.key, op.data.body)
+          } else if (op.data.method === 'PUT') {
+            await put(op.key, op.data.body)
+          }
           await removePending(i)
         } catch {
           break
         }
       }
-      const serverData = await get('/sync/pull')
       setSyncStatus('synced')
     } catch {
       setSyncStatus('error')

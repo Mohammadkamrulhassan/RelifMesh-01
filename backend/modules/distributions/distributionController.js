@@ -1,9 +1,13 @@
 const DistributionLog = require('./distributionModel')
 const DuplicateAlert = require('../alerts/alertModel')
+const Household = require('../households/householdModel')
 
 async function create(req, res, next) {
   try {
     const { householdId, itemCategoryId, quantity, unit, gps, photoUrl, distributedAt, overrideReason } = req.body
+
+    const household = await Household.findById(householdId)
+    if (!household) return res.status(404).json({ error: 'Household not found' })
 
     const existing = await DistributionLog.findOne({
       householdId,
@@ -14,6 +18,7 @@ async function create(req, res, next) {
     if (existing && !overrideReason) {
       return res.status(409).json({
         error: 'Duplicate distribution detected',
+        isDuplicate: true,
         priorLog: existing,
       })
     }
@@ -50,12 +55,25 @@ async function create(req, res, next) {
 
 async function list(req, res, next) {
   try {
+    const { page = 1, limit = 20, householdId, itemCategoryId, startDate, endDate } = req.query
     const filter = {}
-    if (req.query.householdId) filter.householdId = req.query.householdId
-    const logs = await DistributionLog.find(filter)
-      .populate('householdId')
-      .sort({ distributedAt: -1 })
-    res.json({ logs })
+    if (householdId) filter.householdId = householdId
+    if (itemCategoryId) filter.itemCategoryId = itemCategoryId
+    if (startDate || endDate) {
+      filter.distributedAt = {}
+      if (startDate) filter.distributedAt.$gte = new Date(startDate)
+      if (endDate) filter.distributedAt.$lte = new Date(endDate)
+    }
+    const skip = (parseInt(page) - 1) * parseInt(limit)
+    const [logs, total] = await Promise.all([
+      DistributionLog.find(filter)
+        .populate('householdId itemCategoryId')
+        .sort({ distributedAt: -1 })
+        .skip(skip)
+        .limit(parseInt(limit)),
+      DistributionLog.countDocuments(filter),
+    ])
+    res.json({ logs, total, page: parseInt(page), pages: Math.ceil(total / parseInt(limit)) })
   } catch (err) { next(err) }
 }
 

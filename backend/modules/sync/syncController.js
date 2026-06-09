@@ -1,15 +1,12 @@
 const DistributionLog = require('../distributions/distributionModel')
+const { processPush } = require('./syncService')
 
 async function push(req, res, next) {
   try {
     const records = req.body.records
     if (!Array.isArray(records)) return res.status(400).json({ error: 'records must be an array' })
-    const created = []
-    for (const r of records) {
-      const log = await DistributionLog.create({ ...r, syncStatus: 'SYNCED' })
-      created.push(log)
-    }
-    res.status(201).json({ synced: created.length })
+    const result = await processPush(records)
+    res.status(201).json(result)
   } catch (err) { next(err) }
 }
 

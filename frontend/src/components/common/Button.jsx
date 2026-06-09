@@ -1,14 +1,53 @@
-export default function Button({ children, variant = 'primary', className = '', ...props }) {
-  const base = 'inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
-  const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
-    ghost: 'text-gray-600 hover:bg-gray-100',
-  }
+import { forwardRef } from 'react'
+
+const VARIANTS = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  danger: 'btn-danger',
+  ghost: 'btn-ghost',
+  outline: 'btn-outline',
+  success: 'btn-success',
+}
+
+const SIZES = {
+  xs: 'btn-xs',
+  sm: 'btn-sm',
+  md: 'btn-md',
+  lg: 'btn-lg',
+}
+
+const Button = forwardRef(({
+  children, variant = 'primary', size = 'md', type = 'button',
+  disabled = false, loading = false, fullWidth = false,
+  leftIcon = null, rightIcon = null, className = '', onClick, ...rest
+}, ref) => {
+  const classes = [
+    'btn',
+    VARIANTS[variant] || VARIANTS.primary,
+    SIZES[size] || SIZES.md,
+    fullWidth ? 'btn-full' : '',
+    loading ? 'btn-loading' : '',
+    className,
+  ].filter(Boolean).join(' ')
+
   return (
-    <button className={`${base} ${variants[variant] || variants.primary} ${className}`} {...props}>
-      {children}
+    <button
+      ref={ref}
+      type={type}
+      disabled={disabled || loading}
+      className={classes}
+      onClick={onClick}
+      aria-disabled={disabled || loading}
+      aria-busy={loading}
+      {...rest}
+    >
+      {loading && <span className="btn-spinner" aria-hidden="true" />}
+      {!loading && leftIcon && <span className="btn-icon btn-icon-left">{leftIcon}</span>}
+      <span className="btn-label">{children}</span>
+      {!loading && rightIcon && <span className="btn-icon btn-icon-right">{rightIcon}</span>}
     </button>
   )
-}
+})
+
+Button.displayName = 'Button'
+export default Button
