@@ -10,3 +10,4 @@ frontend/dist/
 .vscode/
 *.swp
 *.swo
+run.sh
