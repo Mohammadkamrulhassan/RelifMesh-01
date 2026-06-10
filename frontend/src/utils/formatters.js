@@ -18,6 +18,7 @@ export function roleLabel(role) {
     UP_OFFICIAL: 'Union Parishad Official',
     UPAZILA_OFFICER: 'Upazila Officer',
     NGO_WORKER: 'NGO Worker',
+    CITIZEN: 'Citizen',
   }
   return labels[role] || role
 }

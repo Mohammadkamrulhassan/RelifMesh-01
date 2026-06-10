@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import Input from '../../components/ui/Input'
 import Button from '../../components/common/Button'
@@ -13,7 +13,7 @@ export default function Login() {
   const [submitting, setSubmitting] = useState(false)
 
   if (user) {
-    navigate('/households', { replace: true })
+    navigate(user.role === 'CITIZEN' ? '/relief-requests' : '/households', { replace: true })
     return null
   }
 
@@ -22,8 +22,8 @@ export default function Login() {
     setError('')
     setSubmitting(true)
     try {
-      await login(email, password)
-      navigate('/households')
+      const u = await login(email, password)
+      navigate(u?.role === 'CITIZEN' ? '/relief-requests' : '/households')
     } catch (err) {
       setError(err.error || 'Login failed')
     } finally {
@@ -90,8 +90,11 @@ export default function Login() {
             </Button>
           </form>
 
-          <p style={{ marginTop: '24px', fontSize: '0.75rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-            Test: upazila@relifmesh.test / upofficial@relifmesh.test / ngo@relifmesh.test
+          <p style={{ marginTop: '16px', fontSize: '0.85rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+            Don't have an account? <Link to="/register" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>Register as Citizen</Link>
+          </p>
+          <p style={{ marginTop: '8px', fontSize: '0.75rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+            Test: upazila@relifmesh.test / upofficial@relifmesh.test / ngo@relifmesh.test / citizen@relifmesh.test
           </p>
         </div>
       </div>

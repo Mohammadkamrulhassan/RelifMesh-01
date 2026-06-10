@@ -18,6 +18,7 @@ const syncRoutes = require('./modules/sync/syncRoutes')
 const uploadRoutes = require('./modules/upload/uploadRoutes')
 const feedbackRoutes = require('./modules/feedback/feedbackRoutes')
 const inventoryRoutes = require('./modules/inventory/inventoryRoutes')
+const reliefRequestRoutes = require('./modules/reliefRequests/reliefRequestRoutes')
 
 const app = express()
 
@@ -37,6 +38,7 @@ app.use('/v1/sync', syncRoutes)
 app.use('/v1/uploads', uploadRoutes)
 app.use('/v1/feedback', feedbackRoutes)
 app.use('/v1/inventory', inventoryRoutes)
+app.use('/v1/relief-requests', reliefRequestRoutes)
 
 app.get('/v1/health', (req, res) => res.json({ status: 'ok' }))
 

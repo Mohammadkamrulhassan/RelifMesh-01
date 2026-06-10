@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { listDistributions } from './distributionService'
+import { Link, useNavigate } from 'react-router-dom'
+import { listDistributions, deleteDistribution } from './distributionService'
 import { formatDateTime } from '../../utils/formatters'
 import { useAuth } from '../../hooks/useAuth'
 import { useToast } from '../../components/ui/Toast'
@@ -13,8 +13,11 @@ import SelectField from '../../components/forms/SelectField'
 
 export default function Distributions() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const { addToast } = useToast()
   const canCreate = user?.role === 'UP_OFFICIAL' || user?.role === 'NGO_WORKER'
+  const canEdit = user?.role === 'UP_OFFICIAL' || user?.role === 'NGO_WORKER'
+  const canDelete = user?.role === 'UP_OFFICIAL' || user?.role === 'UPAZILA_OFFICER'
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -22,13 +25,14 @@ export default function Distributions() {
   const [totalPages, setTotalPages] = useState(1)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
+  const [deleting, setDeleting] = useState(null)
 
-  useEffect(() => {
+  function loadData() {
     setLoading(true)
-    const params = new URLSearchParams({ page, limit: '20' })
-    if (search) params.set('q', search)
-    if (statusFilter) params.set('syncStatus', statusFilter)
-    listDistributions(`?${params.toString()}`)
+    const filters = { page, limit: '20' }
+    if (search) filters.q = search
+    if (statusFilter) filters.syncStatus = statusFilter
+    listDistributions(filters)
       .then(data => {
         setLogs(data.logs)
         setTotalPages(data.pages || 1)
@@ -38,7 +42,23 @@ export default function Distributions() {
         addToast('Failed to load distributions', 'error')
       })
       .finally(() => setLoading(false))
-  }, [page, search, statusFilter])
+  }
+
+  useEffect(() => { loadData() }, [page, search, statusFilter])
+
+  async function handleDelete(id) {
+    if (!confirm('Delete this distribution log? This cannot be undone.')) return
+    setDeleting(id)
+    try {
+      await deleteDistribution(id)
+      addToast('Distribution deleted', 'success')
+      loadData()
+    } catch (err) {
+      addToast(err.error || 'Failed to delete', 'error')
+    } finally {
+      setDeleting(null)
+    }
+  }
 
   if (loading) return <Loading message="Loading distributions..." />
   if (error) return <div className="page-section"><p style={{ color: 'var(--color-danger)' }}>{error}</p></div>
@@ -77,11 +97,12 @@ export default function Distributions() {
                   <th>Qty</th>
                   <th>Date</th>
                   <th>Status</th>
+                  {(canEdit || canDelete) && <th style={{ width: '100px' }}>Actions</th>}
                 </tr>
               </thead>
               <tbody>
                 {logs.map(log => (
-                  <tr key={log._id}>
+                  <tr key={log._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/distributions/${log._id}`)}>
                     <td style={{ fontWeight: 500 }}>{log.householdId?.headName || log.householdId}</td>
                     <td>{log.itemCategoryId?.name || log.unit}</td>
                     <td>{log.quantity}</td>
@@ -91,6 +112,22 @@ export default function Distributions() {
                         {log.syncStatus}
                       </span>
                     </td>
+                    {(canEdit || canDelete) && (
+                      <td onClick={e => e.stopPropagation()}>
+                        <div style={{ display: 'flex', gap: 'var(--space-1)' }}>
+                          {canEdit && (
+                            <Button size="xs" variant="ghost" onClick={() => navigate(`/distributions/${log._id}/edit`)}>
+                              Edit
+                            </Button>
+                          )}
+                          {canDelete && (
+                            <Button size="xs" variant="danger" onClick={() => handleDelete(log._id)} loading={deleting === log._id} disabled={deleting === log._id}>
+                              Del
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

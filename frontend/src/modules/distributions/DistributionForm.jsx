@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { createDistribution, duplicateCheck, listCategories } from './distributionService'
+import { useNavigate, useParams } from 'react-router-dom'
+import { createDistribution, getDistribution, updateDistribution, duplicateCheck, listCategories } from './distributionService'
 import { listHouseholds } from '../households/householdService'
 import { getCurrentPosition } from '../../utils/geo'
 import { useAuth } from '../../hooks/useAuth'
@@ -10,10 +10,13 @@ import SelectField from '../../components/forms/SelectField'
 import PhotoCapture from '../../components/forms/PhotoCapture'
 import Button from '../../components/common/Button'
 import Card from '../../components/common/Card'
+import Loading from '../../components/common/Loading'
 
 export default function DistributionForm() {
   const { user } = useAuth()
+  const { id } = useParams()
   const navigate = useNavigate()
+  const isEditing = !!id
 
   if (user?.role !== 'UP_OFFICIAL' && user?.role !== 'NGO_WORKER') {
     return <div className="page-section" style={{ color: 'var(--color-danger)', padding: 'var(--space-6)', textAlign: 'center' }}>You do not have permission to log distributions. Only UP Officials and NGO Workers can perform this action.</div>
@@ -29,11 +32,30 @@ export default function DistributionForm() {
   const [duplicateWarning, setDuplicateWarning] = useState(null)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [pageLoading, setPageLoading] = useState(isEditing)
 
   useEffect(() => {
     listHouseholds().then(d => setHouseholds(d.households)).catch(() => {})
     listCategories().then(d => setCategories(d.categories || [])).catch(() => {})
-  }, [])
+    if (isEditing) {
+      getDistribution(id)
+        .then(data => {
+          const log = data.log
+          setForm({
+            householdId: log.householdId?._id || log.householdId || '',
+            itemCategoryId: log.itemCategoryId?._id || log.itemCategoryId || '',
+            quantity: String(log.quantity || ''),
+            unit: log.unit || '',
+            gps: { lat: String(log.gps?.lat || ''), lng: String(log.gps?.lng || '') },
+            photoUrl: log.photoUrl || null,
+            distributedAt: new Date(log.distributedAt).toISOString().slice(0, 16),
+            overrideReason: log.overrideReason || '',
+          })
+        })
+        .catch(err => setError(err.error || 'Failed to load'))
+        .finally(() => setPageLoading(false))
+    }
+  }, [id])
 
   async function handleHouseholdChange(e) {
     const hhId = e.target.value
@@ -87,26 +109,32 @@ export default function DistributionForm() {
         gps: { lat: Number(form.gps.lat), lng: Number(form.gps.lng) },
         distributedAt: new Date(form.distributedAt).toISOString(),
       }
-      await createDistribution(payload)
+      if (isEditing) {
+        await updateDistribution(id, payload)
+      } else {
+        await createDistribution(payload)
+      }
       navigate('/distributions')
     } catch (err) {
-      if (err.status === 409) {
+      if (!isEditing && err.status === 409) {
         setDuplicateWarning(err.priorLog)
         setError('Duplicate detected. Provide an override reason below to confirm.')
       } else {
-        setError(err.error || 'Failed to log distribution')
+        setError(err.error || 'Failed to save distribution')
       }
     } finally {
       setSubmitting(false)
     }
   }
 
+  if (pageLoading) return <div className="page-section"><Loading message="Loading distribution..." /></div>
+
   return (
     <div style={{ maxWidth: '640px' }}>
       <div className="page-header">
         <div>
-          <h1 className="page-header-title">Log Distribution</h1>
-          <p className="page-header-subtitle">Record a new distribution event</p>
+          <h1 className="page-header-title">{isEditing ? 'Edit Distribution' : 'Log Distribution'}</h1>
+          <p className="page-header-subtitle">{isEditing ? 'Update distribution details' : 'Record a new distribution event'}</p>
         </div>
       </div>
 
@@ -156,8 +184,8 @@ export default function DistributionForm() {
           )}
 
           <div className="page-actions" style={{ justifyContent: 'flex-start' }}>
-            <Button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Log Distribution'}</Button>
-            <Button type="button" variant="secondary" onClick={() => navigate('/distributions')}>Cancel</Button>
+            <Button type="submit" disabled={submitting}>{submitting ? 'Saving...' : isEditing ? 'Save Changes' : 'Log Distribution'}</Button>
+            <Button type="button" variant="secondary" onClick={() => navigate(isEditing ? `/distributions/${id}` : '/distributions')}>Cancel</Button>
           </div>
         </form>
       </Card>

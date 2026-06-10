@@ -9,8 +9,8 @@ const validateRegister = [
   body('name').trim().isLength({ min: 2, max: 100 }),
   body('email').isEmail().normalizeEmail(),
   body('password').isLength({ min: 6 }),
-  body('role').isIn(['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER']),
-  body('jurisdictionId').isMongoId(),
+  body('role').isIn(['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN']),
+  body('jurisdictionId').optional().isMongoId(),
 ]
 
 function handleValidation(req, res, next) {

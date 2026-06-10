@@ -2,7 +2,14 @@ const NAV_ITEMS = [
   {
     section: 'Overview',
     items: [
-      { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: 'dashboard', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER'] },
+      { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: 'dashboard', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
+    ],
+  },
+  {
+    section: 'My Requests',
+    items: [
+      { key: 'relief-requests', label: 'My Requests', path: '/relief-requests', icon: 'hand', roles: ['CITIZEN'] },
+      { key: 'relief-request-new', label: 'Request Relief', path: '/relief-requests/new', icon: 'plus', roles: ['CITIZEN'] },
     ],
   },
   {
@@ -10,6 +17,7 @@ const NAV_ITEMS = [
     items: [
       { key: 'households', label: 'Households', path: '/households', icon: 'building', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
       { key: 'distributions', label: 'Distributions', path: '/distributions', icon: 'truck', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
+      { key: 'relief-requests-admin', label: 'Relief Requests', path: '/relief-requests/admin', icon: 'hand', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER'] },
     ],
   },
   {
@@ -21,7 +29,7 @@ const NAV_ITEMS = [
   {
     section: 'Feedback',
     items: [
-      { key: 'feedback', label: 'Submit Feedback', path: '/feedback', icon: 'message', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
+      { key: 'feedback', label: 'Submit Feedback', path: '/feedback', icon: 'message', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN'] },
       { key: 'feedback-manage', label: 'Manage Feedback', path: '/feedback/manage', icon: 'list', roles: ['UPAZILA_OFFICER'] },
     ],
   },
@@ -29,7 +37,7 @@ const NAV_ITEMS = [
     section: 'System',
     items: [
       { key: 'admin', label: 'Admin', path: '/admin', icon: 'shield', roles: ['UPAZILA_OFFICER'] },
-      { key: 'profile', label: 'Profile', path: '/profile', icon: 'user', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER'] },
+      { key: 'profile', label: 'Profile', path: '/profile', icon: 'user', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
     ],
   },
 ]

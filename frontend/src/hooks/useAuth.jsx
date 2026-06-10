@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
       setToken(token)
       setStoredUser(u)
       setUser(u)
+      return u
     } finally {
       setLoading(false)
     }
@@ -25,8 +26,14 @@ export function AuthProvider({ children }) {
     setUser(null)
   }, [])
 
+  const setAuth = useCallback((u, token) => {
+    if (token) setToken(token)
+    setStoredUser(u)
+    setUser(u)
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, setAuth }}>
       {children}
     </AuthContext.Provider>
   )

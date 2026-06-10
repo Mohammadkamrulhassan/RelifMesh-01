@@ -6,11 +6,13 @@ const userSchema = new mongoose.Schema({
   passwordHash: { type: String, required: true },
   role: {
     type: String,
-    enum: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'],
+    enum: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN'],
     required: true,
   },
   organization: { type: String, default: null },
-  jurisdictionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Jurisdiction', required: true },
+  jurisdictionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Jurisdiction' },
+  address: { type: String, default: null },
+  phone: { type: String, default: null },
   isActive: { type: Boolean, default: true },
 }, { timestamps: true })
 

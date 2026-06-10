@@ -29,6 +29,7 @@ export default function Dashboard() {
     { label: 'Distributions Logged', value: stats.totalDistributions, color: 'var(--color-success)' },
     { label: 'Item Categories', value: stats.totalCategories ?? stats.unions?.length ?? 0, color: 'var(--color-info)' },
     { label: 'Unresolved Alerts', value: stats.unresolvedAlerts, color: stats.unresolvedAlerts > 0 ? 'var(--color-danger)' : 'var(--color-text-muted)' },
+    { label: 'Pending Relief Requests', value: stats.pendingRequests ?? 0, color: stats.pendingRequests > 0 ? 'var(--color-warning)' : 'var(--color-text-muted)' },
     { label: 'Feedback Received', value: stats.totalFeedbacks ?? 0, color: 'var(--color-accent)' },
     { label: 'Pending Sync', value: stats.pendingSync ?? 0, color: stats.pendingSync > 0 ? 'var(--color-warning)' : 'var(--color-text-muted)' },
   ]

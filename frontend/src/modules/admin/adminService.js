@@ -1,7 +1,7 @@
 import { get, put } from '../../services/api'
 
-export function listUsers() {
-  return get('/auth/users')
+export function listUsers(params = '') {
+  return get(`/auth/users${params}`)
 }
 
 export function resolveAlert(id, reason) {

@@ -46,6 +46,14 @@ async function seed() {
       jurisdictionId: union._id,
       organization: 'BRAC',
     },
+    {
+      name: 'Jamil Hassan',
+      email: 'citizen@relifmesh.test',
+      passwordHash: await bcrypt.hash('password123', 10),
+      role: 'CITIZEN',
+      phone: '01712345678',
+      address: 'Char Fasson, Sunamganj',
+    },
   ])
 
   await ItemCategory.create([
@@ -61,6 +69,7 @@ async function seed() {
   console.log('  upazila@relifmesh.test / password123  (UPAZILA_OFFICER)')
   console.log('  upofficial@relifmesh.test / password123 (UP_OFFICIAL)')
   console.log('  ngo@relifmesh.test / password123       (NGO_WORKER)')
+  console.log('  citizen@relifmesh.test / password123   (CITIZEN)')
 
   if (needsConnection) await mongoose.disconnect()
 }

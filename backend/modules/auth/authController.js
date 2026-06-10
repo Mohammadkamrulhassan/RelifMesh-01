@@ -30,6 +30,27 @@ async function register(req, res, next) {
   } catch (err) { next(err) }
 }
 
+async function registerCitizen(req, res, next) {
+  try {
+    const { name, email, password, phone, address } = req.body
+    const existing = await User.findOne({ email })
+    if (existing) return res.status(409).json({ error: 'Email already registered' })
+    const passwordHash = await bcrypt.hash(password, 10)
+    const user = await User.create({
+      name, email, passwordHash,
+      role: 'CITIZEN',
+      phone,
+      address,
+    })
+    const token = jwt.sign(
+      { sub: user._id, role: user.role, jurisdictionId: user.jurisdictionId },
+      env.jwtSecret,
+      { expiresIn: env.jwtExpiresIn }
+    )
+    res.status(201).json({ token, user })
+  } catch (err) { next(err) }
+}
+
 async function getProfile(req, res, next) {
   try {
     const user = await User.findById(req.user.sub).populate('jurisdictionId')
@@ -52,10 +73,19 @@ async function updateProfile(req, res, next) {
 
 async function listUsers(req, res, next) {
   try {
-    const filter = { jurisdictionId: req.user.jurisdictionId }
+    const { role } = req.query
+    const filter = {}
+    if (req.user.role === 'UPAZILA_OFFICER' && req.user.jurisdictionId) {
+      filter.$or = [
+        { jurisdictionId: req.user.jurisdictionId },
+        { jurisdictionId: { $exists: false } },
+        { jurisdictionId: null },
+      ]
+    }
+    if (role) filter.role = role
     const users = await User.find(filter).sort({ createdAt: -1 })
     res.json({ users })
   } catch (err) { next(err) }
 }
 
-module.exports = { login, register, getProfile, updateProfile, listUsers }
+module.exports = { login, register, registerCitizen, getProfile, updateProfile, listUsers }

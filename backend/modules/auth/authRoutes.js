@@ -32,6 +32,16 @@ router.post('/register',
   ctrl.register,
 )
 
+router.post('/register/citizen',
+  body('email').isEmail().withMessage('Valid email required'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('name').trim().isLength({ min: 2 }).withMessage('Name required'),
+  body('phone').optional().trim().isMobilePhone('any'),
+  body('address').optional().trim().isLength({ min: 5 }),
+  handleValidation,
+  ctrl.registerCitizen,
+)
+
 router.get('/profile', authenticate, ctrl.getProfile)
 router.put('/profile', authenticate, ctrl.updateProfile)
 router.get('/users', authenticate, authorize('UPAZILA_OFFICER'), ctrl.listUsers)
