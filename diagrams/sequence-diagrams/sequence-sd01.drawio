@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+  <diagram id="sequence-auth" name="Sequence - Authentication &amp; Self-Registration">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Lifelines -->
+        <mxCell id="ll-citizen" value="Citizen (Browser)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-citizen" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="90" y="50" width="10" height="520" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ll-frontend" value="Frontend (React)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="20" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-frontend" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="50" width="10" height="520" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ll-backend" value="Backend (Express)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="20" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-backend" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="515" y="50" width="10" height="520" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ll-db" value="MongoDB" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="20" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-db" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="750" y="50" width="10" height="520" as="geometry" />
+        </mxCell>
+
+        <!-- === SELF-REGISTRATION FLOW === -->
+
+        <!-- Request form -->
+        <mxCell id="arrow1" value="1. Fill register form" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-citizen" target="lifeline-frontend">
+          <mxGeometry x="0.5" y="20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- FE -> BE -->
+        <mxCell id="arrow2" value="2. POST /auth/register/citizen" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-frontend" target="lifeline-backend">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0.5" y="30" relative="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- BE -> DB -->
+        <mxCell id="arrow3" value="3. db.users.insertOne()" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-backend" target="lifeline-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- DB -> BE -->
+        <mxCell id="arrow4" value="4. User created" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-db" target="lifeline-backend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BE generates JWT -->
+        <mxCell id="act-jwt" value="Generate JWT" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="200" width="90" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BE -> FE -->
+        <mxCell id="arrow5" value="5. 201 Created + JWT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-backend" target="lifeline-frontend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- FE -> Citizen -->
+        <mxCell id="arrow6" value="6. Redirect to /relief-requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-frontend" target="lifeline-citizen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- === LOGIN FLOW === -->
+
+        <mxCell id="label-login" value="&lt;b&gt;&lt;i&gt;--- Existing User Login ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="320" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Login request -->
+        <mxCell id="arrow7" value="7. Enter email + password" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-citizen" target="lifeline-frontend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- FE -> BE -->
+        <mxCell id="arrow8" value="8. POST /auth/login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-frontend" target="lifeline-backend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BE -> DB -->
+        <mxCell id="arrow9" value="9. db.users.findOne()" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-backend" target="lifeline-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- DB -> BE -->
+        <mxCell id="arrow10" value="10. User document" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-db" target="lifeline-backend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BE verifies -->
+        <mxCell id="act-verify" value="Verify password hash" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="420" width="90" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BE -> FE -->
+        <mxCell id="arrow11" value="11. 200 OK + JWT + user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-backend" target="lifeline-frontend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- FE stores JWT -->
+        <mxCell id="act-store" value="Store JWT in session" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="470" width="80" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- FE -> Citizen -->
+        <mxCell id="arrow12" value="12. Redirect to dashboard" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-frontend" target="lifeline-citizen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
