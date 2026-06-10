@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { getHousehold } from './householdService'
+import { listDistributions } from '../distributions/distributionService'
 import { formatDateTime } from '../../utils/formatters'
 import Card from '../../components/common/Card'
 import Loading from '../../components/common/Loading'
@@ -11,6 +12,8 @@ export default function HouseholdDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [household, setHousehold] = useState(null)
+  const [distributions, setDistributions] = useState([])
+  const [distsLoading, setDistsLoading] = useState(true)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -19,6 +22,10 @@ export default function HouseholdDetail() {
       .then(({ household }) => setHousehold(household))
       .catch(err => setError(err.error || 'Failed to load'))
       .finally(() => setLoading(false))
+    listDistributions({ householdId: id, limit: '50' })
+      .then(data => setDistributions(data.logs || []))
+      .catch(() => {})
+      .finally(() => setDistsLoading(false))
   }, [id])
 
   if (loading) return <Loading message="Loading household..." />
@@ -86,6 +93,45 @@ export default function HouseholdDetail() {
           <img src={household.photoUrl} alt="Household" style={{ maxWidth: '320px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }} />
         </Card>
       )}
+
+      <Card style={{ marginBottom: 'var(--space-4)' }}>
+        <h2 className="page-section-title">
+          Relief Received
+          {!distsLoading && <span className="badge badge-info" style={{ marginLeft: 'var(--space-2)' }}>{distributions.length}</span>}
+        </h2>
+        {distsLoading ? (
+          <Loading message="Loading relief history..." />
+        ) : distributions.length === 0 ? (
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>No relief distributed to this household yet.</p>
+        ) : (
+          <div className="data-table-wrapper">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Date</th>
+                  <th>Officer</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {distributions.map(d => (
+                  <tr key={d._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/distributions/${d._id}`)}>
+                    <td style={{ fontWeight: 500 }}>{d.itemCategoryId?.name || d.unit}</td>
+                    <td>{d.quantity} {d.unit}</td>
+                    <td style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>{formatDateTime(d.distributedAt)}</td>
+                    <td style={{ fontSize: '0.85rem' }}>{d.officerId?.name || '—'}</td>
+                    <td>
+                      <span className={`badge ${d.syncStatus === 'SYNCED' ? 'badge-success' : 'badge-warning'}`}>{d.syncStatus}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Card>
 
       {markers.length > 0 && (
         <Card>

@@ -67,7 +67,7 @@ async function list(req, res, next) {
     const skip = (parseInt(page) - 1) * parseInt(limit)
     const [logs, total] = await Promise.all([
       DistributionLog.find(filter)
-        .populate('householdId itemCategoryId')
+        .populate('householdId itemCategoryId officerId')
         .sort({ distributedAt: -1 })
         .skip(skip)
         .limit(parseInt(limit)),
