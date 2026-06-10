@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+  <diagram id="activity-relief-flow" name="Relief Request Activity Flow">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- === SWIMLANES === -->
+
+        <!-- Citizen lane -->
+        <mxCell id="lane-citizen" value="CITIZEN" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="300" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- System lane -->
+        <mxCell id="lane-system" value="SYSTEM" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="320" y="20" width="300" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Official lane -->
+        <mxCell id="lane-official" value="OFFICIAL&#10;(UP/UPAZILA)" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="620" y="20" width="300" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- === CITIZEN ACTIVITIES === -->
+
+        <!-- Start -->
+        <mxCell id="start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150" y="60" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 1. Citizen registers -->
+        <mxCell id="act-register" value="Self-Register&#10;(name, email, phone, password)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- 2. Citizen logs in -->
+        <mxCell id="act-login" value="Login&#10;(email + password)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="80" y="210" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- 3. Submit relief request -->
+        <mxCell id="act-submit" value="Submit Relief Request&#10;(items, priority, location)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- 4. View status -->
+        <mxCell id="act-view" value="View Request Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="80" y="490" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- End -->
+        <mxCell id="end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150" y="760" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- === SYSTEM ACTIVITIES === -->
+
+        <!-- Register user -->
+        <mxCell id="sys-register" value="Create User&#10;(hash password, save)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="110" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Issue JWT -->
+        <mxCell id="sys-jwt" value="Issue JWT Token" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="160" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Save request -->
+        <mxCell id="sys-save" value="Save Relief Request&#10;(status = PENDING)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Notify officials -->
+        <mxCell id="sys-notify" value="Notify Officials&#10;(pending request count)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="390" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Update status -->
+        <mxCell id="sys-update" value="Update Request&#10;Status + ReviewedBy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="490" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === OFFICIAL ACTIVITIES === -->
+
+        <!-- Login -->
+        <mxCell id="off-login" value="Login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="690" y="210" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- View pending -->
+        <mxCell id="off-view" value="View Pending&#10;Relief Requests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="690" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Review -->
+        <mxCell id="off-review" value="Review Request&#10;(Approve / Reject)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="690" y="390" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === FLOWS === -->
+
+        <!-- start -> register -->
+        <mxCell id="f-start-reg" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="start" target="act-register">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- register -> sys-register (cross-lane) -->
+        <mxCell id="f-reg-sys" value="POST /auth/register/citizen" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="act-register" target="sys-register">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-register -> sys-jwt -->
+        <mxCell id="f-sysreg-jwt" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sys-register" target="sys-jwt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-jwt -> act-login (back to citizen) -->
+        <mxCell id="f-jwt-login" value="JWT returned" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-jwt" target="act-login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- act-login -> off-login -->
+        <mxCell id="f-login-off" value="Login (all roles)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="235" as="sourcePoint" />
+            <mxPoint x="690" y="235" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- act-login -> act-submit -->
+        <mxCell id="f-login-submit" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="act-login" target="act-submit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- act-submit -> sys-save -->
+        <mxCell id="f-submit-save" value="POST /relief-requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="act-submit" target="sys-save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-save -> sys-notify -->
+        <mxCell id="f-save-notify" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sys-save" target="sys-notify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-notify -> off-view -->
+        <mxCell id="f-notify-view" value="Dashboard update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-notify" target="off-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- off-login -> off-view -->
+        <mxCell id="f-offlogin-view" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="off-login" target="off-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- off-view -> off-review -->
+        <mxCell id="f-view-review" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="off-view" target="off-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- off-review -> sys-update -->
+        <mxCell id="f-review-update" value="PUT /relief-requests/admin/:id/review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-review" target="sys-update">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-update -> act-view -->
+        <mxCell id="f-update-view" value="Status updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-update" target="act-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- act-view -> end -->
+        <mxCell id="f-view-end" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="act-view" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

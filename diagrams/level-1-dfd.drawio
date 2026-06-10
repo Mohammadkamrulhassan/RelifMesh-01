@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+  <diagram id="level1-dfd" name="Level 1 Data Flow Diagram">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- === PROCESSES (bubbles) === -->
+
+        <!-- P1: Auth -->
+        <mxCell id="p1" value="P1&#10;Authenticate &amp;&#10;User Mgmt" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P2: Households -->
+        <mxCell id="p2" value="P2&#10;Manage&#10;Households" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="220" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P3: Distributions -->
+        <mxCell id="p3" value="P3&#10;Manage&#10;Distributions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="430" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P4: Relief Requests -->
+        <mxCell id="p4" value="P4&#10;Manage&#10;Relief Requests" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="370" y="30" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P5: Dashboard -->
+        <mxCell id="p5" value="P5&#10;Dashboard &#38;&#10;Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="370" y="220" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P6: Feedback -->
+        <mxCell id="p6" value="P6&#10;Manage&#10;Feedback" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="370" y="430" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- === DATA STORES (parallel lines) === -->
+
+        <!-- D1: Users -->
+        <mxCell id="d1" value="D1&#10;Users" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="600" y="30" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- D2: Households -->
+        <mxCell id="d2" value="D2&#10;Households" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="600" y="200" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- D3: DistributionLogs -->
+        <mxCell id="d3" value="D3&#10;Distribution&#10;Logs" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- D4: ReliefRequests -->
+        <mxCell id="d4" value="D4&#10;Relief&#10;Requests" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="600" y="610" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- D5: Feedback -->
+        <mxCell id="d5" value="D5&#10;Feedback" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="760" y="400" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- D6: ItemCategories -->
+        <mxCell id="d6" value="D6&#10;Item&#10;Categories" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="760" y="610" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- === EXTERNAL ENTITIES === -->
+
+        <!-- UPAZILA -->
+        <mxCell id="ee-upazila" value="UPAZILA&#10;OFFICER" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="30" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UP OFFICIAL -->
+        <mxCell id="ee-up" value="UP&#10;OFFICIAL" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="220" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- NGO -->
+        <mxCell id="ee-ngo" value="NGO&#10;WORKER" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="400" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- CITIZEN -->
+        <mxCell id="ee-citizen" value="CITIZEN" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="610" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === DATA FLOWS === -->
+
+        <!-- P1 <-> D1 -->
+        <mxCell id="f-p1-d1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p1" target="d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P2 <-> D2 -->
+        <mxCell id="f-p2-d2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p2" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P3 <-> D3 -->
+        <mxCell id="f-p3-d3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p3" target="d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P4 <-> D4 -->
+        <mxCell id="f-p4-d4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p4" target="d4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P6 <-> D5 -->
+        <mxCell id="f-p6-d5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p6" target="d5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P1 <-> EE: UPAZILA -->
+        <mxCell id="f-p1-e1" value="Login, Reg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p1" target="ee-upazila">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P2 <-> EE: UP -->
+        <mxCell id="f-p2-e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p2" target="ee-up">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P3 <-> EE: UP, NGO -->
+        <mxCell id="f-p3-e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p3" target="ee-ngo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P4 <-> EE: CITIZEN -->
+        <mxCell id="f-p4-e4" value="Request, Status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p4" target="ee-citizen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P5 <-> D2, D3, D4 for dashboard -->
+        <mxCell id="f-p5-d2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p5" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f-p5-d3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p5" target="d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f-p5-d4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p5" target="d4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

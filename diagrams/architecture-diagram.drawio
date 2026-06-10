@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+  <diagram id="architecture" name="System Architecture">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- === CLIENTS TIER === -->
+        <mxCell id="tier-client" value="&lt;b&gt;CLIENT TIER (Frontend)&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#fff2cc;strokeColor=#d6b656;startSize=30;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="300" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="react-app" value="React SPA&#10;(Vite)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="router" value="React Router&#10;(Auth Guards)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="icons" value="SVG Icons&#10;(Lucide)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="Axios API&#10;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="200" y="150" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === API GATEWAY TIER === -->
+        <mxCell id="tier-api" value="&lt;b&gt;API GATEWAY (Backend)&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=30;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="30" y="280" width="300" height="260" as="geometry" />
+        </mxCell>
+
+        <mxCell id="express" value="Express.js&#10;(Node.js)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="330" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="middleware" value="Auth JWT&#10;Middleware" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="400" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="routes" value="Route Modules&#10;(Auth, Households, etc.)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="330" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="controllers" value="Controllers&#10;(Business Logic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="400" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="models" value="Mongoose&#10;Models" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="470" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="validators" value="Validation&#10;(Zod/Manual)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="470" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === DATA TIER === -->
+        <mxCell id="tier-data" value="&lt;b&gt;DATA TIER&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="30" y="600" width="300" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mongo" value="MongoDB&#10;(NoSQL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="660" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="collections" value="Collections: users,&#10;households, distributions,&#10;relief_requests, feedback,&lt;br&gt;item_categories,&lt;br&gt;jurisdictions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="180" y="655" width="130" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- === CONNECTORS === -->
+
+        <!-- Client -> API (HTTP) -->
+        <mxCell id="conn-client-api" value="HTTP/JSON" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="220" as="sourcePoint" />
+            <mxPoint x="180" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- API -> Data (Mongoose) -->
+        <mxCell id="conn-api-data" value="Mongoose ODM" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="540" as="sourcePoint" />
+            <mxPoint x="180" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- === LEGEND === -->
+        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="430" y="20" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-client" value="Frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="450" y="50" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-api" value="Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="450" y="80" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-data" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="450" y="110" width="80" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
