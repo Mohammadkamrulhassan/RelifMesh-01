@@ -12,10 +12,10 @@
 
 | ID | Name | Role |
 |----|------|------|
-| 2101011001 | Abidul Islam | System Analyst / QA Tester |
-| 2101011005 | MD. Kamrul Hassan | Project Manager / Developer |
-| 2101011013 | Sayeda Mofatteha Ahmed | UI/UX Designer |
-| 2101011038 | Iftekhar Alam Nahid | UI/UX Designer |
+| 2101011001 | Abidul Islam | Backend Lead (v2) / QA Tester |
+| 2101011005 | MD. Kamrul Hassan | Project Manager / Full-Stack Developer |
+| 2101011013 | Sayeda Mofatteha Ahmed | UI/UX Designer (v2) / Documentation Lead |
+| 2101011038 | Iftekhar Alam Nahid | Frontend UI / Presentation Lead |
 
 ---
 
@@ -49,6 +49,18 @@ ReliefMesh solves this with an offline-first platform connecting **victims**, **
 - **Relief Requests** — citizen submit, officials approve/reject/fulfill
 - **Reports Export** — CSV/PDF generation
 - **Image Upload** — photo capture and upload
+
+### v2 Roles (7 roles)
+
+| Role | Purpose |
+|------|---------|
+| `victim` | Disaster-affected individual requesting SOS/relief |
+| `volunteer` | Rescue worker assigned to missions |
+| `ngo` | NGO admin managing campaigns & inventory |
+| `govt` | Government official overseeing relief |
+| `donor` | Individual/organization donating to campaigns |
+| `admin` | System administrator with full access |
+| `super_admin` | Elevated admin with user management & audit |
 
 ### Planned (v2 — In Development)
 - **Phone/OTP Authentication** — passwordless login via OTP + JWT refresh tokens
@@ -124,12 +136,14 @@ ReliefMesh/
 
 ---
 
-## API Reference (v1)
+## API Reference
+
+### v1 (Implemented)
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|:----:|-------------|
 | GET | `/v1/health` | No | Health check |
-| POST | `/v1/auth/login` | No | Login, returns JWT |
+| POST | `/v1/auth/login` | No | Login (email/password), returns JWT |
 | POST | `/v1/auth/register` | Upazila Officer | Create user account |
 | GET | `/v1/auth/profile` | Yes | Get profile |
 | PUT | `/v1/auth/profile` | Yes | Update profile |
@@ -156,25 +170,83 @@ ReliefMesh/
 | PUT | `/v1/inventory/:id` | Upazila Officer | Update inventory item |
 | POST | `/v1/uploads/image` | Yes | Upload photo (multipart, 5MB, image only) |
 
+### v2 (Planned — models seeded)
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|:----:|-------------|
+| POST | `/v2/auth/send-otp` | No | Send OTP to phone number |
+| POST | `/v2/auth/verify-otp` | No | Verify OTP, returns JWT |
+| POST | `/v2/auth/refresh` | No | Refresh access token |
+| POST | `/v2/sos` | victim | Submit SOS request |
+| GET | `/v2/sos` | volunteer | List SOS requests |
+| POST | `/v2/missions` | volunteer | Accept/start mission |
+| PUT | `/v2/missions/:id` | volunteer | Update mission status |
+| GET | `/v2/campaigns` | No | List active campaigns |
+| POST | `/v2/donations` | donor | Donate to campaign |
+| GET | `/v2/shelters` | No | List nearby shelters |
+| POST | `/v2/chat/:missionId` | volunteer/victim | Send mission message |
+| GET | `/v2/notifications` | Yes | List user notifications |
+| GET | `/v2/admin/dashboard` | admin | Command center stats |
+| GET | `/v2/admin/audit-logs` | super_admin | View audit trail |
+
 All protected endpoints use `Authorization: Bearer <token>` header.
 
 ---
 
 ## Quick Start
 
-```bash
-# Backend
-cd backend
-cp .env.example .env  # fill in your values
-npm install
-npm run migrate
-npm run seed
-npm run dev
+### Prerequisites
+- Node.js 20+
+- MongoDB Atlas cluster (free tier) — or local MongoDB
+- (Optional) Redis — for OTP caching and Socket.io
 
-# Frontend (separate terminal)
-cd frontend
+### Backend
+
+```bash
+cd backend
+cp .env.example .env  # add your Atlas URI from MongoDB Atlas dashboard
 npm install
-npm run dev
+npm run dev   # auto-seeds DB on first run (port 5000)
+```
+
+Your `.env` should contain:
+```env
+MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/relifmesh?retryWrites=true&w=majority
+JWT_SECRET=your-32-char-secret
+```
+
+> **Atlas IP Whitelist:** Add `0.0.0.0/0` (allow all) in Network Access for development, or add your specific IP.
+
+### Frontend
+
+```bash
+cd frontend
+cp .env.example .env
+npm install
+npm run dev   # Vite proxy forwards /v1 → localhost:5000 (port 5173)
+```
+
+Open `http://localhost:5173` in your browser.
+
+### Test Accounts
+
+```bash
+# v1 (email/password)
+upazila@relifmesh.test / password123     (UPAZILA_OFFICER)
+upofficial@relifmesh.test / password123  (UP_OFFICIAL)
+ngo@relifmesh.test / password123         (NGO_WORKER)
+citizen@relifmesh.test / password123     (CITIZEN)
+
+# v2 (phone/OTP — all use OTP 123456)
++8801700000001  (super_admin)
++8801700000002  (admin)
++8801700000003  (ngo)
++8801700000004  (govt)
++8801700000005  (volunteer)
++8801700000006  (volunteer)
++8801700000007  (donor)
++8801700000008  (victim)
++8801700000009  (victim)
 ```
 
 ---
