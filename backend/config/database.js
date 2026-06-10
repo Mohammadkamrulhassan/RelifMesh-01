@@ -59,6 +59,9 @@ async function connectDB() {
         console.log('[DB] Using MongoDB Atlas — ensure the cluster IP whitelist includes your app IP (0.0.0.0/0 for dev)')
       }
 
+      await mongoose.syncIndexes()
+      console.log('[DB] Indexes synced')
+
       const status = await checkDatabase()
 
       if (status === 'EMPTY') {

@@ -183,8 +183,8 @@ const seed = async () => {
   console.log('  +8801700000007 / 123456  (donor)')
   console.log('  +8801700000008 / 123456  (victim)')
   console.log('  +8801700000009 / 123456  (victim)')
-  console.log('[Seed] Note: v2 collections (sos_requests, missions, campaigns, etc.)')
-  console.log('[Seed] will be seeded once their Mongoose models are implemented.')
+  console.log('[Seed] v2 collections (sos_requests, missions, campaigns, etc.)')
+  console.log('[Seed] are auto-created when first used through the API.')
 
   if (needsConnection) await mongoose.disconnect()
 }

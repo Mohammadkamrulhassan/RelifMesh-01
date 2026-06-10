@@ -5,45 +5,89 @@
 
 ---
 
-## 3.10.1 Authentication (v2)
+## 3.10.1 Authentication (v2 — Implemented)
 
 ReliefMesh v2 uses **Phone Number + OTP** authentication for all users.
 
-### OTP Flow
+### OTP Flow (Implemented)
+
 ```
 [User enters phone number]
         │
         ▼
-[Request OTP → POST /api/auth/send-otp]
+[POST /v2/auth/send-otp]
         │
         ▼
-[Server generates 6-digit OTP]
-  ├── Stores OTP hash + phone in Redis (5 min TTL)
-  └── Sends SMS via SMS gateway
+[Server generates 6-digit OTP (crypto.randomInt)]
+  ├── Hashes OTP with SHA-256
+  ├── Stores hash in Redis (5 min TTL) OR in-memory Map
+  └── In dev mode (NODE_ENV=development):
+        OTP is returned in the response body
+        In production: OTP would be sent via SMS gateway
         │
         ▼
-[User enters OTP → POST /api/auth/verify-otp]
+[POST /v2/auth/verify-otp]
+  { phone, otp }
         │
         ▼
-[Server verifies OTP hash]
-  ├── Valid → Issue JWT (access + refresh tokens)
-  └── Invalid → Return 401, max 5 attempts
+[Server hashes input OTP → compares with stored hash]
+  ├── Match → Delete OTP from store
+  │           Issue JWT access token (15 min TTL)
+  │           Issue refresh token (7 day TTL)
+  │           Store refresh token for rotation
+  │           Auto-create user if first-time phone
+  │           Return { accessToken, refreshToken, user }
+  │
+  └── No match → Increment attempt counter (max 5)
+                  Return 401 with remaining attempts
+                  After 5 failures → block phone for 30 min
 ```
 
-### Token Strategy
+### Rate Limiting (Implemented)
+
+| Limit | Value | Implementation |
+|-------|-------|----------------|
+| OTP send | 3 requests per 10 min per phone | Increment counter with 10 min TTL |
+| OTP verify | 5 attempts per phone | Counter cleared on success; block 30 min after 5 failures |
+| General API | 200 requests per 15 min | `express-rate-limit` middleware |
+
+If rate limit is exceeded, the API returns:
+```json
+{
+  "error": "Too many OTP requests. Try again in X min.",
+  "retryAfter": 345
+}
+```
+
+### Token Strategy (Implemented)
+
 | Token | Storage | TTL | Purpose |
 |-------|---------|-----|---------|
-| Access Token | Memory (Redux) | 15 min | API auth |
-| Refresh Token | HTTP-only cookie | 7 days | Token renewal |
-| OTP Code | Redis (hashed) | 5 min | Phone verification |
+| **Access Token** | Memory (client) | 15 min (`JWT_EXPIRES_IN`) | API auth header |
+| **Refresh Token** | Client + Server store | 7 days (`JWT_REFRESH_EXPIRES_IN`) | Token renewal with rotation |
+| **OTP Code** | Redis / In-Memory | 5 min | Phone verification |
+
+### Refresh Token Rotation
+
+Each use of a refresh token:
+1. Server **consumes** the old token (deletes from store)
+2. Server verifies the old token's JWT signature
+3. Server issues a **new** access token + **new** refresh token
+4. If an old, already-consumed refresh token is reused → rejected (401)
+
+This prevents replay attacks if a refresh token is stolen.
 
 ### Security Measures
-- OTP hashed with bcrypt before storage
-- Rate limit: 3 OTP requests per phone per 10 min (Redis)
-- Max 5 OTP verify attempts per session
-- JWT signed with RS256 (asymmetric key pair)
-- Refresh token rotation on each use
-- Device fingerprint stored on login for anomaly detection
+
+| Measure | Implementation |
+|---------|----------------|
+| OTP hashing | SHA-256 before storage (not plaintext) |
+| Rate limiting | Redis-cached counters (or in-memory fallback) |
+| Max verify attempts | 5 → phone blocked for 30 min |
+| JWT signing | HS256 with env secret (RS256 planned for production) |
+| Refresh rotation | Old token invalidated on each use |
+| Dev mode safety | OTP returned in response body only when `NODE_ENV=development` |
+| No password storage | Phone/OTP users have no `passwordHash` |
 
 ---
 
@@ -97,35 +141,77 @@ Legend: C = Create, R = Read, U = Update, D = Delete
 
 | Measure | Implementation |
 |---------|----------------|
-| Password/OTP hashing | bcrypt (cost factor 12) |
-| NID encryption | AES-256-GCM at rest |
-| JWT signing | RS256 (4096-bit key pair) |
-| API rate limiting | Redis-based, per-route tiers |
-| Input validation | Zod schemas on all routes |
+| OTP hashing | SHA-256 (not stored in plaintext) |
+| Password hashing | bcrypt (cost factor 10) — for v1 email/password users |
+| JWT signing | HS256 with 32+ character secret |
+| API rate limiting | 200 req/15 min global; 3 OTP/10 min per phone |
+| Input validation | express-validator on all routes |
 | XSS protection | Helmet.js, React escape by default |
-| CSRF protection | SameSite=Strict cookies, CSRF token for state-changing requests |
-| MongoDB injection | Mongoose sanitization, mongo-sanitize |
+| MongoDB injection | Mongoose schema validation |
 | HTTPS enforcement | Production only; TLS 1.3 |
-| Audit trail | All admin/role changes logged to audit_logs |
-
-### API Rate Limit Tiers
-
-| Tier | Limit | Routes |
-|------|-------|--------|
-| Strict | 3 req/min | OTP send, OTP verify |
-| Standard | 30 req/min | Auth, SOS create |
-| Moderate | 100 req/min | CRUD endpoints |
-| Unlimited | — | Public read-only |
 
 ---
 
-## 10.5 Session & Device Management
+## 10.5 Implementation Details
 
-- Users can view all active sessions (device, IP, last active)
-- Force logout from specific devices
-- Single-session enforcement optional (configurable in admin panel)
-- Session data stored in Redis for fast invalidation
+### OTP Service (`backend/services/otpStore.js`)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      OtpStore (Singleton)                        │
+├─────────────────────────────────────────────────────────────────┤
+│  _init()                                                         │
+│    ├── Try Redis connection (ioredis)                            │
+│    ├── If Redis fails → in-memory Map fallback                   │
+│    └── Logs which store is active                                │
+│                                                                  │
+│  sendOtp(phone)                                                  │
+│    ├── Check rate limit (3/10min) → 429 if exceeded              │
+│    ├── Generate 6-digit OTP                                      │
+│    ├── Hash with SHA-256                                         │
+│    ├── Store hash (Redis EX 300s / Map with expiry)              │
+│    └── Return OTP (visible only in dev mode)                     │
+│                                                                  │
+│  verifyOtp(phone, otp)                                           │
+│    ├── Check attempt counter → 423 if ≥5 failures               │
+│    ├── Hash input OTP, compare with stored hash                  │
+│    ├── Match → delete from store, return { valid: true }         │
+│    └── No match → increment counter, return error                │
+│                                                                  │
+│  consumeRefreshToken(token)                                      │
+│    ├── Look up token in store                                    │
+│    ├── Found → delete from store, return phone                   │
+│    └── Not found → return null                                   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Auth Controller (`backend/modules/auth-v2/authV2Controller.js`)
+
+```
+sendOtp(req, res)
+  ├── Calls otpStore.sendOtp(phone)
+  ├── If rate limited → 429 { error, retryAfter }
+  └── 200 { message: "OTP sent to +880****08", otp: "..." }
+
+verifyOtp(req, res)
+  ├── Calls otpStore.verifyOtp(phone, otp)
+  ├── If invalid → 401 { error }
+  ├── Find or auto-create User by phone
+  ├── Sign accessToken (JWT, 15 min)
+  ├── Sign refreshToken (JWT, 7 days)
+  ├── Store refreshToken in otpStore
+  └── 200 { accessToken, refreshToken, user }
+
+refresh(req, res)
+  ├── Calls otpStore.consumeRefreshToken(refreshToken)
+  ├── If null → 401 { error: "Invalid or expired refresh token" }
+  ├── Verify JWT signature of old refresh token
+  ├── Find user
+  ├── Issue new access + refresh tokens
+  ├── Store new refresh token
+  └── 200 { accessToken, refreshToken }
+```
 
 ---
 
-*End of Section 3.10 — Next: Section 3.12 Project Management*
+*End of Section 3.10 — Next: Section 3.11 Deployment & Maintenance*

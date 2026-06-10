@@ -62,8 +62,12 @@ ReliefMesh solves this with an offline-first platform connecting **victims**, **
 | `admin` | System administrator with full access |
 | `super_admin` | Elevated admin with user management & audit |
 
+### Implemented (v2 — Done)
+- **Phone/OTP Authentication** — passwordless login via OTP + JWT refresh token rotation
+- **Auto-User Creation** — first-time phone login creates a verified user automatically
+- **Offline-First with In-Memory Fallback** — OTP store works without Redis in development
+
 ### Planned (v2 — In Development)
-- **Phone/OTP Authentication** — passwordless login via OTP + JWT refresh tokens
 - **SOS Emergency Requests** — GPS-based SOS with type, priority, auto-expiry, offline mode
 - **Rescue Mission Coordination** — volunteers accept SOS, mission lifecycle with real-time tracking
 - **Campaigns & Crowdfunding** — NGOs create fundraising campaigns, bKash/Nagad/Rocket payments
@@ -89,7 +93,7 @@ ReliefMesh solves this with an offline-first platform connecting **victims**, **
 | Language | JavaScript (FE + BE) | TypeScript (FE + BE) |
 | Frontend | React 18, Vite, Tailwind CSS, Leaflet.js, localforage | React 18, Vite, Tailwind, Leaflet, Redux Toolkit, react-i18next |
 | Backend | Node.js, Express.js | Node.js, Express.js, Socket.io |
-| Database | MongoDB, Mongoose ODM | MongoDB, Mongoose ODM, Redis |
+| Database | MongoDB, Mongoose ODM | MongoDB (Atlas), Mongoose ODM, Redis |
 | Auth | Email/password + JWT | Phone/OTP + JWT (access + refresh) |
 | Real-time | — | Socket.io (SOS, missions, notifications) |
 | Offline | localforage (distribution sync) | IndexedDB (SOS queue + distribution sync) |
@@ -102,9 +106,9 @@ ReliefMesh solves this with an offline-first platform connecting **victims**, **
 ## Architecture (v2)
 
 ```
-[ React Client (PWA + Redux) ] <──REST/WS──> [ Express + Socket.io Server ] <──> [ MongoDB ]
-                                                    │
-                                              [ Redis Cache ]
+[ React Client (PWA + Redux) ] <──REST/WS──> [ Express + Socket.io Server ] <──> [ MongoDB Atlas ]
+                                                     │
+                                               [ Redis / In-Memory Store ]
 ```
 
 ---
@@ -118,19 +122,18 @@ ReliefMesh/
 │   ├── shared/        # Shared components, hooks, store, i18n, api
 │   └── public/        # PWA manifest, icons, service worker
 │
-├── backend/           # Express + TypeScript REST API + Socket.io
-│   ├── modules/       # Domain modules with model/router/controller/service
-│   ├── config/        # DB, Redis, Socket, env config
-│   ├── sockets/       # WebSocket event handlers
-│   ├── jobs/          # Background cron jobs
-│   └── tests/         # Integration and E2E tests
+├── backend/           # Express REST API
+│   ├── modules/       # Domain modules (auth, auth-v2, sos, campaigns...)
+│   ├── services/      # Shared services (otpStore, conflictResolver)
+│   ├── config/        # DB, environment, env config
+│   ├── middleware/     # authenticate, authorize, errorHandler
+│   └── tests/         # Integration and unit tests
 │
 ├── documentation/     # 14 SAD module deliverables
 ├── diagrams/          # draw.io files (DFD, UML, ERD, architecture)
 ├── designs/           # Figma exports (wireframes, mockups)
 ├── reports/           # PM artifacts (meeting minutes, weekly progress)
 ├── submission/        # Final deliverables (demo video, slides)
-├── newly-think/       # Redesign spec and documentation
 └── assets/            # Shared media
 ```
 
@@ -170,13 +173,18 @@ ReliefMesh/
 | PUT | `/v1/inventory/:id` | Upazila Officer | Update inventory item |
 | POST | `/v1/uploads/image` | Yes | Upload photo (multipart, 5MB, image only) |
 
-### v2 (Planned — models seeded)
+### v2 (Implemented)
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|:----:|-------------|
-| POST | `/v2/auth/send-otp` | No | Send OTP to phone number |
-| POST | `/v2/auth/verify-otp` | No | Verify OTP, returns JWT |
-| POST | `/v2/auth/refresh` | No | Refresh access token |
+| POST | `/v2/auth/send-otp` | No | Send 6-digit OTP to phone |
+| POST | `/v2/auth/verify-otp` | No | Verify OTP, returns access + refresh tokens |
+| POST | `/v2/auth/refresh` | No | Rotate refresh token (old one invalidated) |
+
+### v2 (Planned)
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|:----:|-------------|
 | POST | `/v2/sos` | victim | Submit SOS request |
 | GET | `/v2/sos` | volunteer | List SOS requests |
 | POST | `/v2/missions` | volunteer | Accept/start mission |
@@ -197,36 +205,112 @@ All protected endpoints use `Authorization: Bearer <token>` header.
 
 ### Prerequisites
 - Node.js 20+
-- MongoDB Atlas cluster (free tier) — or local MongoDB
-- (Optional) Redis — for OTP caching and Socket.io
+- **MongoDB Atlas** cluster (free M0 tier) — or local MongoDB
+- (Optional but recommended) Redis — for OTP caching in production
 
-### Backend
+---
+
+### 1. Create a MongoDB Atlas Cluster
+
+If you don't have one yet:
+
+```
+1. Go to https://www.mongodb.com/atlas → Sign up (free)
+2. Deploy a free M0 cluster (AWS, 512MB storage)
+3. Under SECURITY → Database Access → Add Database User:
+     Username: your_db_user
+     Password: your_db_password  (copy this)
+4. Under SECURITY → Network Access → Add IP Address:
+     Add 0.0.0.0/0 (allows all IPs — use for development only)
+5. Click Connect → Drivers → Copy the connection string:
+   mongodb+srv://<db_user>:<db_password>@cluster0.xxxxx.mongodb.net
+```
+
+> **Note:** The app auto-appends `/relifmesh` as the database name if your URI doesn't include one.
+
+---
+
+### 2. Configure Backend
 
 ```bash
 cd backend
-cp .env.example .env  # add your Atlas URI from MongoDB Atlas dashboard
-npm install
-npm run dev   # auto-seeds DB on first run (port 5000)
+cp .env.example .env
 ```
 
-Your `.env` should contain:
+Edit `backend/.env` with your Atlas credentials:
+
 ```env
-MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/relifmesh?retryWrites=true&w=majority
-JWT_SECRET=your-32-char-secret
+MONGODB_URI=mongodb+srv://your_db_user:your_db_password@cluster0.xxxxx.mongodb.net/relifmesh?retryWrites=true&w=majority
+JWT_SECRET=generate-a-random-32-char-string
+JWT_REFRESH_SECRET=another-random-32-char-string
+SMS_PROVIDER=mock
+REDIS_URL=redis://localhost:6379
+PORT=5000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
 ```
 
-> **Atlas IP Whitelist:** Add `0.0.0.0/0` (allow all) in Network Access for development, or add your specific IP.
+Then install and start:
 
-### Frontend
+```bash
+npm install
+npm run dev
+```
+
+**On first run**, the server:
+1. Connects to Atlas
+2. Syncs indexes (fixes unique sparse index for email field)
+3. Detects empty database → auto-seeds with test accounts
+4. Starts on port `5000`
+
+---
+
+### 3. Configure Frontend
 
 ```bash
 cd frontend
 cp .env.example .env
 npm install
-npm run dev   # Vite proxy forwards /v1 → localhost:5000 (port 5173)
+npm run dev
 ```
 
+The Vite proxy forwards `/v1` and `/v2` → `http://localhost:5000`.
+
 Open `http://localhost:5173` in your browser.
+
+---
+
+### 4. Verify the OTP Auth Flow
+
+Test the entire OTP lifecycle with curl:
+
+```bash
+# Step 1: Send OTP to a test phone
+curl -X POST http://localhost:5000/v2/auth/send-otp \
+  -H "Content-Type: application/json" \
+  -d '{"phone":"+8801700000008"}'
+# Response: { "message": "OTP sent to +880****08", "otp": "630083" }
+# Note: In development mode, the OTP is returned in the response.
+
+# Step 2: Verify the OTP (use the otp value from step 1)
+curl -X POST http://localhost:5000/v2/auth/verify-otp \
+  -H "Content-Type: application/json" \
+  -d '{"phone":"+8801700000008","otp":"630083"}'
+# Response: { "accessToken": "...", "refreshToken": "...", "user": {...} }
+
+# Step 3: Use the access token to access protected endpoints
+curl http://localhost:5000/v1/auth/profile \
+  -H "Authorization: Bearer <accessToken>"
+
+# Step 4: Refresh the token (before the access token expires)
+curl -X POST http://localhost:5000/v2/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"refreshToken":"<refreshToken>"}'
+# Response: { "accessToken": "...", "refreshToken": "..." }
+# Note: The old refresh token is invalidated after use (rotation).
+```
+
+---
 
 ### Test Accounts
 
@@ -237,7 +321,7 @@ upofficial@relifmesh.test / password123  (UP_OFFICIAL)
 ngo@relifmesh.test / password123         (NGO_WORKER)
 citizen@relifmesh.test / password123     (CITIZEN)
 
-# v2 (phone/OTP — all use OTP 123456)
+# v2 (phone/OTP — OTP is returned in API response in dev mode)
 +8801700000001  (super_admin)
 +8801700000002  (admin)
 +8801700000003  (ngo)
@@ -270,4 +354,5 @@ citizen@relifmesh.test / password123     (CITIZEN)
 | 3.13 | References & Bibliography | [x] Complete |
 | 3.14 | Presentation & Defense | [x] Complete |
 | **Prototype** | Frontend + Backend code | [x] Complete (v1) |
-| **Upgrade** | v2 enhancements (see newly-think/) | [ ] In Progress |
+| **v2 Auth** | Phone/OTP + Refresh Rotation | [x] Implemented |
+| **Upgrade** | v2 enhancements | [ ] In Progress |
