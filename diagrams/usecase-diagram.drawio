@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+  <diagram id="usecase-diagram" name="Use Case Diagram">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- System Boundary -->
+        <mxCell id="sys" value="RelifMesh System" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="520" height="580" as="geometry" />
+        </mxCell>
+
+        <!-- === ACTORS === -->
+
+        <!-- UPAZILA OFFICER -->
+        <mxCell id="actor-upazila" value="UPAZILA&#10;OFFICER" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="30" y="100" width="30" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UP OFFICIAL -->
+        <mxCell id="actor-up" value="UP OFFICIAL" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="30" y="280" width="30" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- NGO WORKER -->
+        <mxCell id="actor-ngo" value="NGO WORKER" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="30" y="450" width="30" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- CITIZEN -->
+        <mxCell id="actor-citizen" value="CITIZEN" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="720" y="280" width="30" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === USE CASES === -->
+
+        <!-- UC1: Login -->
+        <mxCell id="uc1" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="80" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC2: Manage Users -->
+        <mxCell id="uc2" value="Manage Users" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="420" y="80" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC3: Register Households -->
+        <mxCell id="uc3" value="Register&#10;Households" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="180" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC4: Manage Relief Requests -->
+        <mxCell id="uc4" value="Review Relief&#10;Requests" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="420" y="180" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC5: Log Distributions -->
+        <mxCell id="uc5" value="Log&#10;Distributions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="280" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC6: View Dashboard -->
+        <mxCell id="uc6" value="View Dashboard" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="420" y="280" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC7: Manage Feedback -->
+        <mxCell id="uc7" value="Manage&#10;Feedback" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="380" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC8: Submit Feedback -->
+        <mxCell id="uc8" value="Submit&#10;Feedback" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="420" y="380" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC9: Self-Register -->
+        <mxCell id="uc9" value="Self-Register" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="480" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC10: Submit Relief Request -->
+        <mxCell id="uc10" value="Submit Relief&#10;Request" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="420" y="480" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC11: Edit/Delete Distributions -->
+        <mxCell id="uc11" value="Edit/Delete&#10;Distributions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="420" y="580" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- UC12: View Relief History -->
+        <mxCell id="uc12" value="View Relief&#10;History" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="580" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === CONNECTORS: Actor -> Use Case === -->
+
+        <!-- UPAZILA <-> UC1 Login -->
+        <mxCell id="conn-upazila-uc1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-upazila" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UPAZILA <-> UC2 -->
+        <mxCell id="conn-upazila-uc2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-upazila" target="uc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UPAZILA <-> UC6 -->
+        <mxCell id="conn-upazila-uc6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-upazila" target="uc6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UPAZILA <-> UC7 -->
+        <mxCell id="conn-upazila-uc7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-upazila" target="uc7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UPAZILA <-> UC4 -->
+        <mxCell id="conn-upazila-uc4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-upazila" target="uc4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UP OFFICIAL <-> UC1 -->
+        <mxCell id="conn-up-uc1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-up" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UP OFFICIAL <-> UC3 -->
+        <mxCell id="conn-up-uc3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-up" target="uc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UP OFFICIAL <-> UC5 -->
+        <mxCell id="conn-up-uc5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-up" target="uc5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UP OFFICIAL <-> UC11 -->
+        <mxCell id="conn-up-uc11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-up" target="uc11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UP OFFICIAL <-> UC12 -->
+        <mxCell id="conn-up-uc12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-up" target="uc12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- UP OFFICIAL <-> UC4 -->
+        <mxCell id="conn-up-uc4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-up" target="uc4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- NGO <-> UC1 -->
+        <mxCell id="conn-ngo-uc1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-ngo" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- NGO <-> UC5 -->
+        <mxCell id="conn-ngo-uc5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-ngo" target="uc5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- NGO <-> UC6 -->
+        <mxCell id="conn-ngo-uc6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-ngo" target="uc6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CITIZEN <-> UC9 -->
+        <mxCell id="conn-cit-uc9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-citizen" target="uc9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- CITIZEN <-> UC10 -->
+        <mxCell id="conn-cit-uc10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-citizen" target="uc10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- CITIZEN <-> UC8 -->
+        <mxCell id="conn-cit-uc8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-citizen" target="uc8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- CITIZEN <-> UC6 -->
+        <mxCell id="conn-cit-uc6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-citizen" target="uc6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- CITIZEN <-> UC1 -->
+        <mxCell id="conn-cit-uc1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="actor-citizen" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- <<include>> Login -> UC9 Self-Register (citizen doesn't need login first) -->
+        <mxCell id="inc-include" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="uc9" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
