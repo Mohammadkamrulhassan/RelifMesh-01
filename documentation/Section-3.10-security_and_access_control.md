@@ -1,191 +1,131 @@
 # Section 3.10 — Security & Access Control
-**Project:** RelifMesh — Disaster Relief Coordination System for Local Government
+**Project:** ReliefMesh — Disaster Response & Relief Management System
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-06-09
+**Last Updated:** 2026-06-10
 
 ---
 
-## 3.10.1 Threat Model (STRIDE)
+## 3.10.1 Authentication (v2)
 
-STRIDE is a standard threat classification framework: **S**poofing, **T**ampering, **R**epudiation, **I**nformation Disclosure, **D**enial of Service, **E**levation of Privilege.
+ReliefMesh v2 uses **Phone Number + OTP** authentication for all users.
 
-| Threat | Category | Example in RelifMesh | Mitigation |
-|--------|----------|----------------------|------------|
-| Fake officer identity | Spoofing | Attacker logs in as UP Official to falsify distribution logs | JWT authentication + bcrypt password hashing |
-| Modify distribution log | Tampering | User edits a submitted log to hide duplicate distribution | Logs are immutable once synced; amendments create new entries |
-| Deny making a log entry | Repudiation | Officer claims they never logged a distribution | All logs include officer_id + timestamp + GPS; full audit trail |
-| Expose household PII | Information Disclosure | Public dashboard leaks NID or name | PII only in private endpoints; public data aggregated at union level |
-| Flood API with requests | Denial of Service | Bot hammers `/distributions` endpoint | Rate limiting middleware (express-rate-limit) |
-| NGO worker views Upazila data | Elevation of Privilege | NGO worker accesses admin-only reports | RBAC enforced on every protected route; JWT role decoded server-side |
+### OTP Flow
+```
+[User enters phone number]
+        │
+        ▼
+[Request OTP → POST /api/auth/send-otp]
+        │
+        ▼
+[Server generates 6-digit OTP]
+  ├── Stores OTP hash + phone in Redis (5 min TTL)
+  └── Sends SMS via SMS gateway
+        │
+        ▼
+[User enters OTP → POST /api/auth/verify-otp]
+        │
+        ▼
+[Server verifies OTP hash]
+  ├── Valid → Issue JWT (access + refresh tokens)
+  └── Invalid → Return 401, max 5 attempts
+```
+
+### Token Strategy
+| Token | Storage | TTL | Purpose |
+|-------|---------|-----|---------|
+| Access Token | Memory (Redux) | 15 min | API auth |
+| Refresh Token | HTTP-only cookie | 7 days | Token renewal |
+| OTP Code | Redis (hashed) | 5 min | Phone verification |
+
+### Security Measures
+- OTP hashed with bcrypt before storage
+- Rate limit: 3 OTP requests per phone per 10 min (Redis)
+- Max 5 OTP verify attempts per session
+- JWT signed with RS256 (asymmetric key pair)
+- Refresh token rotation on each use
+- Device fingerprint stored on login for anomaly detection
 
 ---
 
-## 3.10.2 Authentication Mechanism
+## 3.10.2 Role Definitions
 
-### Method: JWT (JSON Web Token)
-
-**Login Flow:**
-```
-Client             Server
- │                │
- │──POST /auth/login─────────────►│
- │ { email, password }      │
- │                │──Lookup user by email
- │                │──Compare password with bcrypt hash
- │                │──Generate JWT (payload: user_id, role, jurisdiction_id)
- │◄──{ token: "eyJ..." }─────────│
- │                │
- │──GET /households (with JWT)───►│
- │ Authorization: Bearer eyJ... │──Decode JWT → extract role + jurisdiction
- │                │──Check permission
- │◄──{ households: [...] }───────│
-```
-
-**JWT Payload Structure:**
-```json
-{
- "sub": "user-uuid-here",
- "role": "UP_OFFICIAL",
- "jurisdiction_id": "union-uuid-here",
- "iat": 1748300000,
- "exp": 1748904800
-}
-```
-
-**Settings:**
-- Algorithm: `HS256`
-- Expiry: `7 days`
-- Secret: stored in `.env`, never in code
-- Token transmitted via `Authorization: Bearer` header only — never in URL query params
+| Role | Description |
+|------|-------------|
+| `victim` | Disaster-affected individual requesting SOS/relief |
+| `volunteer` | Rescue worker assigned to missions |
+| `ngo` | NGO admin managing campaigns & inventory |
+| `govt` | Government official overseeing relief distribution |
+| `donor` | Individual/organization donating to campaigns |
+| `admin` | System administrator with full access |
+| `super_admin` | Elevated admin with user management & audit access |
 
 ---
 
-## 3.10.3 Role-Based Access Control (RBAC)
+## 3.10.3 Role-Based Permission Matrix (v2)
 
-### Roles & Permissions Matrix
+| Resource | victim | volunteer | ngo | govt | donor | admin | super_admin |
+|----------|--------|-----------|-----|------|-------|-------|-------------|
+| **Profile (own)** | CRUD | CRUD | CRUD | CRUD | CRUD | CRUD | CRUD |
+| **Profile (others)** | — | — | — | — | — | R | CRUD |
+| **SOS (create)** | C | C | C | C | — | C | C |
+| **SOS (own history)** | R | — | — | — | — | R | R |
+| **SOS (all)** | — | R | — | R | — | R | R |
+| **SOS (delete)** | — | — | — | — | — | D | D |
+| **Missions (view)** | Own | All assigned | — | R | — | R | CRUD |
+| **Missions (assign)** | — | — | — | — | — | U | U |
+| **Missions (status)** | — | Own | — | — | — | U | U |
+| **Relief Request** | C | U | CRUD | CRUD | — | R | R |
+| **Distribution** | — | C | C | C | — | R | CRUD |
+| **Campaign (create)** | — | — | CRUD | CRUD | — | — | — |
+| **Campaign (verify)** | — | — | — | — | — | U | U |
+| **Campaign (all)** | R | R | R | R | R | CRUD | CRUD |
+| **Donation** | — | — | R | R | C | R | CRUD |
+| **Shelter (create)** | — | — | CRUD | CRUD | — | — | CRUD |
+| **Shelter (view)** | R | R | R | R | R | R | R |
+| **Inventory** | — | — | CRUD (own) | R | — | R | CRUD |
+| **Chat (mission)** | Own mission | Own mission | — | — | — | R | R |
+| **Notifications** | Own | Own | Own | Own | Own | Own | Own |
+| **Audit Logs** | — | — | — | — | — | R | CRUD |
+| **User Management** | — | — | — | — | — | — | CRUD |
+| **System Config** | — | — | — | — | — | — | CRUD |
 
-| Permission | Public | UP Official | NGO Worker | Upazila Officer |
-|-----------|:------:|:-----------:|:----------:|:---------------:|
-| View public dashboard | [x] | [x] | [x] | [x] |
-| Register household | [ ] | [x] | [ ] | [ ] |
-| Log distribution | [ ] | [x] | [x] | [ ] |
-| Override duplicate | [ ] | [x] | [x] | [ ] |
-| View own union data | [ ] | [x] | [x] | [x] |
-| View all unions (jurisdiction) | [ ] | [ ] | [ ] | [x] |
-| Export reports | [ ] | [ ] | [ ] | [x] |
-| Manage user accounts | [ ] | [ ] | [ ] | [x] |
-| Review sync conflicts | [ ] | [x] (own) | [x] (own) | [x] (all) |
-| View duplicate alert log | [ ] | [x] (own) | [x] (own) | [x] (all) |
-| Submit feedback | [x] | [x] | [x] | [x] |
-| Manage feedback | [ ] | [ ] | [ ] | [x] |
-| View inventory | [ ] | [x] | [x] | [x] |
-| Manage inventory | [ ] | [ ] | [ ] | [x] |
-| View/update own profile | [ ] | [x] | [x] | [x] |
-
-### Jurisdiction Enforcement
-Beyond role, every data query is filtered by `jurisdiction_id`:
-- A UP Official can only read/write data tagged to their union.
-- An Upazila Officer can read data from all unions whose `parent_id` matches their Upazila.
-- Server always validates: `decoded_jwt.jurisdiction_id` is an ancestor of the requested resource's jurisdiction.
-
-### RBAC Middleware (pseudocode)
-```javascript
-// middleware/authorize.js
-function authorize(...allowedRoles) {
- return (req, res, next) => {
-  const { role, jurisdiction_id } = req.user; // decoded from JWT
-  if (!allowedRoles.includes(role)) {
-   return res.status(403).json({ error: 'Forbidden' });
-  }
-  req.userJurisdiction = jurisdiction_id;
-  next();
- };
-}
-
-// Usage in routes
-router.post('/households', authenticate, authorize('UP_OFFICIAL'), createHousehold);
-router.get('/reports/export', authenticate, authorize('UPAZILA_OFFICER'), exportReport);
-```
+Legend: C = Create, R = Read, U = Update, D = Delete
 
 ---
 
-## 3.10.4 Data Privacy Design
+## 10.4 Data Protection
 
-### PII Handling
-| Data Field | Classification | Where Visible |
-|-----------|---------------|---------------|
-| Head-of-household name | PII | Authenticated users only |
-| NID number | Sensitive PII | Authenticated users only; never in logs/responses |
-| GPS (household) | Location data | Authenticated users; approximate only in reports |
-| Family vulnerability flags | Sensitive | Authenticated users only |
-| Photo URL | Sensitive | Authenticated users only |
-| Distribution item + quantity | Public aggregate | Public dashboard (no individual linkage) |
-| Officer ID | Internal | Audit logs; not shown publicly |
+| Measure | Implementation |
+|---------|----------------|
+| Password/OTP hashing | bcrypt (cost factor 12) |
+| NID encryption | AES-256-GCM at rest |
+| JWT signing | RS256 (4096-bit key pair) |
+| API rate limiting | Redis-based, per-route tiers |
+| Input validation | Zod schemas on all routes |
+| XSS protection | Helmet.js, React escape by default |
+| CSRF protection | SameSite=Strict cookies, CSRF token for state-changing requests |
+| MongoDB injection | Mongoose sanitization, mongo-sanitize |
+| HTTPS enforcement | Production only; TLS 1.3 |
+| Audit trail | All admin/role changes logged to audit_logs |
 
-### Public Dashboard Rules
-- Only aggregated counts per union (no per-household breakdown)
-- No NID, name, or GPS coordinates in public responses
-- API response for `/public/dashboard` is pre-computed and cached — never directly queries household table
+### API Rate Limit Tiers
 
-### Data Retention
-- All distribution logs retained permanently (audit purposes)
-- Photos stored indefinitely in Cloudinary (prototype: manual cleanup after semester)
-- No right-to-erasure implementation in prototype scope
-
----
-
-## 3.10.5 Input Validation & Injection Prevention
-
-### Server-Side Validation (all inputs)
-```javascript
-// Example: household registration validation
-const { body, validationResult } = require('express-validator');
-
-const validateHousehold = [
- body('head_name').trim().isLength({ min: 2, max: 100 }).escape(),
- body('nid').trim().matches(/^[0-9]{10,17}$/),
- body('family_size').isInt({ min: 1, max: 50 }),
- body('gps_lat').isFloat({ min: -90, max: 90 }),
- body('gps_lng').isFloat({ min: -180, max: 180 }),
-];
-```
-
-### SQL Injection Prevention
-- No raw SQL string concatenation — all DB queries use parameterized queries:
-```javascript
-// Safe
-const result = await db.query(
- 'SELECT * FROM households WHERE jurisdiction_id = $1',
- [jurisdictionId]
-);
-
-// Never
-const result = await db.query(
- `SELECT * FROM households WHERE jurisdiction_id = '${jurisdictionId}'`
-);
-```
-
-### XSS Prevention
-- All user input escaped before storage (`express-validator`'s `.escape()`)
-- React escapes output by default — no `dangerouslySetInnerHTML` used
-- `Content-Security-Policy` header set on all API responses
-
-### Other Security Headers (via `helmet` middleware)
-```javascript
-const helmet = require('helmet');
-app.use(helmet()); // Sets: X-Frame-Options, X-Content-Type-Options, HSTS, CSP
-```
-
-### Rate Limiting
-```javascript
-const rateLimit = require('express-rate-limit');
-app.use('/api/', rateLimit({
- windowMs: 15 * 60 * 1000, // 15 minutes
- max: 200,         // max 200 requests per window per IP
- message: { error: 'Too many requests, slow down.' }
-}));
-```
+| Tier | Limit | Routes |
+|------|-------|--------|
+| Strict | 3 req/min | OTP send, OTP verify |
+| Standard | 30 req/min | Auth, SOS create |
+| Moderate | 100 req/min | CRUD endpoints |
+| Unlimited | — | Public read-only |
 
 ---
 
-*End of Section 3.10 — Next: Section 3.11 Deployment & Maintenance*
+## 10.5 Session & Device Management
+
+- Users can view all active sessions (device, IP, last active)
+- Force logout from specific devices
+- Single-session enforcement optional (configurable in admin panel)
+- Session data stored in Redis for fast invalidation
+
+---
+
+*End of Section 3.10 — Next: Section 3.12 Project Management*

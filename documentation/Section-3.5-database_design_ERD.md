@@ -1,243 +1,207 @@
 # Section 3.5 — Database Design (ERD)
-**Project:** RelifMesh — Disaster Relief Coordination System for Local Government
+**Project:** ReliefMesh — Disaster Response & Relief Management System
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-06-09
+**Last Updated:** 2026-06-10
 
 ---
 
 ## 3.5.1 Entity Identification
 
-| Entity | Description |
-|--------|-------------|
-| **User** | System accounts — UP officials, Upazila officers, NGO workers |
-| **Jurisdiction** | Geographic unit (District → Upazila → Union) |
-| **Household** | Registered disaster-affected family unit |
-| **DistributionLog** | Record of one relief distribution to one household |
-| **ItemCategory** | Lookup table for predefined relief item types |
-| **DuplicateAlert** | Alert generated when duplicate distribution is detected |
-| **SyncConflict** | Log of offline sync conflicts pending manual review |
-| **Feedback** | User-submitted feedback/complaints with response |
-| **Inventory** | Stock tracking per item category (total, distributed, remaining) |
+| Entity | Description | Phase |
+|--------|-------------|-------|
+| **User** | System accounts — 7 roles | v1 |
+| **Household** | Registered disaster-affected family | v1 |
+| **DistributionLog** | Relief distribution record | v1 |
+| **ItemCategory** | Lookup for relief item types | v1 |
+| **DuplicateAlert** | Alert for duplicate distribution | v1 |
+| **SyncConflict** | Offline sync conflict log | v1 |
+| **Feedback** | User-submitted feedback | v1 |
+| **Inventory** | Stock levels per item category | v1 |
+| **ReliefRequest** | Citizen relief item requests | v1 |
+| **Jurisdiction** | Geographic units | v1 |
+| **SOSRequest** | Emergency SOS from victims | v2 |
+| **Mission** | Rescue mission assignment | v2 |
+| **Shelter** | Shelter/camp management | v2 |
+| **Campaign** | Fundraising campaigns | v2 |
+| **Donation** | Donation records | v2 |
+| **Notification** | In-app notifications | v2 |
+| **ChatMessage** | Mission-scoped messaging | v2 |
+| **InventoryTransaction** | Stock movement audit | v2 |
+| **AuditLog** | System admin action trail | v2 |
 
 ---
 
-## 3.5.2 Entity-Relationship Diagram (Crow's Foot Notation)
+## 3.5.2 Entity-Relationship Diagram
 
 ```
-┌───────────────────┐     ┌───────────────────────┐
-│  Jurisdiction  │     │     User      │
-├───────────────────┤     ├───────────────────────┤
-│ PK jurisdiction_id│     │ PK user_id       │
-│  name      │◄─────────│ FK jurisdiction_id   │
-│  level (enum)  │ 1   * │  name        │
-│  parent_id (FK) │     │  email        │
-└───────────────────┘     │  password_hash    │
-     │ 1          │  role (enum)     │
-     │           │  organization    │
-     │ *          │  is_active      │
-     │           │  created_at     │
-┌────────┴──────────┐     └───────────┬────────────┘
-│  Household   │           │ 1
-├───────────────────┤           │ registers
-│ PK hh_id     │           │ *
-│ FK jurisdiction_id│     ┌───────────▼────────────┐
-│  head_name   │     │  DistributionLog   │
-│  nid      │◄─────────├───────────────────────┤
-│  gps_lat    │ 1   * │ PK log_id       │
-│  gps_lng    │     │ FK hh_id        │
-│  family_size  │     │ FK officer_id (User)  │
-│  is_elderly   │     │ FK item_category_id  │
-│  is_disabled  │     │  quantity      │
-│  is_pregnant  │     │  unit        │
-│  photo_url   │     │  gps_lat       │
-│  registered_by │     │  gps_lng       │
-│  created_at   │     │  photo_url      │
-└───────────────────┘     │  timestamp      │
-                │  sync_status (enum) │
-                │  is_override     │
-                │  override_reason   │
-                │  created_at     │
-                └───────────┬────────────┘
-                      │ 1
-                      │ triggers
-                      │ 0..1
-                ┌───────────▼────────────┐
-                │  DuplicateAlert    │
-                ├───────────────────────┤
-                │ PK alert_id      │
-                │ FK hh_id        │
-                │ FK prior_log_id    │
-                │ FK triggered_log_id  │
-                │  item_category_id  │
-                │  is_resolved     │
-                │  resolved_by     │
-                │  override_reason   │
-                │  created_at     │
-                └────────────────────────┘
+┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+│   User    │       │  Household    │       │  SOSRequest   │
+├───────────────┤       ├───────────────┤       ├───────────────┤
+│ PK user_id   │       │ PK hh_id    │       │ PK sos_id    │
+│ phone (unique)│1──*│ head_name   │       │ FK victim_id │
+│ fullName    │       │ nid (unique)  │       │ type (enum)  │
+│ role (enum)  │       │ gps (GeoJSON) │       │ location (2d) │
+│ location (2d)│       │ familySize   │       │ priority     │
+│ isVerified  │       │ photo_url   │       │ status (enum)│
+│ isActive    │       │ FK jurisdiction│*──1│ expiresAt(TTL)│
+└──────┬────────┘       └──────┬────────┘       └──────┬────────┘
+       │ 1                     │ 1                      │ 1
+       │                       │                        │ triggers
+       │ *                     │ *                      │ 0..1
+┌──────┴────────┐       ┌──────┴────────┐       ┌──────┴────────┐
+│ Distribution  │       │ ReliefRequest │       │   Mission    │
+│     Log       │       │               │       │              │
+├───────────────┤       ├───────────────┤       ├───────────────┤
+│ PK log_id    │       │ PK req_id    │       │ PK mission_id│
+│ FK hh_id     │       │ FK citizenId │       │ FK sos_id(uq)│
+│ FK officerId │       │ items[]      │       │ FK volunteerId│
+│ itemCategory │       │ status (enum)│       │ status (enum)│
+│ quantity     │       │ priority     │       │ startedAt    │
+│ proofPhotos[]│       │ FK approvedBy│       │ completedAt  │
+│ signature    │       │ reviewedAt   │       │ feedback     │
+└───────────────┘       └───────────────┘       └───────────────┘
 
-┌───────────────────┐     ┌───────────────────────┐
-│  ItemCategory  │     │   SyncConflict    │
-├───────────────────┤     ├───────────────────────┤
-│ PK item_cat_id  │     │ PK conflict_id     │
-│  name      │     │ FK log_id_a      │
-│  parent_cat_id │     │ FK log_id_b      │
-│  is_active   │     │  resolution_status  │
-└───────────────────┘     │  reviewed_by     │
-                │  created_at     │
-                └────────────────────────┘
+┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+│   Campaign   │       │   Donation    │       │   Shelter    │
+├───────────────┤       ├───────────────┤       ├───────────────┤
+│ PK campaignId│       │ PK donationId│       │ PK shelterId │
+│ title        │       │ FK campaignId │       │ name         │
+│ description  │       │ FK donorId   │       │ location (2d)│
+│ FK ngoId     │1──*│ amount       │       │ capacity     │
+│ goalAmount   │       │ paymentMethod│       │ occupancy    │
+│ raisedAmount │       │ txnId       │       │ facilities[] │
+│ status (enum)│       │ status (enum)│       │ isActive     │
+└───────────────┘       └───────────────┘       └───────────────┘
+
+┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+│  Inventory   │       │ Notification │       │  ChatMessage  │
+├───────────────┤       ├───────────────┤       ├───────────────┤
+│ PK invId     │       │ PK notifId   │       │ PK msgId     │
+│ name         │       │ FK userId    │       │ FK missionId │
+│ category     │       │ type (enum)  │       │ FK senderId  │
+│ quantity     │       │ title        │       │ message      │
+│ batchNo      │       │ body         │       │ messageType  │
+│ expiryDate   │       │ isRead       │       │ isRead       │
+│ FK shelterId │       │ readAt       │       │ createdAt    │
+└───────────────┘       └───────────────┘       └───────────────┘
+
+┌───────────────┐       ┌───────────────┐
+│  AuditLog    │       │InventoryTrans │
+├───────────────┤       ├───────────────┤
+│ PK logId     │       │ PK txnId     │
+│ FK userId    │       │ FK inventoryId│
+│ action       │       │ type (in/out) │
+│ resource     │       │ quantity      │
+│ details(JSON)│       │ referenceType │
+│ ipAddress    │       │ performedBy  │
+└───────────────┘       └───────────────┘
 ```
 
 ---
 
-## 3.5.3 Relationships & Cardinality
+## 3.5.3 New Collections (v2)
 
-| Relationship | Cardinality | Description |
-|-------------|-------------|-------------|
-| Jurisdiction → User | 1 : Many | One jurisdiction has many users |
-| Jurisdiction → Household | 1 : Many | One union has many households |
-| Jurisdiction → Jurisdiction | 1 : Many | Self-referencing (District → Upazila → Union) |
-| User → DistributionLog | 1 : Many | One officer logs many distributions |
-| Household → DistributionLog | 1 : Many | One household receives many distributions |
-| ItemCategory → DistributionLog | 1 : Many | One item category used in many logs |
-| DistributionLog → DuplicateAlert | 1 : 0..1 | A log may trigger one duplicate alert |
-| DistributionLog → SyncConflict | 1 : 0..1 | A log may have one conflict record |
-| ItemCategory → Inventory | 1 : 1 | Each item category has one inventory record |
-| User → Feedback | 1 : Many | One user responds to many feedback entries |
+### sos_requests
+| Field | Type | Notes |
+|-------|------|-------|
+| `victimId` | ObjectId (User) | Ref: users |
+| `type` | Enum | rescue, food, water, medical, shelter, other |
+| `location` | GeoJSON Point | 2dsphere index |
+| `priority` | Enum | low, medium, high, critical |
+| `status` | Enum | pending, acknowledged, in_progress, resolved, cancelled, expired |
+| `expiresAt` | Date | TTL index for auto-expiry |
+| `isOffline` | Boolean | True if submitted offline |
 
----
+### missions
+| Field | Type | Notes |
+|-------|------|-------|
+| `sosId` | ObjectId (SOSRequest) | Unique |
+| `volunteerId` | ObjectId (User) | Assigned volunteer |
+| `status` | Enum | assigned, en_route, on_site, rescued, completed, cancelled |
+| `victimFeedback` | Object | rating, comment |
 
-## 3.5.4 Normalization
+### shelters
+| Field | Type | Notes |
+|-------|------|-------|
+| `name` | String | |
+| `location` | GeoJSON Point | 2dsphere index |
+| `capacity` | Number | Max people |
+| `currentOccupancy` | Number | Current count |
+| `facilities` | [String] | toilet, water, medical, power |
 
-### 1NF — All attributes are atomic
-- No repeating groups. Vulnerability flags split into individual boolean columns (`is_elderly`, `is_disabled`, `is_pregnant`).
+### campaigns
+| Field | Type | Notes |
+|-------|------|-------|
+| `title` | String | |
+| `ngoId` | ObjectId (User) | Campaign creator |
+| `goalAmount` | Number | Target BDT |
+| `raisedAmount` | Number | Default 0 |
+| `status` | Enum | draft, active, paused, completed, cancelled |
+| `isVerified` | Boolean | Admin verification required |
 
-### 2NF — No partial dependencies (all non-key attributes depend on full PK)
-- All tables use single-column surrogate PKs (UUID/auto-increment). No composite PKs, so 2NF is satisfied.
+### donations
+| Field | Type | Notes |
+|-------|------|-------|
+| `campaignId` | ObjectId (Campaign) | |
+| `donorId` | ObjectId (User) | |
+| `amount` | Number | BDT |
+| `paymentMethod` | Enum | bkash, nagad, rocket, bank, cash |
+| `transactionId` | String | Payment gateway Txn ID |
+| `status` | Enum | pending, completed, failed, refunded |
 
-### 3NF — No transitive dependencies
-- `Jurisdiction` hierarchy is self-referencing via `parent_id`, not transitive columns.
-- `ItemCategory` is in its own table (not embedded as a string in DistributionLog).
-- User's jurisdiction is a FK, not duplicated data.
+### notifications
+| Field | Type | Notes |
+|-------|------|-------|
+| `userId` | ObjectId (User) | |
+| `type` | Enum | sos_assigned, mission_update, relief_approved, donation_receipt, system_alert |
+| `title` | String | |
+| `body` | String | |
+| `isRead` | Boolean | Default false |
 
-**Result:** All tables are in 3NF.
+### chat_messages
+| Field | Type | Notes |
+|-------|------|-------|
+| `missionId` | ObjectId (Mission) | |
+| `senderId` | ObjectId (User) | |
+| `message` | String | |
+| `messageType` | Enum | text, image, location |
 
----
+### audit_logs
+| Field | Type | Notes |
+|-------|------|-------|
+| `userId` | ObjectId (User) | |
+| `action` | String | e.g., user.create, sos.delete, donation.refund |
+| `resource` | String | Target collection |
+| `details` | Object | JSON metadata |
+| `ipAddress` | String | |
 
-## 3.5.5 Data Dictionary
-
-### Table: `users`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| user_id | UUID | PK, NOT NULL | Unique user identifier |
-| jurisdiction_id | UUID | FK → jurisdictions | User's assigned area |
-| name | VARCHAR(100) | NOT NULL | Full name |
-| email | VARCHAR(150) | UNIQUE, NOT NULL | Login email |
-| password_hash | VARCHAR(255) | NOT NULL | bcrypt hashed password |
-| role | ENUM | NOT NULL | UP_OFFICIAL / UPAZILA_OFFICER / NGO_WORKER |
-| organization | VARCHAR(100) | NULLABLE | NGO name if applicable |
-| is_active | BOOLEAN | DEFAULT TRUE | Account status |
-| created_at | TIMESTAMP | NOT NULL | Account creation time |
-
-### Table: `jurisdictions`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| jurisdiction_id | UUID | PK, NOT NULL | Unique area ID |
-| name | VARCHAR(100) | NOT NULL | Area name |
-| level | ENUM | NOT NULL | DISTRICT / UPAZILA / UNION |
-| parent_id | UUID | FK → jurisdictions, NULLABLE | Parent area |
-
-### Table: `households`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| hh_id | UUID | PK, NOT NULL | Unique household ID |
-| jurisdiction_id | UUID | FK → jurisdictions | Union where household belongs |
-| head_name | VARCHAR(100) | NOT NULL | Head-of-household name |
-| nid | VARCHAR(20) | UNIQUE, NOT NULL | National ID number |
-| gps_lat | DECIMAL(9,6) | NOT NULL | Latitude |
-| gps_lng | DECIMAL(9,6) | NOT NULL | Longitude |
-| family_size | INT | NOT NULL | Number of members |
-| is_elderly | BOOLEAN | DEFAULT FALSE | Elderly member flag |
-| is_disabled | BOOLEAN | DEFAULT FALSE | Disability flag |
-| is_pregnant | BOOLEAN | DEFAULT FALSE | Pregnant member flag |
-| photo_url | VARCHAR(300) | NULLABLE | Household photo path |
-| registered_by | UUID | FK → users | Officer who registered |
-| created_at | TIMESTAMP | NOT NULL | Registration timestamp |
-
-### Table: `distribution_logs`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| log_id | UUID | PK, NOT NULL | Unique log ID |
-| hh_id | UUID | FK → households | Recipient household |
-| officer_id | UUID | FK → users | Distributing officer |
-| item_category_id | UUID | FK → item_categories | Item type |
-| quantity | DECIMAL(8,2) | NOT NULL | Amount distributed |
-| unit | VARCHAR(20) | NOT NULL | kg, litre, piece, etc. |
-| gps_lat | DECIMAL(9,6) | NOT NULL | Distribution GPS latitude |
-| gps_lng | DECIMAL(9,6) | NOT NULL | Distribution GPS longitude |
-| photo_url | VARCHAR(300) | NULLABLE | Distribution photo |
-| timestamp | TIMESTAMP | NOT NULL | When distribution occurred |
-| sync_status | ENUM | DEFAULT 'PENDING' | PENDING / SYNCED / CONFLICT |
-| is_override | BOOLEAN | DEFAULT FALSE | Was duplicate overridden? |
-| override_reason | TEXT | NULLABLE | Override justification |
-| created_at | TIMESTAMP | NOT NULL | Record creation time |
-
-### Table: `item_categories`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| item_cat_id | UUID | PK | Unique category ID |
-| name | VARCHAR(50) | NOT NULL | Rice, Water, Tarp, etc. |
-| parent_cat_id | UUID | FK → self, NULLABLE | Parent category (Food, WASH, Shelter) |
-| is_active | BOOLEAN | DEFAULT TRUE | Whether item is currently in use |
-
-### Table: `duplicate_alerts`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| alert_id | UUID | PK | Unique alert ID |
-| hh_id | UUID | FK → households | Affected household |
-| prior_log_id | UUID | FK → distribution_logs | First distribution |
-| triggered_log_id | UUID | FK → distribution_logs | Duplicate attempt |
-| item_category_id | UUID | FK → item_categories | Item that triggered alert |
-| is_resolved | BOOLEAN | DEFAULT FALSE | Resolution status |
-| resolved_by | UUID | FK → users, NULLABLE | Officer who resolved |
-| override_reason | TEXT | NULLABLE | Reason if overridden |
-| created_at | TIMESTAMP | NOT NULL | Alert generation time |
-
-### Table: `feedbacks`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| feedback_id | UUID | PK, NOT NULL | Unique feedback ID |
-| name | VARCHAR(100) | NOT NULL | Submitter's name |
-| contact | VARCHAR(100) | NULLABLE | Phone or email |
-| category | ENUM | NOT NULL | COMPLAINT / SUGGESTION / INQUIRY / APPRECIATION / OTHER |
-| message | TEXT | NOT NULL | Feedback message body |
-| is_read | BOOLEAN | DEFAULT FALSE | Admin read flag |
-| response | TEXT | NULLABLE | Admin response |
-| responded_by | UUID | FK → users, NULLABLE | Responding officer |
-| responded_at | TIMESTAMP | NULLABLE | When response was sent |
-| created_at | TIMESTAMP | NOT NULL | Submission time |
-
-### Table: `inventories`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| inventory_id | UUID | PK, NOT NULL | Unique inventory ID |
-| item_category_id | UUID | FK → item_categories, UNIQUE | Linked item category |
-| total_quantity | DECIMAL(10,2) | NOT NULL, MIN 0 | Total stock |
-| unit | VARCHAR(20) | NOT NULL | kg, litre, piece, etc. |
-| distributed_quantity | DECIMAL(10,2) | DEFAULT 0, MIN 0 | Already distributed amount |
-| last_restocked_at | TIMESTAMP | NULLABLE | Last restock time |
-| notes | TEXT | NULLABLE | Any notes |
-| created_at | TIMESTAMP | NOT NULL | Record creation |
-
-### Table: `sync_conflicts`
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| conflict_id | UUID | PK | Unique conflict ID |
-| log_id_a | UUID | FK → distribution_logs | First version |
-| log_id_b | UUID | FK → distribution_logs | Conflicting version |
-| resolution_status | ENUM | DEFAULT 'PENDING' | PENDING / RESOLVED / AUTO |
-| reviewed_by | UUID | FK → users, NULLABLE | Officer who reviewed |
-| created_at | TIMESTAMP | NOT NULL | Conflict detected time |
+### inventory_transactions
+| Field | Type | Notes |
+|-------|------|-------|
+| `inventoryId` | ObjectId (Inventory) | |
+| `type` | Enum | in, out, expired, damaged |
+| `quantity` | Number | Positive for in, negative for out |
+| `referenceType` | Enum | donation, relief_request, transfer, adjustment |
+| `performedBy` | ObjectId (User) | |
 
 ---
 
-*End of Section 3.5 — Next: Section 3.6 Architecture & Technology Stack*
+## 3.5.4 Index Summary
+
+| Collection | Indexes |
+|------------|---------|
+| users | `phone` (unique), `role`, `location` (2dsphere) |
+| sos_requests | `victimId + status`, `location` (2dsphere), `expiresAt` (TTL) |
+| missions | `sosId` (unique), `volunteerId + status` |
+| households | `nid` (unique), `jurisdictionId`, `headName` |
+| distribution_logs | `householdId + createdAt`, `officerId` |
+| shelters | `location` (2dsphere), `isActive` |
+| campaigns | `ngoId`, `status`, `endDate` |
+| donations | `campaignId`, `donorId`, `status` |
+| notifications | `userId + isRead + createdAt` |
+| chat_messages | `missionId + createdAt` |
+| audit_logs | `userId + createdAt`, `action` |
+
+---
+
+*End of Section 3.5 — Next: Section 3.6 Architecture & Tech Stack*

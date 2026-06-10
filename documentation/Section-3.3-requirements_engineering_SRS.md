@@ -1,95 +1,122 @@
 # Section 3.3 — Requirements Engineering (SRS)
-**Project:** RelifMesh — Disaster Relief Coordination System for Local Government
+**Project:** ReliefMesh — Disaster Response & Relief Management System
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-06-09
+**Last Updated:** 2026-06-10
 
 ---
 
 ## 3.3.1 Functional Requirements
 
 ### Authentication & User Management
-
-| ID | Requirement |
-|----|-------------|
-| FR-01 | The system shall allow users to register with name, role, organization, and password. |
-| FR-02 | The system shall authenticate users via email/username and password (JWT-based). |
-| FR-03 | The system shall support four roles: UP Official, Upazila Officer, NGO Worker, Public Viewer. |
-| FR-04 | The system shall restrict data access based on user role and geographic jurisdiction. |
-| FR-05 | Upazila Officers shall be able to create and manage UP Official accounts under their jurisdiction. |
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-01 | The system shall allow user registration via phone number and OTP verification. | v1 |
+| FR-02 | The system shall authenticate users via phone + OTP (passwordless). | v1 |
+| FR-03 | The system shall support 7 roles: Victim, Volunteer, NGO, Govt, Donor, Admin, Super Admin. | v2 |
+| FR-04 | The system shall restrict data access based on user role and jurisdiction. | v1 |
+| FR-05 | The system shall implement JWT access + refresh token rotation with Redis storage. | v2 |
+| FR-06 | Admin shall be able to create, suspend, and manage user accounts. | v1 |
 
 ### Household Registration
-
-| ID | Requirement |
-|----|-------------|
-| FR-06 | UP Officials shall be able to register a household with: head-of-household name, NID number, GPS coordinates, number of members, and vulnerability flags (elderly, disabled, pregnant). |
-| FR-07 | The system shall capture a photo of the household location during registration. |
-| FR-08 | The system shall assign a unique Household ID (HH-ID) to every registered household. |
-| FR-09 | The system shall allow searching and editing existing household records by HH-ID or name. |
-| FR-10 | Household registration shall work offline and sync to the server when connectivity is restored. |
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-07 | UP Officials shall register households with head name, NID, GPS, family size, vulnerability flags. | v1 |
+| FR-08 | The system shall capture a photo of the household location during registration. | v1 |
+| FR-09 | Household registration shall work offline and sync when connectivity is restored. | v1 |
+| FR-10 | The system shall allow searching and editing existing household records. | v1 |
 
 ### Relief Distribution Logging
-
-| ID | Requirement |
-|----|-------------|
-| FR-11 | Authorized users shall be able to log a distribution event: HH-ID, item type, quantity, unit, distributing officer, GPS, timestamp, and photo. |
-| FR-12 | The system shall support predefined item categories: food (rice, dal, oil), WASH (water, soap), shelter (tarp, blanket), and other. |
-| FR-13 | Distribution logging shall work offline and sync automatically on reconnection. |
-| FR-14 | Each distribution log entry shall be immutable once synced; corrections require a new entry flagged as amendment. |
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-11 | Authorized users shall log distribution events: HH-ID, item type, quantity, unit, officer, GPS, timestamp, photo. | v1 |
+| FR-12 | Distribution logging shall work offline and sync on reconnection. | v1 |
+| FR-13 | Distribution logs shall include proof photos and beneficiary signatures. | v2 |
 
 ### Duplicate Detection
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-14 | Before logging, the system shall check same household + same item within 7 days. | v1 |
+| FR-15 | If duplicate detected, the system shall show warning with prior distribution details. | v1 |
+| FR-16 | Officer may override with mandatory reason; all overrides logged. | v1 |
 
-| ID | Requirement |
-|----|-------------|
-| FR-15 | Before logging a distribution, the system shall check if the same household received the same item category within a configurable window (default: 7 days). |
-| FR-16 | If a duplicate is detected, the system shall display a warning with details of the previous distribution (date, officer, quantity). |
-| FR-17 | The distributing officer may override the duplicate warning with a mandatory reason (text field). |
-| FR-18 | All override events shall be logged with officer ID, timestamp, and reason. |
+### SOS Emergency Requests
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-17 | Victims shall create SOS requests with GPS coordinates and type (rescue/food/water/medical/shelter). | v2 |
+| FR-18 | SOS shall display on an interactive map for nearby volunteers. | v2 |
+| FR-19 | SOS shall work offline via IndexedDB queue and sync when online. | v2 |
+| FR-20 | SOS shall auto-expire after configurable timeout (TTL index). | v2 |
+| FR-21 | Low-bandwidth text-only SOS mode shall be available. | v2 |
 
-### Public Dashboard
+### Rescue Mission Coordination
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-22 | Volunteers shall view nearby active SOS on a map. | v2 |
+| FR-23 | Volunteers shall accept SOS as a rescue mission. | v2 |
+| FR-24 | Mission lifecycle: Assigned → En Route → On Site → Rescued → Completed. | v2 |
+| FR-25 | Victim shall receive real-time notification on mission status change. | v2 |
+| FR-26 | Admin shall be able to reassign missions. | v2 |
 
-| ID | Requirement |
-|----|-------------|
-| FR-19 | The public dashboard shall display total distributions by union, item category, and date — without any household PII. |
-| FR-20 | The dashboard shall be accessible without login. |
-| FR-21 | The dashboard shall show a map view with union-level markers indicating distribution activity. |
-| FR-22 | The dashboard shall update aggregated data at least once every hour. |
+### Campaigns & Donations
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-27 | NGOs/Govt shall create fundraising campaigns with goal amount and end date. | v2 |
+| FR-28 | Donors shall browse active campaigns and donate via bKash/Nagad/Rocket. | v2 |
+| FR-29 | Donors shall receive digital receipts. | v2 |
+| FR-30 | Admin shall verify and approve campaigns. | v2 |
 
-### Reporting & Export
+### Shelter Management
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-31 | Govt/Admin shall create shelters with name, location, capacity, facilities. | v2 |
+| FR-32 | Shelters shall be visible on public map with current occupancy. | v2 |
 
-| ID | Requirement |
-|----|-------------|
-| FR-23 | Upazila Officers shall be able to export a distribution report (CSV/PDF) filtered by union, date range, and item category. |
-| FR-24 | The system shall generate a household coverage report showing registered vs. distributed households per union. |
+### Chat & Notifications
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-33 | Mission-scoped chat between victim and assigned volunteer. | v2 |
+| FR-34 | In-app real-time notifications via Socket.io for all critical events. | v2 |
 
-### Sync & Offline
-
-| ID | Requirement |
-|----|-------------|
-| FR-25 | The system shall queue all offline actions (registration, distribution log) in local storage. |
-| FR-26 | On reconnection, the system shall sync queued data to the server automatically. |
-| FR-27 | The system shall detect and log sync conflicts; default resolution is last-write-wins with a manual review flag. |
-
-### Feedback & Communication
-
-| ID | Requirement |
-|----|-------------|
-| FR-28 | The system shall allow any user to submit feedback/complaints (name, contact, category, message) without authentication. |
-| FR-29 | The system shall support feedback categories: Complaint, Suggestion, Inquiry, Appreciation, Other. |
-| FR-30 | Authorized users (Upazila Officer) shall be able to view and respond to feedback submissions. |
+### Public Transparency Ledger
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-35 | Public dashboard shall show total donations collected and relief distributed. | v2 |
+| FR-36 | Each distribution record shall include proof (photo, signature). | v2 |
+| FR-37 | Public dashboard shall be accessible without login. | v1 |
 
 ### Inventory & Stock Tracking
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-38 | The system shall track inventory levels per item category. | v1 |
+| FR-39 | Inventory items shall track batch/lot numbers and expiry dates. | v2 |
+| FR-40 | Low-stock alerts shall be generated automatically. | v2 |
+| FR-41 | Inventory transfers between shelters shall be supported. | v2 |
 
-| ID | Requirement |
-|----|-------------|
-| FR-31 | The system shall track inventory levels per item category (total quantity, distributed quantity, remaining). |
-| FR-32 | Upazila Officers shall be able to create and update inventory items with quantities and unit. |
-| FR-33 | All authenticated users shall be able to view current inventory levels. |
+### Offline & Sync
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-42 | All offline actions shall queue in local storage. | v1 |
+| FR-43 | Auto-sync on reconnection with conflict detection. | v1 |
+| FR-44 | SOS requests shall have dedicated offline queue in IndexedDB. | v2 |
 
-### User Profile
+### Feedback
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-45 | Any user may submit feedback without authentication. | v1 |
+| FR-46 | Authorized users may view and respond to feedback. | v1 |
 
-| ID | Requirement |
-|----|-------------|
-| FR-34 | The system shall allow authenticated users to view and update their profile (name, organization). |
+### i18n
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-47 | The platform shall be available in English and Bengali. | v2 |
+| FR-48 | Language toggle shall persist across sessions. | v2 |
+
+### Admin Command Center
+| ID | Requirement | Phase |
+|----|-------------|-------|
+| FR-49 | Admin dashboard shall show heatmaps, analytics charts, resource shortage alerts. | v2 |
+| FR-50 | Full system audit log shall be accessible. | v2 |
+| FR-51 | Background jobs shall auto-expire SOS and generate inventory alerts. | v2 |
 
 ---
 
@@ -97,111 +124,82 @@
 
 | ID | Category | Requirement |
 |----|----------|-------------|
-| NFR-01 | Performance | The public dashboard shall load within 3 seconds on a 3G connection. |
-| NFR-02 | Performance | Distribution log submission shall complete within 2 seconds when online. |
-| NFR-03 | Availability | The system shall target 99% uptime during declared disaster periods. |
-| NFR-04 | Scalability | The system shall support up to 500 concurrent users without degradation. |
-| NFR-05 | Security | All API endpoints shall require authentication except the public dashboard. |
-| NFR-06 | Security | All data transmission shall use HTTPS/TLS. |
-| NFR-07 | Security | Passwords shall be hashed using bcrypt (min. cost factor 10). |
-| NFR-08 | Privacy | Household NID numbers shall not appear on any public-facing view. |
-| NFR-09 | Usability | Core data entry flows shall be completable in ≤ 5 taps on a mobile device. |
-| NFR-10 | Usability | UI shall support Bengali language labels for all field-facing screens. |
-| NFR-11 | Reliability | Offline sync failure rate shall be less than 5% on reconnection. |
-| NFR-12 | Maintainability | All backend API endpoints shall be documented (README or Swagger). |
-| NFR-13 | Portability | The frontend shall function as a Progressive Web App (PWA) on Android Chrome. |
+| NFR-01 | Performance | Public dashboard loads within 3 seconds on 3G. |
+| NFR-02 | Performance | SOS creation completes within 2 seconds when online. |
+| NFR-03 | Performance | Real-time notification latency < 1 second. |
+| NFR-04 | Availability | 99% uptime during declared disaster periods. |
+| NFR-05 | Scalability | Support up to 10,000 concurrent users (city-level). |
+| NFR-06 | Security | All API endpoints authenticated except public dashboard. |
+| NFR-07 | Security | All data transmission over HTTPS/TLS. |
+| NFR-08 | Security | OTP expires in 300 seconds; 5 failed attempts locks for 15 min. |
+| NFR-09 | Privacy | No household PII on public-facing views. |
+| NFR-10 | Usability | Core flows completable in ≤ 5 taps on mobile. |
+| NFR-11 | Usability | Bengali language support for all field-facing screens. |
+| NFR-12 | Reliability | Offline sync failure rate < 5%. |
+| NFR-13 | Maintainability | All endpoints documented. |
+| NFR-14 | Portability | PWA function on Android Chrome. |
+| NFR-15 | Accessibility | WCAG 2.1 AA compliance. |
+| NFR-16 | Rate Limiting | Auth: 1 req/60s per phone; General: 100 req/min per user. |
 
 ---
 
 ## 3.3.3 User Stories
 
-| ID | Role | Story | Acceptance Criteria |
-|----|------|-------|---------------------|
-| US-01 | UP Official | As a UP Official, I want to register a household with GPS and photo so that I have a verifiable record of who I visited. | Registration saves offline; photo and GPS captured; HH-ID generated. |
-| US-02 | UP Official | As a UP Official, I want to log rice distribution for a household so that the system can prevent duplicate distribution later. | Log entry saved with item, quantity, timestamp; duplicate check triggered. |
-| US-03 | UP Official | As a UP Official, I want to work without internet during floods so that I can still enter data in the field. | App works fully offline; data queued locally; syncs on reconnect. |
-| US-04 | NGO Worker | As an NGO worker, I want to see a duplicate alert before distributing to a household so that I don't give aid already provided by the UP team. | Warning shown if same item given within 7 days; override requires reason. |
-| US-05 | Upazila Officer | As an Upazila Officer, I want to view all distributions under my jurisdiction so that I can audit relief operations remotely. | Dashboard filtered by Upazila; all UP logs visible; exportable. |
-| US-06 | Upazila Officer | As an Upazila Officer, I want to export a PDF report of distributions so that I can submit a physical record to the district office. | PDF generated with filter options; includes summary table. |
-| US-07 | General Public | As a citizen, I want to see a public dashboard of what relief was distributed in my union so that I can verify transparency. | Dashboard loads without login; shows union-level aggregates; no PII. |
-| US-08 | General Public | As a journalist, I want to see distribution data on a map so that I can identify under-served areas. | Map view with union markers; clickable for summary. |
+| ID | Role | Story | Phase |
+|----|------|-------|-------|
+| US-01 | UP Official | Register household with GPS + photo; work offline | v1 |
+| US-02 | UP Official | Log distribution with duplicate check | v1 |
+| US-03 | NGO Worker | See duplicate alerts before distributing | v1 |
+| US-04 | Upazila Officer | Audit all unions; export PDF reports | v1 |
+| US-05 | General Public | View distribution transparency dashboard | v1 |
+| US-06 | Victim | Send SOS with GPS when stranded during flood | v2 |
+| US-07 | Victim | Submit SOS offline; auto-syncs when online | v2 |
+| US-08 | Volunteer | Find nearby SOS on map; accept rescue mission | v2 |
+| US-09 | Volunteer | Update mission status; see assigned missions | v2 |
+| US-10 | NGO | Create fundraising campaign for relief supplies | v2 |
+| US-11 | Donor | Donate to campaign via bKash; get receipt | v2 |
+| US-12 | Admin | View analytics, heatmaps, audit logs | v2 |
+| US-13 | Victim | Chat with assigned volunteer during rescue | v2 |
+| US-14 | All Users | Switch between English and Bengali UI | v2 |
 
 ---
 
-## 3.3.4 Use Case Descriptions (Fully Dressed)
+## 3.3.4 Use Case Descriptions
 
 ### UC-01: Register a Household
-
 | Field | Detail |
 |-------|--------|
-| **Use Case ID** | UC-01 |
-| **Name** | Register a Household |
-| **Actor** | UP Official |
-| **Preconditions** | Actor is authenticated; device has GPS enabled |
-| **Trigger** | Actor taps "New Household" |
-| **Main Flow** | 1. Actor opens registration form. 2. System auto-fills GPS coordinates. 3. Actor enters name, NID, family size, vulnerability flags. 4. Actor captures photo. 5. Actor taps Save. 6. System validates inputs. 7. System generates HH-ID. 8. System saves record (locally if offline, syncs when online). 9. System displays HH-ID confirmation. |
-| **Alternate Flow** | 3a. GPS unavailable → Actor manually selects area on map. |
-| **Exception Flow** | 6a. Duplicate NID detected → System warns actor; actor confirms or cancels. |
-| **Postconditions** | Household record saved with unique HH-ID; photo and GPS attached. |
-
----
+| Actor | UP Official |
+| Preconditions | Authenticated, GPS enabled |
+| Main Flow | Open form → GPS auto-capture → Enter name, NID, family size, flags → Take photo → Save (offline if needed) → HH-ID generated |
 
 ### UC-02: Log a Distribution
+| Actor | UP Official, NGO Worker |
+|-------|------------------------|
+| Main Flow | Search HH → System checks duplicates → No dup: log item/qty/photo → Save |
+| Alt Flow | Duplicate found → Show warning → Override with reason → Save |
 
-| Field | Detail |
+### UC-03: Send SOS
+| Actor | Victim |
 |-------|--------|
-| **Use Case ID** | UC-02 |
-| **Name** | Log a Relief Distribution |
-| **Actor** | UP Official, NGO Worker |
-| **Preconditions** | Actor is authenticated; household is registered |
-| **Trigger** | Actor taps "Log Distribution" |
-| **Main Flow** | 1. Actor searches for household by HH-ID or name. 2. System retrieves household. 3. System checks duplicate history for item category. 4. No duplicate → Actor selects item, quantity, takes photo. 5. Actor submits. 6. System saves log entry with timestamp and officer ID. |
-| **Alternate Flow** | 3a. Duplicate found → System shows warning with prior distribution details → Actor provides override reason → Log saved with override flag. |
-| **Exception Flow** | 1a. Household not found → Actor prompted to register household first. |
-| **Postconditions** | Distribution log entry saved and linked to household. |
+| Main Flow | Open SOS form → GPS auto-capture → Select type (rescue/food/water/medical/shelter) → Set priority → Submit (online or offline queue) |
+| Postcondition | SOS visible to nearby volunteers on map |
 
----
+### UC-04: Accept Rescue Mission
+| Actor | Volunteer |
+|--------|-----------|
+| Main Flow | View SOS on map → Select SOS → Accept → Mission created → Victim notified → Update status as mission progresses |
 
-### UC-03: View Public Dashboard
+### UC-05: Donate to Campaign
+| Actor | Donor |
+|-------|-------|
+| Main Flow | Browse campaigns → Select campaign → Enter amount → Choose payment method (bKash/Nagad/Rocket) → Complete payment → Receive digital receipt |
 
-| Field | Detail |
-|-------|--------|
-| **Use Case ID** | UC-03 |
-| **Name** | View Public Dashboard |
-| **Actor** | General Public (unauthenticated) |
-| **Preconditions** | None |
-| **Trigger** | User opens public URL |
-| **Main Flow** | 1. User opens dashboard. 2. System loads aggregated distribution data by union. 3. User selects union or date filter. 4. System updates chart and map. |
-| **Postconditions** | User sees distribution summary; no PII exposed. |
-
----
-
-### UC-04: Sync Offline Data
-
-| Field | Detail |
-|-------|--------|
-| **Use Case ID** | UC-04 |
-| **Name** | Sync Offline Data |
-| **Actor** | System (automated), UP Official |
-| **Preconditions** | Device has queued offline records |
-| **Trigger** | Device detects network connectivity restored |
-| **Main Flow** | 1. System detects connectivity. 2. System uploads queued records in chronological order. 3. Server validates and stores records. 4. System clears local queue. 5. System notifies user: "X records synced." |
-| **Alternate Flow** | 3a. Conflict detected → Server flags for manual review; saves both versions with timestamps. |
-| **Postconditions** | All offline records uploaded; conflicts flagged for review. |
-
----
-
-### UC-05: Audit Union Distributions
-
-| Field | Detail |
-|-------|--------|
-| **Use Case ID** | UC-05 |
-| **Name** | Audit Union Distributions |
-| **Actor** | Upazila Officer |
-| **Preconditions** | Actor is authenticated as Upazila Officer |
-| **Trigger** | Officer opens Upazila dashboard |
-| **Main Flow** | 1. Officer selects a union from their jurisdiction. 2. System loads all distribution logs for that union. 3. Officer applies date/item filters. 4. Officer reviews entries; can flag suspicious ones. 5. Officer exports report as PDF or CSV. |
-| **Postconditions** | Officer has an audited view; flagged entries marked for follow-up. |
+### UC-06: Sync Offline Data
+| Actor | System (automated) |
+|-------|--------------------|
+| Main Flow | Detect connectivity → Upload queued records → Server validates → Clear local queue → Notify user |
+| Alt Flow | Conflict detected → Flag for review → Save both versions |
 
 ---
 
@@ -209,67 +207,35 @@
 
 ### Must Have
 - FR-01 to FR-04 (authentication and roles)
-- FR-06 to FR-10 (household registration with offline)
-- FR-11 to FR-13 (distribution logging with offline)
-- FR-15 to FR-17 (duplicate detection and override)
-- FR-19 to FR-20 (public dashboard, no login)
-- FR-25 to FR-26 (offline queue and auto-sync)
-- NFR-05, NFR-06, NFR-07 (security baseline)
-- NFR-09, NFR-10 (mobile usability, Bengali labels)
+- FR-07 to FR-10 (household registration with offline)
+- FR-11 to FR-12 (distribution logging)
+- FR-14 to FR-16 (duplicate detection)
+- FR-35, FR-37 (public dashboard)
+- FR-42 to FR-43 (offline sync)
+- FR-17 to FR-21 (SOS)
+- FR-22 to FR-26 (missions)
+- FR-38 to FR-41 (inventory)
+- NFR-06 to NFR-11 (security + UX)
 
 ### Should Have
-- FR-05 (Upazila manages UP accounts)
-- FR-23 to FR-24 (export reports)
-- FR-21 (map view on public dashboard)
-- FR-27 (conflict detection and flagging)
-- FR-28 to FR-30 (feedback module)
-- FR-31 to FR-33 (inventory tracking)
-- FR-34 (user profile)
-- NFR-01, NFR-02 (performance targets)
+- FR-27 to FR-30 (campaigns and donations)
+- FR-31 to FR-32 (shelters)
+- FR-33 to FR-34 (chat and notifications)
+- FR-45 to FR-46 (feedback)
+- FR-47 to FR-48 (i18n)
+- NFR-01 to NFR-04 (performance targets)
 
 ### Could Have
-- FR-22 (hourly dashboard refresh)
-- FR-18 (override event logging)
-- NFR-04 (500 concurrent users — beyond prototype scale)
-- NFR-12 (Swagger API docs)
+- FR-49 to FR-51 (admin command center)
+- NFR-15 (WCAG accessibility)
+- NFR-16 (granular rate limiting)
 
 ### Won't Have (this semester)
-- DDM API integration
 - Native Android/iOS app
 - AI-based need forecasting
-- Financial/cash transfer management
-- Real-time satellite GIS layers
-
----
-
-## 3.3.6 Requirements Traceability Matrix
-
-| Requirement ID | Module | Use Case | Test Case |
-|---------------|--------|----------|-----------|
-| FR-01 | Auth | — | TC-01 |
-| FR-02 | Auth | — | TC-02 |
-| FR-03 | Auth | — | TC-03 |
-| FR-06 | Household | UC-01 | TC-04 |
-| FR-07 | Household | UC-01 | TC-05 |
-| FR-08 | Household | UC-01 | TC-06 |
-| FR-10 | Household / Sync | UC-01, UC-04 | TC-07 |
-| FR-11 | Distribution | UC-02 | TC-08 |
-| FR-15 | Duplicate | UC-02 | TC-09 |
-| FR-16 | Duplicate | UC-02 | TC-10 |
-| FR-17 | Duplicate | UC-02 | TC-11 |
-| FR-19 | Dashboard | UC-03 | TC-12 |
-| FR-25 | Sync | UC-04 | TC-13 |
-| FR-26 | Sync | UC-04 | TC-14 |
-| FR-27 | Sync | UC-04 | TC-15 |
-| FR-23 | Reports | UC-05 | TC-16 |
-| FR-28 | Feedback | — | TC-FB01 |
-| FR-29 | Feedback | — | TC-FB02 |
-| FR-30 | Feedback | — | TC-FB03 |
-| FR-31 | Inventory | — | TC-INV01 |
-| FR-32 | Inventory | — | TC-INV02 |
-| FR-34 | Auth | — | — |
-
-*(Test cases defined in full in Section 3.9)*
+- DDM API integration
+- Full SMS gateway integration
+- Satellite GIS layers
 
 ---
 
