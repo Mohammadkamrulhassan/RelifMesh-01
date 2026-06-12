@@ -11,9 +11,10 @@
 4. Set up GitHub repository
 
 ## Discussion & Decisions
-- Project topic confirmed: RelifMesh — Disaster Relief Coordination System
+- Project topic confirmed: ReliefMesh — Disaster Response & Relief Management System
 - Team name: Team_Skipper
 - Tech stack: MERN (MongoDB, Express, React, Node.js) with Vite + Tailwind
+- v1 scope: relief distribution tracking, household registration, duplicate detection, offline sync
 - Documentation: 14 sections to be completed as per SAD Lab guidelines
 - Repository structure: separated frontend/backend with documentation/
 

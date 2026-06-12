@@ -11,3 +11,8 @@ frontend/dist/
 *.swp
 *.swo
 run.sh
+newly-think/
+TODO.md
+.gitignore
+git_basic_command.md
+git.sh

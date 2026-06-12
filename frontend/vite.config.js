@@ -11,7 +11,7 @@ export default defineConfig({
       manifest: {
         name: 'RelifMesh',
         short_name: 'RelifMesh',
-        description: 'Disaster Relief Coordination System',
+        description: 'Disaster Response & Relief Management System',
         theme_color: '#1e40af',
         background_color: '#f9fafb',
         display: 'standalone',
@@ -22,5 +22,14 @@ export default defineConfig({
       },
     }),
   ],
-  server: { host: true, port: 5173 },
+  server: {
+    host: true,
+    port: 5173,
+    proxy: {
+      '/v1': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+      },
+    },
+  },
 })
