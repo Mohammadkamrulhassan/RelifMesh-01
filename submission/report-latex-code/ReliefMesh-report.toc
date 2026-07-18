@@ -1,0 +1,66 @@
+\contentsline {section}{Approval}{ii}{section*.1}%
+\contentsline {section}{Declaration}{iii}{section*.2}%
+\contentsline {section}{Acknowledgement}{iv}{section*.3}%
+\contentsline {section}{List of Acronyms}{ix}{section*.4}%
+\contentsline {chapter}{ABSTRACT}{1}{chapter*.5}%
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Overview}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Motivation}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Problem Statement}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Project Objectives}{3}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Project Scope}{4}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Report Organization}{4}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Contributions}{4}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Literature Review}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Disaster Relief Coordination Systems}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Offline-First Web Applications}{5}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Role-Based Access Control in Humanitarian Systems}{6}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Duplicate Detection in Relief Distribution}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Geographic Need Assessment}{6}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Summary}{6}{section.2.6}%
+\contentsline {chapter}{\numberline {3}Methodology}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Development Model}{8}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Justification}{8}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Development Environment}{8}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Requirements Engineering}{9}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Requirement Elicitation}{9}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Functional Requirements}{9}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Non-Functional Requirements}{9}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}System Modeling: Data Flow Diagrams}{10}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Context Diagram (Level 0)}{10}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Level 1 DFD}{10}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Use Case Model}{11}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Entity Relationship Diagram (ERD)}{11}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Algorithm Design: Duplicate Detection}{12}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Architecture}{13}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}High-Level Architecture}{13}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Offline-First Architecture}{14}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Security Architecture}{14}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Testing Strategy}{14}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Implementation Overview}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Milestone Delivery}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Test Results}{16}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Automated Testing}{16}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Manual QA Testing}{17}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Key Technical Decisions}{17}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Deployment Architecture}{17}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Discussion}{18}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Limitations and Future Work}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Limitations}{19}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Future Work}{20}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Conclusion}{21}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Use Case Diagram}{24}{chapter.7}%
+\contentsline {chapter}{\numberline {8}API Endpoints}{25}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Authentication}{25}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Households}{25}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Distributions}{25}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Duplicates}{25}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Need Calculation}{26}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Heatmap}{26}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Inventory}{26}{section.8.7}%
+\contentsline {section}{\numberline {8.8}Pledges}{26}{section.8.8}%
+\contentsline {section}{\numberline {8.9}Feedback}{26}{section.8.9}%
+\contentsline {section}{\numberline {8.10}Reports}{27}{section.8.10}%
+\contentsline {section}{\numberline {8.11}Dashboard}{27}{section.8.11}%
+\contentsline {section}{\numberline {8.12}Sync}{27}{section.8.12}%
