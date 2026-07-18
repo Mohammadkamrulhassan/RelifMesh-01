@@ -1,22 +1,56 @@
-% ==================================================================
-% DECLARATION
-% ==================================================================
-\chapter*{DECLARATION}
-\addcontentsline{toc}{chapter}{DECLARATION}
-\thispagestyle{empty}
+%% ============================================================
+%% DECLARATION PAGE
+%% ============================================================
 
-We, \textbf{\studentonename, \studenttwoname, \studentthreename, and \studentfourname}, do hereby declare that this report has been done by us under the supervision of \textbf{\supervisorname}, \supervisortitle, \supervisordept, \uniname. We also declare that neither this report nor any part of this report has been submitted elsewhere for the award of any degree.
+\clearpage
+\thispagestyle{frontmatter}
+\phantomsection
+\addcontentsline{toc}{section}{Declaration}
 
-\vspace{1.5cm}
-\noindent\textbf{Submitted By}
+\begin{center}
+    {\Large\bfseries DECLARATION}
+\end{center}
 
-\vspace{0.6cm}
-\noindent\rule{6cm}{0.4pt}\\
-\textbf{\teamname}\\
-\studentonename (Reg: \studentonereg),\\
-\studenttwoname (Reg: \studenttworeg),\\
-\studentthreename (Reg: \studentthreereg),\\
-\studentfourname (Reg: \studentfourreg)\\
-Session: \session\\
-\deptname\\
-\uniname
+\vspace{0.8cm}
+
+\noindent We, the undersigned, do hereby declare that this report has been prepared by us under the supervision of \textbf{\supervisorname, \supervisordesignation}, \departmentname, \universityname. We also declare that neither this report nor any part of this report has been submitted elsewhere for the award of any degree or diploma.
+
+\vspace{0.3cm}
+
+\noindent We further declare that the work presented in this report is original and any reference to work done by others has been duly acknowledged.
+
+
+
+%% ----- Submitted By (2 per row) -----
+\vspace{1cm}
+\noindent\underline{Submitted By:}
+
+\vspace{0.5cm}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \sigblockcompact{\studentonename}{ID: \studentonereg}{Session: \session}{\departmentnameshort, \universitynameshort}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \sigblockcompact{\studenttwoname}{ID: \studenttworeg}{Session: \session}{\departmentnameshort, \universitynameshort}
+\end{minipage}
+
+\vspace{0.5cm}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \sigblockcompact{\studentthreename}{ID: \studentthreereg}{Session: \session}{\departmentnameshort, \universitynameshort}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \sigblockcompact{\studentfourname}{ID: \studentfourreg}{Session: \session}{\departmentnameshort, \universitynameshort}
+\end{minipage}
+
+%% ----- Supervised By -----
+\vspace{1cm}
+\noindent\underline{Supervised By:}
+
+\sigblockcompact{\supervisorname}{\supervisordesignation}{\departmentname}{\universityname}

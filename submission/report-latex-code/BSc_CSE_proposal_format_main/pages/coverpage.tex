@@ -1,0 +1,65 @@
+%% ============================================================
+%% COVER PAGE
+%% ============================================================
+
+\begin{titlepage}
+    \pagestyle{coverpage}      % force cover style for this page
+    %\thispagestyle{coverpage}
+    \begin{center}
+    
+    %--- Top block ---
+    {\LARGE\bfseries BSc Thesis Proposal\\[0.3cm]}
+    {\large On\\[0.5cm]}
+    
+    {\Large\bfseries [\thesistitle]\\[0.4cm]}
+    {\normalsize Course Code: \coursecode\ (\coursecredit)\\[1.0cm]}
+    
+    %--- Submitted by ---
+    {\large\bfseries Submitted by:}\\[0.25cm]
+    {\normalsize
+    \studentname\\
+    ID: \studentid\\
+    Session: \studentsession\\[1.2cm]
+    }
+    
+    %--- Under supervision ---
+    {\large\bfseries Under the supervision of}\\[0.25cm]
+    {\normalsize
+    \supervisorname\\  % Change these variables from config\styles.tex
+    \supervisordesignation\\ % Change these variables from config\styles.tex
+    Department of Computer Science and Engineering\\
+    Rangamati Science and Technology University\\[1.9cm]
+    }
+    
+    %--- Fulfillment text ---
+    {\normalsize
+    \textit{This Thesis/Research Proposal is Submitted in Partial Fulfillment of the Requirements}\\
+    \textit{for the Degree of BSc (Engg.) in Computer Science and Engineering}\\[0.9cm]
+    }
+    
+    %--- Logo BEFORE department name (as you asked) ---
+    \IfFileExists{figures/rmstu_logo.png}{%
+        \includegraphics[width=1.6in]{figures/rmstu_logo.png}\\[0.5cm]
+    }{%
+        \fbox{\parbox{1.6in}{\centering\vspace{0.45in}\small Place university\\logo here\\(figures/rmstu\_logo.png)\vspace{0.45in}}}\\[0.5cm]
+    }
+    
+      
+    \textbf{DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING}\\
+    \textbf{RANGAMATI SCIENCE AND TECHNOLOGY UNIVERSITY}\\
+    \textbf{RANGAMATI, BANGLADESH}\\[0.5cm]
+    \textbf{[MONTH YEAR]}
+    
+    \end{center}
+    
+    %==================== AUTO-FIT (keeps everything on ONE page) ====================
+    % If content overflows, reduce spacing/font slightly by uncommenting one of these:
+    % \renewcommand{\baselinestretch}{0.97}\normalsize
+    % Reduce logo size slightly:
+    % change width=1.6in to width=1.4in
+    % Reduce some [0.9cm] blocks to [0.6cm]
+    %=================================================================
+    
+
+\end{titlepage}
+\pagestyle{fancy}

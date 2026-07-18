@@ -1,0 +1,109 @@
+%% ============================================================
+%% STYLES — Visual layout, headers, footers, section formatting
+%% ============================================================
+
+%% ----- Line Spacing -----
+\onehalfspacing
+
+%% ----- Hyperlinks -----
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue,
+    bookmarksopen=true,
+    pdfauthor={\studentname},
+    pdftitle={BSc Thesis Proposal — RMSTU},
+    pdfsubject={BSc Thesis Proposal},
+    pdfkeywords={thesis, proposal, RMSTU, CSE},
+}
+
+%% ===== HEADERS & FOOTERS =====
+
+% Default page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\textit{\footnotesize BSc Thesis Proposal $|$ Dept.\ of CSE, RMSTU}}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\textit{\scriptsize \copyright\ Department of Computer Science and Engineering, RMSTU}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.2pt}
+
+% Plain style (first page of sections)
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[R]{\textit{\scriptsize \copyright\ Department of Computer Science and Engineering, RMSTU}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+
+% Cover page style — copyright only (NO page number, NO header)
+\fancypagestyle{coverpage}{
+    \fancyhf{} % clear header/footer
+    \fancyfoot[C]{\textit{\scriptsize \copyright\ Department of Computer Science and Engineering, RMSTU}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+
+% Front-matter style (roman pages — no header)
+\fancypagestyle{frontmatter}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[R]{\textit{\scriptsize \copyright\ Department of Computer Science and Engineering, RMSTU}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+%% ===== SECTION FORMATTING =====
+
+% Section — centered, large, bold
+\titleformat{\section}
+  {\normalfont\Large\bfseries\centering}
+  {\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{24pt}{16pt}
+
+% Subsection
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{}{0em}{\thesubsection\quad}
+\titlespacing*{\subsection}{0pt}{16pt}{8pt}
+
+% Subsubsection
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\itshape}{}{0em}{\thesubsubsection\quad}
+\titlespacing*{\subsubsection}{0pt}{12pt}{6pt}
+
+%% ===== TABLE OF CONTENTS =====
+\setlength{\cftsecnumwidth}{2em}
+\setlength{\cftsubsecnumwidth}{3em}
+\setlength{\cftsubsubsecnumwidth}{4em}
+\setlength{\cftbeforesecskip}{4pt}
+
+%% ===== CAPTIONS =====
+\captionsetup{font=small, labelfont=bf, skip=8pt}
+
+%% ===== CODE LISTINGS =====
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=4,
+    captionpos=b,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red!70!black},
+}
+
+%% ===== PARAGRAPH =====
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{6pt}
+
+%% ===== CUSTOM COLORS =====
+\definecolor{headerblue}{HTML}{D9E2F3}
+\definecolor{ganttblue}{HTML}{B4C7E7}
+\definecolor{placeholdergray}{HTML}{666666}

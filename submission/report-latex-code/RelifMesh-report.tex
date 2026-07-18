@@ -1,84 +1,61 @@
-% ==================================================================
-% ReliefMesh Report - Modular Main File
-% ==================================================================
-\documentclass[12pt,a4paper]{report}
+%% ============================================================
+%% ReliefMesh Report — Modular Main File
+%% Department of Computer Science and Engineering
+%% Rangamati Science and Technology University (RMSTU)
+%% Course: CSE-3208 (System Analysis & Design Lab)
+%% ============================================================
 
-% ==================== CONFIGURATION ====================
+\documentclass[12pt, a4paper]{report}
+
+%% ===== Load all packages and configuration =====
 \input{config/packages}
-\input{config/styles}
 \input{config/info}
+\input{config/styles}
 \input{config/commands}
 
-% ==================== DOCUMENT ====================
+%% ==================== DOCUMENT ====================
 \begin{document}
 
-% ==================== FRONT MATTER ====================
-\pagenumbering{roman}
+%% ----- Cover Page -----
 \input{pages/coverpage}
+
+%% ----- Front Matter (roman numerals) -----
+\pagenumbering{roman}
+\setcounter{page}{2}
+
 \input{pages/approval}
 \input{pages/declaration}
 \input{pages/acknowledgement}
-\input{pages/acronyms}
-\clearpage
 
-% List of Figures
-\listoffigures
-\addcontentsline{toc}{chapter}{List of Figures}
-\clearpage
-
-% List of Tables
-\listoftables
-\addcontentsline{toc}{chapter}{List of Tables}
-\clearpage
-
-% Table of Contents
-{
-\hypersetup{linkcolor=black}
 \tableofcontents
-}
-\clearpage
+\newpage
 
-% ==================== MAIN CONTENT ====================
+\listoftables
+\newpage
+
+\listoffigures
+\newpage
+
+\input{pages/acronyms}
+\newpage
+
+%% ----- Main Content (arabic numerals) -----
 \pagenumbering{arabic}
+\setcounter{page}{1}
 
-% Abstract
 \input{sections/00_abstract}
-\clearpage
-
-% Chapter 1: Introduction
 \input{sections/01_introduction}
-\clearpage
-
-% Chapter 2: Literature Review
 \input{sections/02_literature_review}
-\clearpage
-
-% Chapter 3: Methodology
 \input{sections/03_methodology}
-\clearpage
-
-% Chapter 4: Results and Discussion
 \input{sections/04_results}
-\clearpage
-
-% Chapter 5: Limitations and Future Work
 \input{sections/05_limitations}
-\clearpage
-
-% Chapter 6: Conclusion
 \input{sections/06_conclusion}
-\clearpage
 
-% References
+%% ----- References -----
 \input{sections/07_references}
-\clearpage
 
-% ==================== BACK MATTER ====================
-% Appendix A: Use Case Diagram
+%% ----- Appendices -----
 \input{sections/08_appendix_usecase}
-\clearpage
-
-% Appendix B: API Endpoints
 \input{sections/09_appendix_api}
 
 \end{document}

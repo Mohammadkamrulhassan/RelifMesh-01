@@ -1,0 +1,212 @@
+%% ============================================================
+%% 8. PROPOSED METHODOLOGY
+%% ============================================================
+
+\newpage
+\section{Proposed Methodology}
+
+\placeholder{This is the most detailed and critical section of your proposal. Describe your complete research methodology step by step. A reader should be able to replicate your approach from this description.}
+
+%% ----- 8.1 Research Approach -----
+\subsection{Research Approach}
+
+\subsubsection{Philosophical Worldview}
+\placeholder{Describe the philosophical stance underlying your research:}
+\begin{itemize}[leftmargin=1cm]
+    \item \placeholder{\textbf{Positivist} --- objective, measurable, quantitative data}
+    \item \placeholder{\textbf{Interpretivist} --- subjective, qualitative understanding}
+    \item \placeholder{\textbf{Pragmatic} --- mixed methods, practical outcomes}
+\end{itemize}
+
+% ===== WRITE YOUR PHILOSOPHICAL WORLDVIEW HERE =====
+
+
+\subsubsection{Research Design Selection}
+\placeholder{Specify your research design and justify your choice:}
+\begin{itemize}[leftmargin=1cm]
+    \item \placeholder{Experimental / Quasi-experimental}
+    \item \placeholder{Survey-based / Questionnaire-based}
+    \item \placeholder{Case study / Observational}
+    \item \placeholder{Computational / Simulation-based}
+\end{itemize}
+
+% ===== WRITE YOUR RESEARCH DESIGN HERE =====
+
+
+%% ----- 8.2 Data Collection -----
+\subsection{Data Collection}
+
+\subsubsection{Data Sources}
+\placeholder{Describe all data sources with specifics:}
+\begin{itemize}[leftmargin=1cm]
+    \item \placeholder{Existing datasets (name, source URL, size, format)}
+    \item \placeholder{Primary data collection (surveys, interviews, sensors)}
+    \item \placeholder{Web scraping (target websites, data fields)}
+    \item \placeholder{Synthetic data generation (if applicable)}
+\end{itemize}
+
+% ===== WRITE YOUR DATA SOURCES HERE =====
+
+
+\subsubsection{Data Collection Procedures}
+\placeholder{Explain the step-by-step procedure for collecting data. Include sampling strategy (random, stratified, convenience), tools used, and timeline for data collection.}
+
+% ===== WRITE YOUR PROCEDURES HERE =====
+
+
+\subsubsection{Data Validation}
+\placeholder{Describe how you will ensure data quality, reliability, and validity. Include cross-validation strategies, inter-rater reliability (for manual labeling), and data cleaning verification steps.}
+
+% ===== WRITE YOUR VALIDATION APPROACH HERE =====
+
+
+%% ----- 8.3 Data Preprocessing -----
+\subsection{Data Preprocessing}
+
+\placeholder{Detail the preprocessing pipeline. Include all steps with justification:}
+\begin{enumerate}[leftmargin=1cm, itemsep=4pt]
+    \item \placeholder{Data cleaning (handling missing values, removing duplicates)}
+    \item \placeholder{Normalization / Standardization}
+    \item \placeholder{Feature extraction / Feature engineering}
+    \item \placeholder{Encoding (one-hot, label, ordinal)}
+    \item \placeholder{Data augmentation (if applicable)}
+    \item \placeholder{Train-test-validation split ratios}
+    \item \placeholder{Class balancing (SMOTE, undersampling, etc.)}
+\end{enumerate}
+
+% ===== WRITE YOUR PREPROCESSING STEPS HERE =====
+
+
+%% ----- 8.4 Proposed Model -----
+\subsection{Proposed Model / Framework / Algorithm}
+
+\placeholder{Describe the core technical approach in detail. This is the heart of your methodology. Include:}
+\begin{itemize}[leftmargin=1cm]
+    \item \placeholder{Architecture diagram (see Figure~\ref{fig:architecture})}
+    \item \placeholder{Algorithmic steps (see Algorithm~\ref{alg:proposed})}
+    \item \placeholder{Mathematical formulations}
+    \item \placeholder{System design and data flow}
+\end{itemize}
+
+% ===== SYSTEM ARCHITECTURE FIGURE =====
+% Uncomment and replace with your diagram:
+%
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.85\textwidth]{figures/architecture.png}
+%     \caption{Proposed System Architecture}
+%     \label{fig:architecture}
+% \end{figure}
+
+% ===== ALGORITHM PSEUDOCODE =====
+% Uncomment and modify for your algorithm:
+%
+% \begin{algorithm}[H]
+% \caption{Proposed Algorithm}
+% \label{alg:proposed}
+% \begin{algorithmic}[1]
+%     \Require Dataset $D = \{(x_i, y_i)\}_{i=1}^{N}$
+%     \Ensure Trained model $M$
+%     \State $D' \gets \text{Preprocess}(D)$
+%     \State $D_{train}, D_{test} \gets \text{Split}(D', \text{ratio}=0.8)$
+%     \State Initialize model $M$ with parameters $\theta$
+%     \For{epoch $e = 1$ to $E$}
+%         \For{mini-batch $B \subset D_{train}$}
+%             \State $\mathcal{L} \gets \text{Loss}(M(B), y_B)$
+%             \State $\theta \gets \theta - \alpha \nabla_\theta \mathcal{L}$
+%         \EndFor
+%         \State $\text{acc} \gets \text{Evaluate}(M, D_{test})$
+%     \EndFor
+%     \State \Return $M$
+% \end{algorithmic}
+% \end{algorithm}
+
+% ===== WRITE YOUR MODEL DESCRIPTION HERE =====
+
+
+%% ----- 8.5 Evaluation Metrics -----
+\subsection{Evaluation Metrics}
+
+\placeholder{Specify the metrics you will use to evaluate your approach. Choose metrics appropriate to your task:}
+
+\begin{table}[H]
+\centering
+\caption{Evaluation Metrics}
+\label{tab:metrics}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\rowcolor{headerblue}
+\textbf{Metric} & \textbf{Description} & \textbf{Task Type} \\
+\hline
+Accuracy & Overall correct predictions / total predictions & Classification \\
+\hline
+Precision & True positives / (True positives + False positives) & Classification \\
+\hline
+Recall & True positives / (True positives + False negatives) & Classification \\
+\hline
+F1-Score & Harmonic mean of Precision and Recall & Classification \\
+\hline
+AUC-ROC & Area under the ROC curve & Classification \\
+\hline
+RMSE & Root Mean Squared Error & Regression \\
+\hline
+MAE & Mean Absolute Error & Regression \\
+\hline
+Execution Time & Training and inference time & All \\
+\hline
+\end{tabularx}
+\end{table}
+
+\placeholder{Justify why these specific metrics are appropriate for your research.}
+
+% ===== SELECT AND JUSTIFY YOUR METRICS HERE =====
+
+
+%% ----- 8.6 Tools and Technologies -----
+\subsection{Tools and Technologies}
+
+\begin{table}[H]
+\centering
+\caption{Tools and Technologies}
+\label{tab:tools}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{headerblue}
+\textbf{Category} & \textbf{Tools} \\
+\hline
+Programming Language & Python 3.x \\
+\hline
+ML/DL Framework & TensorFlow / PyTorch / scikit-learn \\
+\hline
+Data Processing & Pandas, NumPy \\
+\hline
+Visualization & Matplotlib, Seaborn, Plotly \\
+\hline
+Development Environment & Jupyter Notebook / Google Colab / VS Code \\
+\hline
+Version Control & Git, GitHub \\
+\hline
+Document Preparation & \LaTeX\ (Overleaf) \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ===== MODIFY THE TABLE ABOVE WITH YOUR ACTUAL TOOLS =====
+
+
+%% ----- 8.7 Ethical Considerations -----
+\subsection{Ethical Considerations}
+
+\placeholder{Discuss ethical aspects of your research. Address as applicable:}
+\begin{itemize}[leftmargin=1cm]
+    \item \placeholder{Ethical guidelines and compliance}
+    \item \placeholder{Informed consent for data collection from human subjects}
+    \item \placeholder{Data privacy and anonymization}
+    \item \placeholder{Cultural sensitivity (especially for research involving communities)}
+    \item \placeholder{Bias and fairness in ML models}
+    \item \placeholder{Responsible use of AI}
+\end{itemize}
+
+% ===== WRITE YOUR ETHICAL CONSIDERATIONS HERE =====

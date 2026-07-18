@@ -1,55 +1,68 @@
-% ==================================================================
-% TITLE PAGE
-% ==================================================================
+%% ============================================================
+%% COVER PAGE
+%% ============================================================
+
 \begin{titlepage}
-\centering
-\vspace*{0.5cm}
-
-{\large\bfseries Report On}\\[0.3cm]
-{\Large\bfseries \reporttitle}\\[0.3cm]
-\vspace{-0.5cm}
-\noindent\rule{15.2cm}{0.4pt}\\
-\vspace{0.3cm}
-
-{\large\bfseries Course Code: \coursedone}\par
-{\large\bfseries Course Name : \coursename}\par
-\vspace{1.2cm}
-
-{\large Submitted By}\par
-\begin{center}
-\textbf{Name} \quad \textbf{Registration} \\[6pt]
-\studentonename \quad \studentonereg \\[4pt]
-\studenttwoname \quad \studenttworeg \\[4pt]
-\studentthreename \quad \studentthreereg \\[4pt]
-\studentfourname \quad \studentfourreg \\
-\end{center}
-
-\hspace*{0.2in}
-{Session: \session \quad Team: \teamname}\par
-
-\vspace{1.1cm}
-{\large Under the supervision of}\par
-\vspace{0.4cm}
-{\large\bfseries \supervisorname}\par
-\supervisortitle\ of\par
-\supervisordept\par
-\supervisoruni\par
-
-\vspace{1.0cm}
-This Report is Submitted in Partial Fulfillment of the\\
-Requirements for the Degree of B.Sc. (Engg.) in Computer Science and Engineering.\par
-
-\vspace{1.0cm}
-
-\begin{center}
-    \includegraphics[width=3.2cm]{figures/rmstu-logo.png}
-\end{center}
-
-\vspace{0.8cm}
-{\deptname}\\
-\uniname\par
-
-\vspace{0.8cm}
-Date of Submission: \today
+    \pagestyle{coverpage}
+    \begin{center}
+    
+    %--- Top block ---
+    {\LARGE\bfseries ReliefMesh Report\\[0.3cm]}
+    \vspace{-6pt}
+    \vspace{-6pt}
+    {\large On\\[0.5cm]}
+    \vspace{-6pt}
+    \vspace{-6pt}
+    
+    {\Large\bfseries \reporttitle\\[0.4cm]}
+    \vspace{-6pt}
+    {\normalsize Course Code: \coursecode\ (\coursename)\\[1.0cm]}
+    \vspace{-6pt}
+    
+    %--- Submitted by ---
+    {\large\bfseries Submitted by:}\\[0.25cm]
+    {\normalsize
+    \studentonename\quad ID: \studentonereg\\
+    \studenttwoname\quad ID: \studenttworeg\\
+    \studentthreename\quad ID: \studentthreereg\\
+    \studentfourname\quad ID: \studentfourreg\\[0.2cm]
+    Session: \session\quad Team: \teamname\\[1.2cm]
+    }
+    \vspace{-6pt}
+    
+    %--- Under supervision ---
+    {\large\bfseries Under the supervision of}\\[0.25cm]
+    {\normalsize
+    \supervisorname\\
+    \supervisortitle\\
+    \supervisordept\\
+    \supervisoruni\\[1.9cm]
+    }
+    \vspace{-6pt}
+    
+    %--- Fulfillment text ---
+    {\normalsize
+    \textit{This Report is Submitted in Partial Fulfillment of the Requirements}\\
+    \textit{for the Degree of B.Sc. (Engg.) in Computer Science and Engineering}\\[0.9cm]
+    }
+    
+    %--- Logo ---
+    \IfFileExists{figures/rmstu_logo.png}{%
+        \includegraphics[width=1.6in]{figures/rmstu_logo.png}\\[0.5cm]
+    }{%
+        \IfFileExists{figures/rmstu-logo.png}{%
+            \includegraphics[width=1.6in]{figures/rmstu-logo.png}\\[0.5cm]
+        }{%
+            \fbox{\parbox{1.6in}{\centering\vspace{0.45in}\small Place university\\logo here\\(figures/rmstu\_logo.png)\vspace{0.45in}}}\\[0.5cm]
+        }
+    }
+    
+    \textbf{DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING}\\
+    \textbf{RANGAMATI SCIENCE AND TECHNOLOGY UNIVERSITY}\\
+    \textbf{RANGAMATI, BANGLADESH}\\[0.5cm]
+    Date of Submission: \today
+    
+    \end{center}
 
 \end{titlepage}
+\pagestyle{fancy}
