@@ -1,0 +1,125 @@
+% ======================================================================
+% Section 3.5 -- Database Design (ERD)
+% ======================================================================
+
+\section{Entity Identification}
+\begin{table}[H]
+\centering
+\caption{Entity Identification}
+\label{tab:entities}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Entity & Description \\
+\midrule
+\textbf{User} & System accounts --- UP officials, Upazila officers, NGO workers \\
+\textbf{GeographicArea} & Full BD administrative hierarchy: Division $\rightarrow$ District $\rightarrow$ Upazila $\rightarrow$ Union $\rightarrow$ Ward \\
+\textbf{Household} & Registered disaster-affected family unit with age-bracket counts \\
+\textbf{DistributionLog} & Record of one relief distribution (optionally linked to a pledge) \\
+\textbf{ItemCategory} & Lookup table for predefined relief item types with per-person rates \\
+\textbf{DuplicateAlert} & Alert generated when duplicate distribution is detected \\
+\textbf{SyncConflict} & Log of offline sync conflicts pending manual review \\
+\textbf{Feedback} & User-submitted feedback/complaints with admin response \\
+\textbf{Inventory} & Stock tracking per item category \\
+\textbf{NeedAssessment} & Ward-level calculated need per item category, with optional officer override \\
+\textbf{ReliefPledge} & Source declaration of relief supply with status lifecycle \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Entity-Relationship Diagram}
+The ERD uses Crow's Foot notation with the relationships shown below:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.92, transform shape,
+    ent/.style={rectangle, draw=rmstublue3!80!black, thick, fill=rmstublue3!5, minimum width=2.6cm, minimum height=0.7cm, align=center, font=\small\bfseries, rounded corners=3pt},
+    rel/.style={-{Stealth[length=2mm,width=2mm]}, draw=rmstugray, thick},
+    lab/.style={font=\tiny, fill=white, inner sep=1pt}
+]
+% Entities -- arranged in clear horizontal tiers to avoid collisions
+\node[ent] (GA) at (6.0,8.0) {GeographicArea};
+\node[ent] (U) at (6.0,6.6) {User};
+\node[ent] (HH) at (1.8,4.8) {Household};
+\node[ent] (IP) at (10.2,4.8) {ItemCategory};
+\node[ent] (DL) at (6.0,3.0) {DistributionLog};
+\node[ent] (DA) at (0.0,3.0) {DuplicateAlert};
+\node[ent] (SC) at (12.0,3.0) {SyncConflict};
+\node[ent] (NA) at (1.8,1.0) {NeedAssessment};
+\node[ent] (RP) at (10.6,1.0) {ReliefPledge};
+\node[ent] (FB) at (0.0,-0.8) {Feedback};
+\node[ent] (INV) at (13.2,1.0) {Inventory};
+
+% Relationships
+\draw[rel] (GA) -- (U) node[midway,right,lab] {1..M};
+\draw[rel] (GA.west) -- ++(-1.5,0) |- (HH.north) node[midway,left,lab,font=\tiny] {1..M};
+\draw[rel] (GA.east) -- ++(1.5,0) |- (IP.north) node[midway,right,lab,font=\tiny] {1..M};
+\draw[rel] (GA.west) .. controls +(-3.0,-2.5) and +(-2.0,3.5) .. node[pos=0.4,left,lab,font=\tiny] {1..M} (NA.west);
+\draw[rel] (GA.east) .. controls +(3.0,-2.5) and +(2.0,3.5) .. node[pos=0.4,right,lab,font=\tiny] {1..M} (RP.east);
+\draw[rel] (HH) -- (DL) node[midway,above,sloped,lab] {1..M};
+\draw[rel] (U.south) -- ++(0,-0.7) -| node[pos=0.3,above,lab] {1..M} (DL.north);
+\draw[rel] (IP) -- (DL) node[midway,above,sloped,lab,font=\tiny] {1..M};
+\draw[rel] (IP) -- (RP) node[midway,right,lab,font=\tiny] {1..M};
+\draw[rel] (IP.south) .. controls +(0,-1.5) and +(2.5,1.2) .. node[pos=0.5,right,lab,font=\tiny] {1..M} (NA.east);
+\draw[rel] (NA) -- (DL) node[midway,above,sloped,lab,font=\tiny] {1..M};
+\draw[rel, dashed] (DL) -- (RP) node[midway,above,sloped,lab] {M..1};
+\draw[rel] (DL) -- (DA) node[midway,above,lab,font=\tiny] {1..M};
+\draw[rel] (DL) -- (SC) node[midway,above,lab,font=\tiny] {1..M};
+\draw[rel] (U.west) .. controls +(-2.5,-1) and +(0,2.5) .. node[pos=0.5,left,lab,font=\tiny] {1..M} (FB.north);
+\draw[rel] (IP.east) -- ++(0.8,0) |- node[pos=0.3,right,lab,font=\tiny] {1..1} (INV.north east);
+\draw[rel, dashed] (SC.south) |- node[pos=0.6,below,lab,font=\tiny] {deducts} (INV.west);
+\end{tikzpicture}
+\captionof{figure}{Entity-Relationship Diagram (simplified)}
+\end{center}
+
+\paragraph{Key Relationships}
+
+\begin{itemize}[nosep]
+    \item \textbf{GeographicArea} (1) $\longleftrightarrow$ (Many) \textbf{User} --- one area has many users
+    \item \textbf{GeographicArea} (1) $\longleftrightarrow$ (Many) \textbf{Household} --- one union has many households
+    \item \textbf{GeographicArea} (self-referencing) --- parent\_id for hierarchy
+    \item \textbf{Household} (1) $\longleftrightarrow$ (Many) \textbf{DistributionLog} --- one household receives many distributions
+    \item \textbf{User} (1) $\longleftrightarrow$ (Many) \textbf{DistributionLog} --- one officer logs many distributions
+    \item \textbf{DistributionLog} (Many) $\longleftrightarrow$ (1) \textbf{ReliefPledge} --- optional FK for pledge fulfillment
+    \item \textbf{ItemCategory} (1) $\longleftrightarrow$ (Many) \textbf{DistributionLog}, \textbf{NeedAssessment}, \textbf{ReliefPledge}
+    \item \textbf{GeographicArea} (1) $\longleftrightarrow$ (Many) \textbf{NeedAssessment}, \textbf{ReliefPledge}
+\end{itemize}
+
+\section{Normalization}
+All tables are in \textbf{3NF (Third Normal Form)}:
+
+\begin{itemize}[nosep]
+    \item \textbf{1NF:} All attributes atomic --- vulnerability flags are separate boolean columns, age-bracket counts are separate INT columns
+    \item \textbf{2NF:} All tables use single-column surrogate PKs (UUID); no composite PKs
+    \item \textbf{3NF:} GeographicArea hierarchy is self-referencing; ItemCategory is in its own table; ReliefPledge.remaining\_qty is a computed column
+\end{itemize}
+
+\section{Data Dictionary (Key Tables)}
+
+\subsection{users}
+\begin{itemize}[nosep]
+    \item user\_id (PK), area\_id (FK), name, email (UNIQUE), password\_hash, role (ENUM), organization, is\_active, created\_at
+\end{itemize}
+
+\subsection{geographic\_areas}
+\begin{itemize}[nosep]
+    \item area\_id (PK), name, level (ENUM: DIVISION/DISTRICT/UPAZILA/UNION/WARD), parent\_id (FK, self), geometry (GeoJSON)
+\end{itemize}
+
+\subsection{households}
+\begin{itemize}[nosep]
+    \item hh\_id (PK), area\_id (FK), head\_name, nid (UNIQUE), gps\_lat, gps\_lng, family\_size, is\_elderly, is\_disabled, is\_pregnant, children\_0\_5, over\_60, photo\_url, registered\_by (FK), created\_at
+\end{itemize}
+
+\subsection{distribution\_logs}
+\begin{itemize}[nosep]
+    \item log\_id (PK), hh\_id (FK), officer\_id (FK), item\_category\_id (FK), pledge\_id (FK, nullable), quantity, unit, gps\_lat, gps\_lng, photo\_url, timestamp, sync\_status (ENUM), is\_override, override\_reason
+\end{itemize}
+
+\subsection{need\_assessments}
+\begin{itemize}[nosep]
+    \item assessment\_id (PK), area\_id (FK, level=WARD), item\_category\_id (FK), calculated\_qty, override\_qty (nullable), override\_reason, computed\_at, overridden\_at, overridden\_by (FK)
+\end{itemize}
+
+\subsection{relief\_pledges}
+\begin{itemize}[nosep]
+    \item pledge\_id (PK), source\_id, source\_type (ENUM), area\_id (FK), item\_category\_id (FK), pledged\_qty, remaining\_qty, team\_count, volunteer\_count, description, status (ENUM: PENDING/IN\_FULFILLMENT/COMPLETED/CANCELLED)
+\end{itemize}

@@ -49,7 +49,7 @@ export default function ReliefRequestList() {
           <h1 className="page-header-title">My Relief Requests</h1>
           <p className="page-header-subtitle">{requests.length} request{requests.length !== 1 ? 's' : ''}</p>
         </div>
-        <Link to="/relief-requests/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>New Request</Button></Link>
+        <Link to="/app/relief-requests/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>New Request</Button></Link>
       </div>
       <div style={{ display: 'flex', gap: 'var(--space-3)', marginBottom: 'var(--space-4)', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: '200px', maxWidth: '320px' }}>
@@ -70,7 +70,7 @@ export default function ReliefRequestList() {
       ) : (
         <div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}>
           {requests.map(r => (
-            <Link key={r._id} to={`/relief-requests/${r._id}`} style={{ textDecoration: 'none' }}>
+            <Link key={r._id} to={`/app/relief-requests/${r._id}`} style={{ textDecoration: 'none' }}>
               <Card className="page-section" style={{ cursor: 'pointer' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-2)' }}>
                   <span className={`badge ${STATUS_COLORS[r.status] || 'badge-warning'}`}>{r.status}</span>

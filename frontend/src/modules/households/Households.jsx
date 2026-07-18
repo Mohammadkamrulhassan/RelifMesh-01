@@ -52,7 +52,7 @@ export default function Households() {
           <h1 className="page-header-title">Households</h1>
           <p className="page-header-subtitle">{households.length} registered household{households.length !== 1 ? 's' : ''}</p>
         </div>
-        {canCreate && <Link to="/households/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>Register Household</Button></Link>}
+        {canCreate && <Link to="/app/households/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>Register Household</Button></Link>}
       </div>
       <form onSubmit={handleSearch} style={{ marginBottom: 'var(--space-4)', maxWidth: '360px' }}>
         <Input name="search" placeholder="Search by name or NID..." value={search} onChange={e => setSearch(e.target.value)}
@@ -64,7 +64,7 @@ export default function Households() {
       ) : (
         <div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
           {households.map(h => (
-            <Link key={h._id || h.hhId} to={`/households/${h._id || h.hhId}`} style={{ textDecoration: 'none' }}>
+            <Link key={h._id || h.hhId} to={`/app/households/${h._id || h.hhId}`} style={{ textDecoration: 'none' }}>
               <Card className="page-section" style={{ cursor: 'pointer', transition: 'box-shadow var(--transition-base)' }}
                 onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow-md)'}
                 onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-sm)'}

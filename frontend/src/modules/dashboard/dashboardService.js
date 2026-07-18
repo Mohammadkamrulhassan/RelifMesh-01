@@ -11,3 +11,11 @@ export function getStats() {
 export function getMapData() {
   return get('/public/map')
 }
+
+export function getRecentActivities() {
+  return get('/public/activities')
+}
+
+export function getDistributionHeatmap() {
+  return get('/public/distribution-heatmap')
+}

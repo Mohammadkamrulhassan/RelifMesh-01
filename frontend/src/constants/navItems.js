@@ -2,42 +2,44 @@ const NAV_ITEMS = [
   {
     section: 'Overview',
     items: [
-      { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: 'dashboard', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
+      { key: 'dashboard', label: 'Dashboard', path: '/app/dashboard', icon: 'dashboard', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
     ],
   },
   {
     section: 'My Requests',
     items: [
-      { key: 'relief-requests', label: 'My Requests', path: '/relief-requests', icon: 'hand', roles: ['CITIZEN'] },
-      { key: 'relief-request-new', label: 'Request Relief', path: '/relief-requests/new', icon: 'plus', roles: ['CITIZEN'] },
+      { key: 'relief-requests', label: 'My Requests', path: '/app/relief-requests', icon: 'hand', roles: ['CITIZEN'] },
+      { key: 'relief-request-new', label: 'Request Relief', path: '/app/relief-requests/new', icon: 'plus', roles: ['CITIZEN'] },
     ],
   },
   {
     section: 'Management',
     items: [
-      { key: 'households', label: 'Households', path: '/households', icon: 'building', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
-      { key: 'distributions', label: 'Distributions', path: '/distributions', icon: 'truck', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
-      { key: 'relief-requests-admin', label: 'Relief Requests', path: '/relief-requests/admin', icon: 'hand', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER'] },
+      { key: 'households', label: 'Households', path: '/app/households', icon: 'building', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
+      { key: 'distributions', label: 'Distributions', path: '/app/distributions', icon: 'truck', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER'] },
+      { key: 'need-dashboard', label: 'Need Assessment', path: '/app/need-dashboard', icon: 'chart', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL'] },
+      { key: 'pledges', label: 'Pledges', path: '/app/pledges', icon: 'heart', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
+      { key: 'relief-requests-admin', label: 'Relief Requests', path: '/app/relief-requests/admin', icon: 'hand', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER'] },
     ],
   },
   {
     section: 'Reports',
     items: [
-      { key: 'reports', label: 'Reports', path: '/reports', icon: 'clipboard', roles: ['UPAZILA_OFFICER'] },
+      { key: 'reports', label: 'Reports', path: '/app/reports', icon: 'clipboard', roles: ['UPAZILA_OFFICER'] },
     ],
   },
   {
     section: 'Feedback',
     items: [
-      { key: 'feedback', label: 'Submit Feedback', path: '/feedback', icon: 'message', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN'] },
-      { key: 'feedback-manage', label: 'Manage Feedback', path: '/feedback/manage', icon: 'list', roles: ['UPAZILA_OFFICER'] },
+      { key: 'feedback', label: 'Submit Feedback', path: '/app/feedback', icon: 'message', roles: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN'] },
+      { key: 'feedback-manage', label: 'Manage Feedback', path: '/app/feedback/manage', icon: 'list', roles: ['UPAZILA_OFFICER'] },
     ],
   },
   {
     section: 'System',
     items: [
-      { key: 'admin', label: 'Admin', path: '/admin', icon: 'shield', roles: ['UPAZILA_OFFICER'] },
-      { key: 'profile', label: 'Profile', path: '/profile', icon: 'user', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
+      { key: 'admin', label: 'Admin', path: '/app/admin', icon: 'shield', roles: ['UPAZILA_OFFICER'] },
+      { key: 'profile', label: 'Profile', path: '/app/profile', icon: 'user', roles: ['UPAZILA_OFFICER', 'UP_OFFICIAL', 'NGO_WORKER', 'CITIZEN'] },
     ],
   },
 ]

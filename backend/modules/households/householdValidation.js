@@ -9,7 +9,7 @@ const validateFamilyMember = [
 
 const validateHousehold = [
   body('headName').trim().isLength({ min: 2, max: 100 }),
-  body('nid').matches(/^[0-9]{6,20}$/).withMessage('NID must be 6–20 digits'),
+  body('nid').trim().matches(/^[0-9]{6,20}$/).withMessage('NID must be 6–20 digits'),
   body('familySize').optional({ values: 'falsy' }).isInt({ min: 1, max: 50 }),
   body('gps.lat').isFloat({ min: -90, max: 90 }),
   body('gps.lng').isFloat({ min: -180, max: 180 }),

@@ -1,66 +1,70 @@
 # Section 3.2 — Stakeholder Analysis
-**Project:** ReliefMesh — Disaster Response & Relief Management System
+**Project:** ReliefMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-06-10
+**Last Updated:** 2026-06-09
 
 ---
 
 ## 3.2.1 Stakeholder Identification
 
+A stakeholder is any individual, group, or organization that affects or is affected by the ReliefMesh system.
+
 | # | Stakeholder | Type | Interaction with System |
 |---|-------------|------|------------------------|
 | S1 | Union Parishad (UP) Officials | Primary | Register households, log distributions, view local dashboard |
-| S2 | Upazila Officers | Primary | Audit data, generate reports, manage accounts |
-| S3 | NGO Field Workers | Primary | Log distributions, view duplicate alerts |
-| S4 | Disaster Victims / Households | Primary | Submit SOS requests, request relief, view mission status |
-| S5 | Volunteers / Rescue Teams | Primary | Find nearby SOS, accept missions, update rescue status |
-| S6 | Donors | Primary | Browse campaigns, make donations, view receipts |
-| S7 | General Public | Primary | View public transparency dashboard (read-only) |
-| S8 | System Administrators | Primary | Manage users, view analytics, audit logs |
-| S9 | District Disaster Management Committee | Secondary | Review aggregated district-level reports |
-| S10 | Department of Disaster Management (DDM) | Secondary | Policy-level oversight; potential future integration |
-| S11 | Course Teacher (MD Mynoddin) | External | Academic evaluator, QA reviewer |
-| S12 | Team_Skipper (Development Team) | Internal | Design, build, test, and maintain the system |
+| S2 | Upazila Officers | Primary | Audit UP-level data, generate reports, manage UP accounts |
+| S3 | NGO Field Workers | Primary | Log distributions independently, view duplicate alerts |
+| S4 | General Public | Primary | View public dashboard (read-only, no login) |
+| S5 | District Disaster Management Committee | Secondary | Review aggregated district-level reports |
+| S6 | Department of Disaster Management (DDM) | Secondary | Policy-level oversight; potential future integration |
+| S7 | Course Teacher (MD Mynoddin) | External | Academic evaluator, QA reviewer |
+| S8 | External QA (Saifur Rahman) | External | Independent functionality testing |
+| S9 | Team_Skipper (Development Team) | Internal | Design, build, test, and maintain the system |
+| S10 | Affected Households / Disaster Victims | Indirect | Data subjects; benefit from fair distribution |
+| S11 | Outside Individual Donors | Primary | Pledge relief capacity, view map, log own distribution |
+| S12 | Local (in-area) Individual/Institution Volunteers | Primary | Pledge relief capacity for their own neighborhood, coordinate with officials |
+| S13 | Volunteer Teams (under NGO/Govt/Independent) | Primary | Move toward pledged area, get logged as part of a Pledge |
 
 ---
 
 ## 3.2.2 Stakeholder Classification
 
 ### Primary Stakeholders (direct system users)
-- **UP Officials** — core data entry role
-- **Upazila Officers** — supervisory role
-- **NGO Field Workers** — cross-agency coordination
-- **Disaster Victims** — SOS requests, relief requests
-- **Volunteers** — rescue mission acceptance
-- **Donors** — campaign donations
-- **General Public** — transparency dashboard
-- **Admins** — system management
+These stakeholders interact with the system directly through the UI.
+
+- **UP Officials** — most frequent users; core data entry role
+- **Upazila Officers** — supervisory role; audit and reporting
+- **NGO Field Workers** — parallel data entry; cross-agency coordination
+- **General Public** — read-only transparency dashboard consumers
 
 ### Secondary Stakeholders (indirect benefit)
-- **District Disaster Management Committee** — aggregated reports
-- **DDM** — policy and compliance oversight
+These stakeholders receive outputs or are affected by decisions but do not use the system directly.
 
-### External Stakeholders
+- **District Disaster Management Committee** — consume aggregated reports
+- **Department of Disaster Management (DDM)** — policy and compliance oversight
+
+### External Stakeholders (project context)
 - **Course Teacher** — evaluates documentation and prototype quality
+- **External QA Tester** — validates system functionality independently
 
 ### Internal Stakeholders
 - **Team_Skipper** — responsible for all design, development, and documentation
 
 ---
 
-## 3.2.3 Power-Interest Grid
+## 3.2.3 Power-Interest Grid (Stakeholder Matrix)
 
 ```
 HIGH POWER
   │
   │  District Committee    UP Officials
-  │  DDM            Upazila Officers, Admins
+  │  DDM            Upazila Officers
   │
   │──────────────────────────────────────────────
   │
-  │  Course Teacher      NGO Workers, Victims
-  │               Volunteers, Donors
-  │               General Public
+  │  Course Teacher      NGO Field Workers
+  │  External QA        General Public
+  │               Affected Households
 LOW POWER
   └──────────────────────────────────────────────
      LOW INTEREST       HIGH INTEREST
@@ -68,74 +72,82 @@ LOW POWER
 
 | Quadrant | Strategy | Stakeholders |
 |----------|----------|--------------|
-| High Power, High Interest | **Manage Closely** | UP Officials, Upazila Officers, Admins |
-| High Power, Low Interest | **Keep Satisfied** | District Committee, DDM, Course Teacher |
-| Low Power, High Interest | **Keep Informed** | Victims, Volunteers, NGO Workers, Donors, Public |
-| Low Power, Low Interest | **Monitor** | — |
+| High Power, High Interest | **Manage Closely** — involve in all decisions | UP Officials, Upazila Officers |
+| High Power, Low Interest | **Keep Satisfied** — provide regular updates | District Committee, DDM, Course Teacher |
+| Low Power, High Interest | **Keep Informed** — regular communication | NGO Workers, General Public, Households |
+| Low Power, Low Interest | **Monitor** — minimal engagement | External QA |
 
 ---
 
-## 3.2.4 User Personas
+## 3.2.4 User Persons
 
-### Persona 1 — Rahim Uddin (UP Official)
+### Person 1 — Rahim Uddin (UP Official)
 | Attribute | Detail |
 |-----------|--------|
 | Age | 42 |
 | Location | Char Fasson Union, Bhola District |
-| Device | Android smartphone (basic) |
-| Connectivity | 2G/3G intermittent |
-| Goal | Register affected families, log distributions |
-| Key Need | Offline data entry, Bengali UI, duplicate prevention |
+| Device | Android smartphone (basic), occasional laptop |
+| Connectivity | 2G/3G intermittent; no internet during active flooding |
+| Digital Literacy | Moderate — uses mobile banking, Facebook |
+| Goal | Register all affected families quickly and log what was distributed |
+| Frustration | Paper forms get wet; no way to know if NGO already visited the same household |
+| Key Need | Offline data entry, simple Bengali-labeled form, photo capture |
 
-### Persona 2 — Nasrin Akter (NGO Worker, BRAC)
+---
+
+### Person 2 — Nasrin Akter (NGO Field Worker, BRAC)
 | Attribute | Detail |
 |-----------|--------|
 | Age | 28 |
-| Location | Mobile — across Sylhet |
-| Device | Android tablet |
-| Connectivity | Moderate with patchy zones |
-| Goal | Log distributions without creating duplicates |
-| Key Need | Duplicate alerts, cross-agency visibility |
+| Location | Mobile — deployed across multiple unions in Sylhet |
+| Device | Android tablet provided by organization |
+| Connectivity | Moderate — has mobile data, but patchy in flood zones |
+| Digital Literacy | High — uses organization apps regularly |
+| Goal | Log distributions without creating duplicates with UP teams |
+| Frustration | No coordination channel with government teams; finds out about duplicates days later |
+| Key Need | Duplicate alert before distribution, cross-agency visibility |
 
-### Persona 3 — Kamal Hossain (Upazila Officer)
+---
+
+### Person 3 — Kamal Hossain (Upazila Officer)
 | Attribute | Detail |
 |-----------|--------|
 | Age | 51 |
 | Location | Upazila office, Sunamganj |
-| Device | Desktop PC |
-| Connectivity | Broadband |
-| Goal | Verify all unions distributing correctly |
-| Key Need | Dashboard, PDF export, audit trail |
+| Device | Desktop PC at office |
+| Connectivity | Stable broadband at office |
+| Digital Literacy | Moderate — email, government portal user |
+| Goal | Verify that all unions under his jurisdiction are distributing correctly |
+| Frustration | Has to physically visit each union to verify; paper reports arrive late |
+| Key Need | Dashboard showing all UP activity under his Upazila, export to PDF |
 
-### Persona 4 — Fatema Begum (Victim)
+---
+
+### Person 4 — Fatema Begum (General Public / Journalist)
 | Attribute | Detail |
 |-----------|--------|
 | Age | 34 |
-| Location | Flood-affected village, Sylhet |
-| Device | Basic smartphone |
-| Connectivity | 2G, frequently offline |
-| Goal | Send SOS when family is stranded, request relief |
-| Key Need | Simple SOS form, works offline, GPS auto-capture |
-
-### Persona 5 — Arif Hasan (Volunteer)
-| Attribute | Detail |
-|-----------|--------|
-| Age | 24 |
-| Location | Sunamganj town |
-| Device | Smartphone with mobile data |
-| Connectivity | 3G/4G |
-| Goal | Find and accept nearby rescue missions |
-| Key Need | Map view of active SOS, real-time mission updates |
-
-### Persona 6 — Shahida Karim (Donor)
-| Attribute | Detail |
-|-----------|--------|
-| Age | 38 |
-| Location | Dhaka |
-| Device | Smartphone |
+| Location | Dhaka (covering Sylhet relief operations remotely) |
+| Device | Laptop, smartphone |
 | Connectivity | Stable |
-| Goal | Donate to verified campaigns, see where money went |
-| Key Need | bKash/Nagad payment, transparency ledger, receipts |
+| Digital Literacy | High |
+| Goal | Verify that relief is reaching flood-affected areas |
+| Frustration | No public source of actual distribution data; only press releases |
+| Key Need | Public dashboard with map and item-level summary by union |
+
+---
+
+### Person 5 — Arif Hossain (Outside Individual Donor)
+| Attribute | Detail |
+|-----------|--------|
+| Age | 30 |
+| Location | Dhaka (home village in Fulgazi Upazila, Feni) |
+| Device | Smartphone |
+| Connectivity | Stable in Dhaka; knows his home village has no connectivity during floods |
+| Digital Literacy | Moderate — uses bKash, Facebook, messaging apps |
+| Goal | Send relief to his home village without duplicating what's already arriving |
+| Frustration | Currently no way to know which wards still need help except calling relatives; no channel to declare what he's sending so it can be coordinated |
+| Key Need | Public heatmap (view, no login) + simple pledge form (login only to pledge) |
 
 ---
 
@@ -143,14 +155,15 @@ LOW POWER
 
 | Stakeholder | Core Requirements |
 |-------------|-------------------|
-| UP Official | Offline registration, duplicate alerts, Bengali UI |
-| Upazila Officer | Audit trail, jurisdiction dashboard, export |
-| NGO Worker | Cross-agency visibility, distribution logging |
-| Victim | SOS with GPS, relief requests, offline mode |
-| Volunteer | Nearby SOS map, mission acceptance, status updates |
-| Donor | Campaigns, payment, receipts, transparency |
-| General Public | Dashboard, map, no login required |
-| Admin | User management, analytics, audit logs |
+| UP Official | Offline household registration, photo+GPS distribution log, Bengali UI, simple form |
+| Upazila Officer | Audit trail for all UPs, jurisdiction-filtered dashboard, PDF export |
+| NGO Worker | Cross-agency duplicate alert, own distribution log, account per organization |
+| General Public | Public dashboard (no login), union-level distribution summary, map view |
+| District Committee | Aggregated district report, no household PII visible |
+| DDM | Potential data export / API endpoint (future scope) |
+| Course Teacher | Complete SAD documentation, working prototype, clean code repository |
+| Affected Households | Fair, unduplicated distribution; indirect beneficiaries |
+| Outside/Local Individual Volunteers | Public heatmap of need, simple pledge form, no jurisdiction restriction on browsing (read-only), pledge requires lightweight registration only |
 
 ---
 

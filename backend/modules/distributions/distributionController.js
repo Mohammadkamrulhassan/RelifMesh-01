@@ -55,7 +55,7 @@ async function create(req, res, next) {
 
 async function list(req, res, next) {
   try {
-    const { page = 1, limit = 20, householdId, itemCategoryId, startDate, endDate } = req.query
+    const { page = 1, limit = 20, householdId, itemCategoryId, startDate, endDate, syncStatus, q } = req.query
     const filter = {}
     if (householdId) filter.householdId = householdId
     if (itemCategoryId) filter.itemCategoryId = itemCategoryId
@@ -63,6 +63,12 @@ async function list(req, res, next) {
       filter.distributedAt = {}
       if (startDate) filter.distributedAt.$gte = new Date(startDate)
       if (endDate) filter.distributedAt.$lte = new Date(endDate)
+    }
+    if (syncStatus) filter.syncStatus = syncStatus
+    if (q) {
+      filter.$or = [
+        { unit: { $regex: q, $options: 'i' } },
+      ]
     }
     const skip = (parseInt(page) - 1) * parseInt(limit)
     const [logs, total] = await Promise.all([

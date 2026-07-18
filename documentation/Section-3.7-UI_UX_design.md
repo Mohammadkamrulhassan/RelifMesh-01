@@ -1,5 +1,5 @@
 # Section 3.7 — UI/UX Design
-**Project:** RelifMesh — Disaster Relief Coordination System for Local Government
+**Project:** ReliefMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
 **Last Updated:** 2026-06-09
 **Primary Designer:** Sayeda Mofatteha Ahmed, Iftekhar Alam Nahid
@@ -11,7 +11,7 @@
 ## 3.7.1 Information Architecture (Site Map)
 
 ```
-RelifMesh
+ReliefMesh
 │
 ├── Public (no login)
 │  └── /dashboard     → Public distribution summary + map
@@ -19,7 +19,7 @@ RelifMesh
 ├── Login          → /login
 │
 ├── UP Official / NGO Worker
-│  ├── /home        → Personal dashboard (today's logs, sync status)
+│  ├── /home        → Personl dashboard (today's logs, sync status)
 │  ├── /households
 │  │  ├── /households/new → Register new household
 │  │  ├── /households   → Search / list households
@@ -93,7 +93,7 @@ RelifMesh
 ### Screen 2 — Home Dashboard (UP Official)
 ```
 ┌─────────────────────────────┐
-│ [*] RelifMesh  [Sync: OK] │
+│ [*] ReliefMesh  [Sync: OK] │
 │ Welcome, Rahim Uddin    │
 │ Char Fasson Union      │
 ├─────────────────────────────┤
@@ -199,7 +199,7 @@ RelifMesh
 ### Screen 6 — Public Dashboard
 ```
 ┌─────────────────────────────────────────────┐
-│ RelifMesh — Public Relief Tracker     │
+│ ReliefMesh — Public Relief Tracker     │
 │ Sylhet Flood Response 2026         │
 ├─────────────────────────────────────────────┤
 │ ┌──────────┐ ┌──────────┐ ┌─────────────┐ │
@@ -301,6 +301,109 @@ RelifMesh
 - Data tables: full-width, striped rows, sticky header with sort indicators
 - Sidebar: fixed dark panel, collapsible, mobile overlay with slide-in
 - Topbar: fixed header with breadcrumbs, theme toggle, sync status indicator
+
+---
+
+### Screen 11 — Need Calculation Dashboard (UP Official)
+
+```
+┌────────────────────────────────────┐
+│ ← Need Dashboard — Feni Sadar    │
+├────────────────────────────────────┤
+│ Ward-Level Need Breakdown        │
+│ ┌────────────────────────────────┐ │
+│ │ Ward 1: 1,240 HH               │ │
+│ │ 🟢 Rice: 1,200 / 1,500 kg      │ │  Green = served ≥ need
+│ │ 🟡 Water: 600 / 1,200 L        │ │  Yellow = partial
+│ │ 🔴 Tarp: 120 / 400 pcs         │ │  Red = unmet
+│ │ [Recalculate] [Override]       │ │
+│ └────────────────────────────────┘ │
+│ ┌────────────────────────────────┐ │
+│ │ Ward 2: 980 HH                │ │
+│ │ 🟢 Rice: 800 / 800 kg          │ │
+│ │ 🔴 Water: 200 / 800 L         │ │
+│ │ [Recalculate] [Override]      │ │
+│ └────────────────────────────────┘ │
+└────────────────────────────────────┘
+```
+
+**Override Dialog (modal):**
+```
+┌────────────────────────────────────┐
+│ Override Ward 1 — Rice Need     │
+├────────────────────────────────────┤
+│ Calculated Qty: 1,500.00 kg       │
+│ Override Qty *: [___________] kg │
+│ Reason *:                        │
+│ [▼ Supply shortage, adjusting  ] │
+│ to actual available               │
+│                                   │
+│ [Cancel] [Save Override]          │
+└────────────────────────────────────┘
+```
+
+### Screen 12 — Public Heatmap + Pledge Overlay
+
+```
+┌────────────────────────────────────────────┐
+│ ReliefMesh — Need Heatmap             │
+│ Feni District | Flood 2025-2026      │
+├────────────────────────────────────────────┤
+│ ┌────────────────────────────────────────┐ │
+│ │                                        │ │
+│ │     [Leaflet Map — Full Width]        │ │
+│ │                                        │ │
+│ │  🔴 Red ward: critical unmet need    │ │
+│ │  🟡 Yellow ward: partially served    │ │
+│ │  🟢 Green ward: need met              │ │
+│ │                                        │ │
+│ │  [Toggle: ☑ Heatmap | ☐ Pledges]     │ │
+│ │                                        │ │
+│ └────────────────────────────────────────┘ │
+│                                             │
+│ Bottom Sheet (on ward click):               │
+│ ┌────────────────────────────────────────┐ │
+│ │ Ward 5 — Feni Sadar                   │ │
+│ │ Rice: 1,200 / 1,500 kg (80%)         │ │
+│ │ Water: 600 / 1,200 L (50%)           │ │
+│ │ Tarp: 120 / 400 pcs (30%)            │ │
+│ │ Active Pledges: 3 (200 kg rice)      │ │
+│ └────────────────────────────────────────┘ │
+└────────────────────────────────────────────┘
+```
+
+**Map color coding:**
+| Color | Status | Condition |
+|-------|--------|-----------|
+| 🔴 Red | Critical / Unmet | Distribution < 30% of calculated need |
+| 🟡 Yellow | Partial | Distribution between 30%–80% of need |
+| 🟢 Green | Served / Met | Distribution ≥ 80% of need |
+
+---
+
+## 3.7.6 New User Flows (v2 Features)
+
+### Flow 4 — Calculate Area Need
+```
+[UP Official opens Need Dashboard]
+→ [Select ward]
+→ [System auto-calculates: household demographics × Sphere rates]
+→ [View item-level breakdown with calculated_qty and distributed_qty side-by-side]
+→ [Optional: Override → enter new qty + reason]
+→ [Save → Heatmap updates automatically]
+```
+
+### Flow 5 — Pledge a Source
+```
+[Donor/NGO opens public map]
+→ [Views Need Heatmap — identifies under-served ward]
+→ [Clicks "Declare Pledge" button]
+→ [Form: Select area, item, quantity, source type, team info]
+→ [Submit → Pledge created (status: PENDING)]
+→ [UP Official is notified]
+→ [Distribution logged with pledge reference → status: IN_FULFILLMENT]
+→ [When pledged qty delivered → status: COMPLETED → Heatmap updates]
+```
 
 ---
 

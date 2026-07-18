@@ -1,0 +1,99 @@
+% ======================================================================
+% Section 3.1 -- Project Initiation & Problem Definition
+% ======================================================================
+
+\section{Project Title \& Tagline}
+\textbf{Title:} ReliefMesh --- Disaster Relief Coordination System for Local Government
+
+\textbf{Tagline:} \textit{``One mesh. No duplicates. No household left behind.''}
+
+\section{Problem Statement}
+Bangladesh is among the world's most disaster-prone nations. Floods affect approximately one-third of the country annually, and the Bengal coast faces cyclones regularly. During flood and cyclone events, relief distribution suffers from critical coordination failures:
+
+\begin{enumerate}[label=\#\arabic*, nosep]
+    \item \textbf{Duplicate distribution} --- Multiple agencies (NGOs, UP, DDM teams) distribute to the same household because there is no shared registry.
+    \item \textbf{Missed households} --- Families in isolated or politically overlooked areas are skipped entirely with no audit trail.
+    \item \textbf{No real-time tracking} --- Relief logs are recorded on paper; consolidation happens days or weeks later.
+    \item \textbf{Inter-agency opacity} --- NGOs and government teams prepare response plans independently with rarely a shared objective.
+    \item \textbf{Accountability gaps} --- Political networks influence who receives aid; household-level allocation suffers from irregularities.
+    \item \textbf{Offline environments} --- Flood-hit areas lose internet and power, making cloud-only systems unusable during the critical first 72 hours.
+    \item \textbf{No visibility into remaining need} --- No one can see which wards still need relief and how much, versus which are already served.
+    \item \textbf{No coordination channel for volunteers} --- Individual donors and local volunteer groups have no shared channel to coordinate with official channels.
+\end{enumerate}
+
+\section{Case Study: Feni District Floods (2024 \& 2025)}
+The August 2024 eastern Bangladesh floods affected an estimated \textbf{4.5--5.8 million people} across 11 districts including Feni. Feni district alone experienced approximately \textbf{92\% of its mobile towers going down}, cutting off communication to all 6 upazilas at the height of the disaster. This real-world event directly validates the project's offline-first design constraint.
+
+\textbf{Feni administrative makeup:} 6 upazilas, 45 unions, $\sim$570 villages.
+
+\textbf{Design implication:} Because mobile network infrastructure itself failed during the disaster, offline-first design is not optional --- it is the defining constraint of this problem domain.
+\vspace{-4pt}
+\section{Vision \& Mission}
+\textbf{Vision:} A Bangladesh where no disaster-affected household is missed or double-served --- where every relief item is tracked from warehouse to household with a photo, a GPS coordinate, and a timestamp, visible to any citizen on a public dashboard.
+
+\textbf{Mission:} To build a lightweight, offline-capable web application that enables Union Parishad officials, Upazila officers, and NGO workers to jointly register affected families, log item-level distributions, and prevent duplicate aid --- while giving the public a transparent view of relief operations.
+
+\section{Project Scope}
+\textbf{In-Scope:} Household registration, relief distribution logging, duplicate detection engine, multi-role authentication (4 roles), offline-first data entry with background sync, sync conflict resolution, public-facing dashboard, authority hierarchy enforcement, basic report export (PDF/CSV).
+
+\textbf{Out-of-Scope:} Financial transactions, warehouse procurement, predictive analytics, national NID database integration, native mobile apps, real-time satellite GIS layers, multi-language UI beyond Bengali/English.
+
+\vspace{-2pt}
+\section{SMART Objectives}
+\begin{table}[H]
+\centering
+\vspace{-8pt}
+\caption{SMART Objectives}
+\label{tab:smart-objectives}
+\begin{tabularx}{\textwidth}{@{}clX@{}}
+\toprule
+\# & Objective & Target \\
+\midrule
+1 & Household registration with GPS and photo & $\ge$ 50 test households registered in prototype \\
+2 & Duplicate detection (same category within 7 days) & Accuracy $\ge$ 90\% on test dataset \\
+3 & Offline-first data entry with auto-sync & Sync success rate $\ge$ 95\% on reconnect \\
+4 & Public dashboard & Loads in $\le$ 3 seconds on 3G \\
+5 & Role-based access control & All RBAC tests pass (0 unauthorized access) \\
+6 & Heatmap rendering & Correct served/remaining split for test ward \\
+7 & Need-calculation accuracy within Sphere-standard tolerance & Within $\pm$2\% of Sphere reference rates \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\vspace{-15pt}
+\section{Risk Register}
+\begin{table}[H]
+\centering
+\caption{Risk Register}
+\label{tab:risk-register}
+\begin{tabularx}{\textwidth}{@{}cllX@{}}
+\toprule
+\# & Risk & Likelihood & Mitigation \\
+\midrule
+R1 & Offline sync conflicts corrupt data & Medium & Conflict log with timestamp; last-write-wins default \\
+R2 & Duplicate detection false positives & Medium & Adjustable detection window; override with reason \\
+R3 & Team member unavailability & Medium & Document all work in shared repo; no knowledge silos \\
+R4 & Scope creep & High & Lock scope document after Module 3 \\
+R5 & GPS accuracy insufficient & Low & Accept $\pm$15\,m; supplement with manual area selection \\
+R6 & Free-tier hosting limits & Low & Lightweight DB; prototype data volume only \\
+R7 & Public dashboard exposes sensitive data & Low & Aggregate at union level; no individual household data \\
+R8 & Poor UI adoption by non-tech users & Medium & Large buttons, Bengali labels, minimal text input \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Team Formation}
+\begin{table}[H]
+\centering
+\caption{Team Formation}
+\label{tab:team-formation}
+\begin{tabularx}{\textwidth}{@{}lXX@{}}
+\toprule
+Role & Member & Responsibilities \\
+\midrule
+Project Manager / Developer & MD. Kamrul Hassan & Timeline, meetings, backend, database, deployment \\
+System Analyst / QA & Abidul Islam & SRS, DFDs, UML, problem research, testing \\
+UI/UX Designer & Sayeda Mofatteha Ahmed & Wireframes, prototypes, UI implementation, hard copy report \\
+UI/UX Designer & Iftekhar Alam Nahid & UI implementation, demo video, heatmap, presentation slides \\
+\bottomrule
+\end{tabularx}
+\end{table}

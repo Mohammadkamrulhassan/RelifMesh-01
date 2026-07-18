@@ -1,21 +1,30 @@
 import { useState, useEffect } from 'react'
-import { getDashboard, getMapData } from './dashboardService'
+import { getDashboard, getMapData, getDistributionHeatmap } from './dashboardService'
+import { getNeedHeatmap } from '../needs/needService'
 import Card from '../../components/common/Card'
 import Loading from '../../components/common/Loading'
 import MapView from '../../components/maps/MapView'
+import HeatmapLayer from '../../components/maps/HeatmapLayer'
 import { useToast } from '../../components/ui/Toast'
 
 export default function Dashboard() {
   const { addToast } = useToast()
   const [stats, setStats] = useState(null)
   const [mapData, setMapData] = useState([])
+  const [needPoints, setNeedPoints] = useState([])
+  const [distPoints, setDistPoints] = useState([])
   const [loading, setLoading] = useState(true)
+  const [showNeedHeat, setShowNeedHeat] = useState(false)
+  const [showDistHeat, setShowDistHeat] = useState(false)
+  const [mapInstance, setMapInstance] = useState(null)
 
   useEffect(() => {
-    Promise.all([getDashboard(), getMapData()])
-      .then(([dash, map]) => {
+    Promise.all([getDashboard(), getMapData(), getNeedHeatmap(), getDistributionHeatmap()])
+      .then(([dash, map, needHeat, distHeat]) => {
         setStats(dash)
         setMapData(map.data || [])
+        setNeedPoints(needHeat.points || [])
+        setDistPoints(distHeat.points || [])
       })
       .catch(err => addToast(err.error || 'Failed to load dashboard', 'error'))
       .finally(() => setLoading(false))
@@ -67,8 +76,55 @@ export default function Dashboard() {
       )}
 
       <Card>
-        <h2 className="page-section-title">Distribution Map</h2>
-        <MapView markers={mapData.map((d, i) => ({ lat: 22.6512 + (i % 5) * 0.008, lng: 92.1712 + Math.floor(i / 5) * 0.008, popup: `${d.count} distributions` }))} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+          <h2 className="page-section-title" style={{ margin: 0 }}>Distribution & Need Map</h2>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+            {needPoints.length > 0 && (
+              <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer' }}>
+                <input type="checkbox" checked={showNeedHeat} onChange={e => setShowNeedHeat(e.target.checked)} />
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: '#e74c3c', display: 'inline-block' }} />
+                Need Intensity
+              </label>
+            )}
+            {distPoints.length > 0 && (
+              <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer' }}>
+                <input type="checkbox" checked={showDistHeat} onChange={e => setShowDistHeat(e.target.checked)} />
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: '#2ecc71', display: 'inline-block' }} />
+                Distribution Coverage
+              </label>
+            )}
+          </div>
+        </div>
+        <div style={{ height: 420, borderRadius: 8, overflow: 'hidden' }}>
+          <MapView
+            markers={mapData.map((d, i) => ({ lat: 23.0141 + (i % 5) * 0.005, lng: 91.3961 + Math.floor(i / 5) * 0.005, popup: `${d.count} distributions` }))}
+            onReady={setMapInstance}
+          />
+          {mapInstance && showNeedHeat && needPoints.length > 0 && (
+            <HeatmapLayer
+              map={mapInstance}
+              points={needPoints}
+              options={{
+                radius: 50,
+                blur: 10,
+                minOpacity: 0.5,
+                gradient: { 0.3: 'yellow', 0.5: 'orange', 0.7: '#e74c3c', 0.9: '#c0392b', 1.0: '#8e0000' },
+              }}
+            />
+          )}
+          {mapInstance && showDistHeat && distPoints.length > 0 && (
+            <HeatmapLayer
+              map={mapInstance}
+              points={distPoints}
+              options={{
+                radius: 48,
+                blur: 12,
+                minOpacity: 0.45,
+                gradient: { 0.0: '#e5f5e0', 0.3: '#a1d99b', 0.5: '#41ab5d', 0.7: '#238443', 0.9: '#005a32', 1.0: '#002d14' },
+              }}
+            />
+          )}
+        </div>
       </Card>
     </div>
   )

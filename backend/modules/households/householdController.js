@@ -1,8 +1,16 @@
 const Household = require('./householdModel')
+const User = require('../auth/authModel')
 
 async function create(req, res, next) {
   try {
-    const data = { ...req.body, registeredBy: req.user.sub, jurisdictionId: req.user.jurisdictionId }
+    let jurisdictionId = req.user.jurisdictionId
+    if (!jurisdictionId) {
+      const user = await User.findById(req.user.sub)
+      if (!user) return res.status(404).json({ error: 'User not found' })
+      jurisdictionId = user.jurisdictionId
+      if (!jurisdictionId) return res.status(400).json({ error: 'Your account has no jurisdiction assigned. Contact an administrator.' })
+    }
+    const data = { ...req.body, registeredBy: req.user.sub, jurisdictionId }
     const household = await Household.create(data)
     res.status(201).json({ household })
   } catch (err) { next(err) }
@@ -11,7 +19,10 @@ async function create(req, res, next) {
 async function list(req, res, next) {
   try {
     const { page = 1, limit = 20, q } = req.query
-    const filter = { jurisdictionId: req.user.jurisdictionId }
+    const filter = {}
+    if (req.user.role !== 'UPAZILA_OFFICER') {
+      filter.jurisdictionId = req.user.jurisdictionId
+    }
     if (q) {
       filter.$or = [
         { headName: { $regex: q, $options: 'i' } },
@@ -46,13 +57,14 @@ async function update(req, res, next) {
 async function search(req, res, next) {
   try {
     const { q } = req.query
-    const households = await Household.find({
-      jurisdictionId: req.user.jurisdictionId,
-      $or: [
-        { headName: { $regex: q, $options: 'i' } },
-        { nid: { $regex: q, $options: 'i' } },
-      ],
-    }).limit(20)
+    const filter = { $or: [
+      { headName: { $regex: q, $options: 'i' } },
+      { nid: { $regex: q, $options: 'i' } },
+    ]}
+    if (req.user.role !== 'UPAZILA_OFFICER') {
+      filter.jurisdictionId = req.user.jurisdictionId
+    }
+    const households = await Household.find(filter).limit(20)
     res.json({ households })
   } catch (err) { next(err) }
 }

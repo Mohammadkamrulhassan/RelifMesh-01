@@ -2,9 +2,9 @@
 **Period:** May 25 – May 31, 2026
 
 ## Achievements
-- Project topic finalized: ReliefMesh — Disaster Response & Relief Management System
+- Project topic finalized: ReliefMesh — Disaster Relief Coordination System
 - GitHub repository initialized with folder structure
-- Documentation drafts completed for Sections 3.1–3.7 (v1 scope)
+- Documentation drafts completed for Sections 3.1–3.7
 - Backend architecture designed (Express + Mongoose + JWT)
 - Frontend framework selected (React + Vite + Tailwind)
 
@@ -12,5 +12,5 @@
 - None
 
 ## Plan for Week 2
-- Begin v1 backend implementation: auth, households, distributions modules
-- Begin v1 frontend implementation: layout, login, basic pages
+- Begin backend implementation: auth, households, distributions modules
+- Begin frontend implementation: layout, login, basic pages

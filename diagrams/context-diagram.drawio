@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+<mxfile host="ReliefMesh" modified="2026-06-20T10:00:00.000Z">
   <diagram id="context-diagram" name="Context Diagram (DFD Level 0)">
     <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -31,43 +31,77 @@
           <mxGeometry x="80" y="140" width="130" height="60" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: UPAZILA -> System -->
+        <!-- ===== v1 Data Flows ===== -->
+
+        <!-- v1: UPAZILA -> System -->
         <mxCell id="uf1" value="User mgmt, Reports" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="upazila" target="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: System -> UPAZILA -->
+        <!-- v1: System -> UPAZILA -->
         <mxCell id="uf2" value="Dashboard, Alerts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" target="upazila" source="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: UP -> System -->
+        <!-- v1: UP -> System -->
         <mxCell id="uof1" value="Households" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="up-official" target="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: System -> UP -->
+        <!-- v1: System -> UP -->
         <mxCell id="uof2" value="Status, Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" target="up-official" source="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: NGO -> System -->
+        <!-- v1: NGO -> System -->
         <mxCell id="nf1" value="Distribution logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ngo" target="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: System -> NGO -->
+        <!-- v1: System -> NGO -->
         <mxCell id="nf2" value="Distribution sync" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" target="ngo" source="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: CITIZEN -> System -->
+        <!-- v1: CITIZEN -> System -->
         <mxCell id="cf1" value="Relief requests, Feedback" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="citizen" target="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Data Flows: System -> CITIZEN -->
+        <!-- v1: System -> CITIZEN -->
         <mxCell id="cf2" value="Dashboard, Request status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" target="citizen" source="sys-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ===== v2 Data Flows (Need Assessment, Pledge, Heatmap) ===== -->
+
+        <!-- v2: UPAZILA -> System (Need Assessment) offset left of center -->
+        <mxCell id="uf3" value="Need Assessment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.2;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="upazila" target="sys-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- v2: System -> UPAZILA (Assessment results, Heatmap data) offset right of center -->
+        <mxCell id="uf4" value="Assessment results, Heatmap data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;entryX=0.8;entryY=1;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" target="upazila" source="sys-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- v2: NGO -> System (Relief Pledges) via top of NGO -> bottom of System -->
+        <mxCell id="uf5" value="Relief Pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.2;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ngo" target="sys-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- v2: System -> NGO (Pledge status) via bottom of System -> top of NGO -->
+        <mxCell id="uf6" value="Pledge status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="sys-box" target="ngo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- v2: CITIZEN -> System (Heatmap view) via right side of CITIZEN -> left side of System -->
+        <mxCell id="uf7" value="Heatmap view" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="citizen" target="sys-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- v2: System -> CITIZEN (Public dashboard, Heatmap) via left side of System -> right side of CITIZEN -->
+        <mxCell id="uf8" value="Public dashboard, Heatmap" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0;exitY=0.7;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=1;" edge="1" parent="1" target="citizen" source="sys-box">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 

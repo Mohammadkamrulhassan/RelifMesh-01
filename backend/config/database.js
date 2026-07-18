@@ -1,24 +1,7 @@
 const mongoose = require('mongoose')
 const env = require('./environment')
 
-const REQUIRED_COLLECTIONS = [
-  'users', 'jurisdictions', 'households', 'distributionlogs',
-  'itemcategories', 'duplicatealerts', 'syncconflicts',
-  'feedbacks', 'inventories', 'reliefrequests',
-]
-
-function getMongooseOptions() {
-  const opts = {
-    serverSelectionTimeoutMS: 10000,
-    socketTimeoutMS: 45000,
-  }
-  if (env.isAtlas) {
-    opts.retryWrites = true
-    opts.w = 'majority'
-    opts.appName = 'reliefmesh'
-  }
-  return opts
-}
+const REQUIRED_COLLECTIONS = ['users', 'jurisdictions', 'households', 'distributionlogs', 'itemcategories', 'duplicatealerts', 'syncconflicts', 'feedbacks', 'inventories']
 
 async function checkDatabase() {
   const db = mongoose.connection.db
@@ -50,17 +33,8 @@ async function connectDB() {
   const maxRetries = 3
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      const opts = getMongooseOptions()
-      await mongoose.connect(env.mongoUri, opts)
+      await mongoose.connect(env.mongoUri, { serverSelectionTimeoutMS: 5000 })
       console.log('[DB] MongoDB connected:', mongoose.connection.host)
-      console.log('[DB] Database:', mongoose.connection.db.databaseName)
-
-      if (env.isAtlas) {
-        console.log('[DB] Using MongoDB Atlas — ensure the cluster IP whitelist includes your app IP (0.0.0.0/0 for dev)')
-      }
-
-      await mongoose.syncIndexes()
-      console.log('[DB] Indexes synced')
 
       const status = await checkDatabase()
 
@@ -69,7 +43,7 @@ async function connectDB() {
         await runSeed()
         console.log('[DB] Seed complete.')
       } else if (status === 'INCOMPLETE') {
-        console.log('[DB] Database is incomplete — consider re-running seed via: npm run seed')
+        console.log('[DB] Database is incomplete — consider re-running seed.')
       } else {
         console.log('[DB] Database is ready.')
       }
@@ -77,15 +51,11 @@ async function connectDB() {
       return mongoose.connection
     } catch (err) {
       if (attempt < maxRetries) {
-        console.log(`[DB] Connection attempt ${attempt} failed, retrying in 3s...`)
-        if (env.isAtlas) {
-          console.log('[DB]   Tip: Verify your Atlas IP whitelist includes 0.0.0.0/0 or your current IP')
-        }
-        await new Promise(r => setTimeout(r, 3000))
+        console.log(`[DB] Connection attempt ${attempt} failed, retrying in 2s...`)
+        await new Promise(r => setTimeout(r, 2000))
       } else {
         console.error('[DB] Failed to connect after', maxRetries, 'attempts')
-        console.error('[DB] URI:', env.mongoUri.replace(/\/\/[^:]+:[^@]+@/, '//<user>:<pass>@'))
-        console.error('[DB] Make sure MongoDB is running or Atlas cluster is accessible')
+        console.error('[DB] Make sure MongoDB is running at:', env.mongoUri)
         process.exit(1)
       }
     }

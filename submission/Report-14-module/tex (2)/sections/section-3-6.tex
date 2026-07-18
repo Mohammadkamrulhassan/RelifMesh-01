@@ -1,0 +1,92 @@
+% ======================================================================
+% Section 3.6 -- Architecture & Tech Stack
+% ======================================================================
+
+\section{System Architecture Overview}
+ReliefMesh uses a \textbf{PWA (Progressive Web App) + REST API + MongoDB} three-tier architecture:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Client Layer
+    \node[systembox, minimum width=7cm, minimum height=2.2cm, fill=rmstublue!8, label={[font=\bfseries]above:CLIENT LAYER (Browser)}] (client) {};
+    \node[processnode, minimum width=3.2cm] at ($(client)+(-1.8,0)$) (pwa) {PWA (React/Vite)\\-- offline queue\\-- role-based views};
+    \node[processnode, minimum width=3.2cm] at ($(client)+(1.8,0)$) (pub) {Public Dashboard\\-- read-only\\-- no auth};
+    
+    % Server Layer
+    \node[systembox, minimum width=7cm, minimum height=2.4cm, fill=rmstuteal!8, below=0.8cm of client, label={[font=\bfseries]above:SERVER LAYER (Express API)}] (server) {};
+    \node[align=center, font=\small] at ($(server)+(0,0)$) {
+        14 Module Routers: auth, households, distributions,\\
+        alerts, reports, public, sync, feedback, inventory,\\
+        areas, need, pledges, upload, auth/profile\\
+        Middleware: authenticate, authorize, errorHandler
+    };
+    
+    % Data Layer
+    \node[systembox, minimum width=7cm, minimum height=1.8cm, fill=rmstuorange!8, below=0.8cm of server, label={[font=\bfseries]above:DATA LAYER (MongoDB)}] (data) {};
+    \node[align=center, font=\small] at ($(data)+(0,0)$) {
+        11 Collections: Users, GeographicAreas, Households,\\
+        DistributionLogs, NeedAssessments, Pledges, Inventory,\\
+        Alerts, Feedback, ReliefRequests, SyncConflicts
+    };
+    
+    \draw[arwblue, thick] (client) -- node[midway, right=8pt, font=\small] {HTTPS / REST JSON} (server);
+    \draw[arwblue, thick] (server) -- (data);
+\end{tikzpicture}
+\captionof{figure}{System Architecture Overview (Three-Tier Hybrid Topology)}
+\label{fig:architecture}
+\end{center}
+
+\section{Technology Stack}
+\begin{table}[H]
+\centering
+\caption{Technology Stack}
+\label{tab:tech-stack}
+\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\toprule
+Layer & Technology & Purpose \\
+\midrule
+\textbf{Frontend} & React 18 + Vite 5 & SPA with fast HMR \\
+\textbf{Routing} & React Router DOM 6 & Client-side routing \\
+\textbf{Styling} & Tailwind CSS 3 + CSS Custom Properties & Utility-first + design tokens \\
+\textbf{Maps} & Leaflet + leaflet.heat + React Leaflet & Interactive heatmap overlays \\
+\textbf{Offline} & localforage (IndexedDB) & Offline queue \\
+\textbf{PWA} & vite-plugin-pwa & Service worker registration \\
+\textbf{Backend} & Express 4 + Node.js 20 & REST API server \\
+\textbf{Database} & MongoDB 8 + Mongoose 8 & Document DB with schema validation \\
+\textbf{Auth} & JWT (jsonwebtoken) + bcrypt & Token-based authentication \\
+\textbf{Validation} & express-validator & Request validation middleware \\
+\textbf{Security} & helmet + cors + express-rate-limit & HTTP security \& rate limiting \\
+\textbf{Uploads} & multer & File upload handling \\
+\textbf{Reports} & PDFKit + json2csv & PDF and CSV generation \\
+\textbf{Testing} & Jest + supertest + mongodb-memory-server & In-memory DB testing \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Offline-First Architecture}
+\textbf{Strategy:} Single-database offline-first pattern using localforage (IndexedDB) in the browser.
+
+\textbf{Sync Flow:}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, transform shape]
+    \node[processnode] (device) {Field Device\\-- Offline};
+    \node[storenode, right=2.4cm of device] (local) {localforage\\(IndexedDB)};
+    \node[processnode, right=2.8cm of local] (api) {Express API\\POST /sync/push};
+    \node[storenode, right=1.8cm of api] (mongo) {MongoDB};
+    \draw[arw] (device) -- node[above, font=\small] {Write} (local);
+    \draw[arw, dashed] (local) -- node[above, font=\footnotesize, align=center] {Network\\restored} (api);
+    \draw[arw] (api) -- (mongo);
+    \draw[arw, teal] (mongo) -- ++(0,-1.0) -| node[below, font=\small] {GET /sync/pull} (local);
+\end{tikzpicture}
+\captionof{figure}{Offline-Sync Data Flow}
+\label{fig:sync-flow}
+\end{center}
+
+\textbf{Conflict Resolution:} Last-write-wins by timestamp; conflicting versions saved in `sync\_conflicts` collection for manual review.
+
+\section{Map \& Heatmap Architecture}
+The map uses a layered rendering stack: Base Tiles (OpenStreetMap) $\rightarrow$ GeoJSON Layer (boundary polygons) $\rightarrow$ Heatmap Overlay (leaflet.heat WebGL) $\rightarrow$ Marker/Info Control (click interaction).
+
+\textbf{Drill-down flow:} District $\rightarrow$ Upazila $\rightarrow$ Union $\rightarrow$ Ward.
+
+\textbf{Heatmap color scheme:} Green (served/need met) $\rightarrow$ Yellow (partially served) $\rightarrow$ Red (unmet/critical).

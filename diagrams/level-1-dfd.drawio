@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+<mxfile host="ReliefMesh" modified="2026-06-20T12:00:00.000Z">
   <diagram id="level1-dfd" name="Level 1 Data Flow Diagram">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
 
         <!-- === PROCESSES (bubbles) === -->
 
+        <!-- Column 1 (x=30): P1-P3 - Core processes -->
         <!-- P1: Auth -->
         <mxCell id="p1" value="P1&#10;Authenticate &amp;&#10;User Mgmt" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="30" y="30" width="100" height="70" as="geometry" />
@@ -23,13 +24,30 @@
           <mxGeometry x="30" y="430" width="100" height="70" as="geometry" />
         </mxCell>
 
+        <!-- Column 2 (x=230): P7-P9 - New v2 processes -->
+        <!-- P7: Manage Geographic Areas -->
+        <mxCell id="p7" value="P7&#10;Manage&#10;Geographic Areas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="230" y="30" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P8: Need Assessment -->
+        <mxCell id="p8" value="P8&#10;Need&#10;Assessment" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="230" y="220" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- P9: Manage Relief Pledges -->
+        <mxCell id="p9" value="P9&#10;Manage&#10;Relief Pledges" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="230" y="430" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Column 3 (x=370): P4-P6 - Support processes -->
         <!-- P4: Relief Requests -->
         <mxCell id="p4" value="P4&#10;Manage&#10;Relief Requests" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="370" y="30" width="100" height="70" as="geometry" />
         </mxCell>
 
         <!-- P5: Dashboard -->
-        <mxCell id="p5" value="P5&#10;Dashboard &#38;&#10;Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="p5" value="P5&#10;Dashboard &amp;&#10;Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="370" y="220" width="100" height="70" as="geometry" />
         </mxCell>
 
@@ -38,13 +56,20 @@
           <mxGeometry x="370" y="430" width="100" height="70" as="geometry" />
         </mxCell>
 
-        <!-- === DATA STORES (parallel lines) === -->
+        <!-- === DATA STORES (cylinders) === -->
 
+        <!-- Top row stores (y=30) -->
         <!-- D1: Users -->
         <mxCell id="d1" value="D1&#10;Users" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
           <mxGeometry x="600" y="30" width="80" height="60" as="geometry" />
         </mxCell>
 
+        <!-- D7: GeographicAreas (NEW) -->
+        <mxCell id="d7" value="D7&#10;Geographic&#10;Areas" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="760" y="30" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Middle row stores (y=200-400) -->
         <!-- D2: Households -->
         <mxCell id="d2" value="D2&#10;Households" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
           <mxGeometry x="600" y="200" width="80" height="60" as="geometry" />
@@ -70,9 +95,19 @@
           <mxGeometry x="760" y="610" width="80" height="60" as="geometry" />
         </mxCell>
 
-        <!-- === EXTERNAL ENTITIES === -->
+        <!-- Bottom row stores (y=700) -->
+        <!-- D8: NeedAssessments (NEW) -->
+        <mxCell id="d8" value="D8&#10;Need&#10;Assessments" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="600" y="700" width="80" height="60" as="geometry" />
+        </mxCell>
 
-        <!-- UPAZILA -->
+        <!-- D9: ReliefPledges (NEW) -->
+        <mxCell id="d9" value="D9&#10;Relief&#10;Pledges" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="760" y="700" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- === EXTERNAL ENTITIES === -->
+        <!-- UPAZILA OFFICER -->
         <mxCell id="ee-upazila" value="UPAZILA&#10;OFFICER" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
           <mxGeometry x="870" y="30" width="100" height="50" as="geometry" />
         </mxCell>
@@ -82,7 +117,7 @@
           <mxGeometry x="870" y="220" width="100" height="50" as="geometry" />
         </mxCell>
 
-        <!-- NGO -->
+        <!-- NGO WORKER -->
         <mxCell id="ee-ngo" value="NGO&#10;WORKER" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
           <mxGeometry x="870" y="400" width="100" height="50" as="geometry" />
         </mxCell>
@@ -92,7 +127,9 @@
           <mxGeometry x="870" y="610" width="100" height="50" as="geometry" />
         </mxCell>
 
-        <!-- === DATA FLOWS === -->
+        <!-- === DATA FLOWS (edges) === -->
+
+        <!-- === Existing flows: P1-P6 to data stores === -->
 
         <!-- P1 <-> D1 -->
         <mxCell id="f-p1-d1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p1" target="d1">
@@ -119,27 +156,93 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P1 <-> EE: UPAZILA -->
+        <!-- === NEW flows: P7-P9 to data stores === -->
+
+        <!-- P7 <-> D7 (bidirectional - geographic areas data) -->
+        <mxCell id="f-p7-d7" value="Area data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p7" target="d7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P8 <-> D8 (need assessment data) -->
+        <mxCell id="f-p8-d8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p8" target="d8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P9 <-> D9 (relief pledges data) -->
+        <mxCell id="f-p9-d9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p9" target="d9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P8 -> D2 (reads Household data for calculation) -->
+        <mxCell id="f-p8-d2" value="reads household" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p8" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P8 -> D6 (reads ItemCategories for rates) -->
+        <mxCell id="f-p8-d6" value="reads rates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p8" target="d6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P9 -> D3 (writes to DistributionLogs when fulfilled) -->
+        <mxCell id="f-p9-d3" value="writes fulfillment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p9" target="d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P5 -> D8 (reads need assessment data) -->
+        <mxCell id="f-p5-d8" value="need data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p5" target="d8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P5 -> D9 (reads pledge data) -->
+        <mxCell id="f-p5-d9" value="pledge data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p5" target="d9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- === Existing flows: Processes to External Entities === -->
+
+        <!-- P1 <-> UPAZILA OFFICER -->
         <mxCell id="f-p1-e1" value="Login, Reg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p1" target="ee-upazila">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P2 <-> EE: UP -->
+        <!-- P2 <-> UP OFFICIAL -->
         <mxCell id="f-p2-e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p2" target="ee-up">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P3 <-> EE: UP, NGO -->
+        <!-- P3 <-> NGO WORKER -->
         <mxCell id="f-p3-e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p3" target="ee-ngo">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P4 <-> EE: CITIZEN -->
+        <!-- P4 <-> CITIZEN -->
         <mxCell id="f-p4-e4" value="Request, Status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p4" target="ee-citizen">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P5 <-> D2, D3, D4 for dashboard -->
+        <!-- === NEW flows: P7-P9 to External Entities === -->
+
+        <!-- UPAZILA OFFICER <-> P7 (manage areas) -->
+        <mxCell id="f-p7-e1" value="Manage areas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p7" target="ee-upazila">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UPAZILA OFFICER <-> P8 (trigger calculation + override) -->
+        <mxCell id="f-p8-e1" value="Trigger calc&#10;Override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p8" target="ee-upazila">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- NGO WORKER <-> P9 (create pledges) -->
+        <mxCell id="f-p9-e3" value="Create pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p9" target="ee-ngo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UPAZILA OFFICER <-> P9 (manage pledge fulfillment) -->
+        <mxCell id="f-p9-e1" value="Pledge fulfillment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p9" target="ee-upazila">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- === Existing flows: P5 Dashboard to data stores === -->
         <mxCell id="f-p5-d2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p5" target="d2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>

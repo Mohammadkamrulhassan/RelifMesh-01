@@ -1,0 +1,16 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Sprint and Workstream Timeline (Gantt View)}}{5}{figure.caption.7}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Context Diagram (Level 0 DFD)}}{8}{figure.caption.11}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Level 1 DFD --- Main Processes}}{9}{figure.caption.13}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Level 2 DFD --- Relief Distribution Process (Expansion of P3)}}{9}{figure.caption.14}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Use Case Diagram}}{10}{figure.caption.15}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Activity Diagram --- Duplicate Detection Workflow}}{11}{figure.caption.17}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Domain Entity Relationships}}{12}{figure.caption.18}%
+\contentsline {figure}{\numberline {8}{\ignorespaces MongoDB Document Collections (Core Collections)}}{12}{figure.caption.19}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Three-Tier System Architecture (MERN Stack)}}{14}{figure.caption.21}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Key Architecture Decisions and Rationale}}{14}{figure.caption.22}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Request Lifecycle: Browser to MongoDB and Back}}{15}{figure.caption.23}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Security Measures by Architectural Layer}}{15}{figure.caption.24}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Shared Application Shell Wireframe (Sidebar + Top Bar + Content Area)}}{16}{figure.caption.25}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Rendered mockup --- UP Official dashboard showing relief distribution summary cards, inventory alerts, and sync status indicator.}}{16}{figure.caption.26}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Rendered mockup --- Login interface with role selection dropdown.}}{17}{figure.caption.27}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Visualization of the primary user workflows within the RelifMesh disaster relief coordination system.}}{18}{figure.caption.28}%

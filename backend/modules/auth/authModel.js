@@ -2,25 +2,17 @@ const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
-  email: { type: String, unique: true, sparse: true, lowercase: true },
-  passwordHash: { type: String },
-  phone: { type: String, unique: true, sparse: true },
+  email: { type: String, required: true, unique: true, lowercase: true },
+  passwordHash: { type: String, required: true },
   role: {
     type: String,
-    enum: [
-      'UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN',
-      'victim', 'volunteer', 'ngo', 'govt', 'donor', 'admin', 'super_admin',
-    ],
+    enum: ['UP_OFFICIAL', 'UPAZILA_OFFICER', 'NGO_WORKER', 'CITIZEN'],
     required: true,
   },
   organization: { type: String, default: null },
-  jurisdictionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Jurisdiction' },
+  jurisdictionId: { type: mongoose.Schema.Types.ObjectId, ref: 'GeographicArea' },
   address: { type: String, default: null },
-  location: {
-    type: { type: String, enum: ['Point'], default: 'Point' },
-    coordinates: { type: [Number], default: [0, 0] },
-  },
-  isVerified: { type: Boolean, default: false },
+  phone: { type: String, default: null },
   isActive: { type: Boolean, default: true },
 }, { timestamps: true })
 

@@ -1,0 +1,54 @@
+% ======================================================================
+% Appendix A -- Project Repository Structure
+% ======================================================================
+
+\section{Repository Layout}
+\begin{verbatim}
+ReliefMesh/
+|-- backend/
+|   |-- modules/                # 14 feature modules
+|   |   |-- auth/               # Authentication & authorization
+|   |   |-- alerts/             # Alert management
+|   |   |-- areas/              # Geographic area hierarchy
+|   |   |-- distributions/      # Relief distribution logging
+|   |   |-- feedback/           # Feedback & response
+|   |   |-- households/         # Household registration
+|   |   |-- inventory/          # Stock/inventory tracking
+|   |   |-- needCalc/           # Need assessment calculation
+|   |   |-- pledges/            # Pledge/commitment tracking
+|   |   |-- public/             # Public-facing endpoints
+|   |   |-- reliefRequests/     # Citizen relief requests
+|   |   |-- reports/            # Report generation (PDF/CSV)
+|   |   |-- sync/               # Offline sync engine
+|   |   `-- uploads/            # Photo upload handling
+|   |-- middleware/              # authenticate, authorize, errorHandler, upload
+|   |-- config/                 # Environment configuration
+|   |-- db/                     # Seeds & database setup
+|   |-- tests/                  # Test helpers (setup, teardown, helpers)
+|   `-- server.js               # App entry point
+|-- frontend/
+|   |-- src/
+|   |   |-- modules/            # 12 feature modules (parallel to backend)
+|   |   |-- components/         # Reusable UI
+|   |   |   |-- common/         # Shared UI elements
+|   |   |   |-- layout/         # Sidebar, Topbar, PageShell
+|   |   |   |-- maps/           # Leaflet map components
+|   |   |   |-- tables/         # Data tables
+|   |   |   `-- ui/             # Buttons, inputs, cards, etc.
+|   |   |-- services/           # API client, offline sync
+|   |   |-- hooks/              # Custom React hooks
+|   |   |-- styles/             # Design tokens (tokens.css, base.css,...)
+|   |   `-- constants/          # Navigation, enums
+|   |-- App.jsx                 # Root component
+|   `-- main.jsx                # Entry point
+|-- documentation/              # 14 section markdown files (3.1--3.14)
+|-- diagrams/                   # draw.io files (DFD, UML, ERD, architecture)
+|-- designs/                    # Figma exports (wireframes, mockups)
+|-- reports/                    # Meeting minutes, weekly progress
+|-- submission/                 # Demo video, slides, consolidated report
+|-- assets/                     # Shared media
+|-- tex/                        # LaTeX source for this document
+|   |-- sections/               # Per-section .tex files
+|   `-- appendices/             # Appendix .tex files
+`-- README.md                   # Project overview
+\end{verbatim}

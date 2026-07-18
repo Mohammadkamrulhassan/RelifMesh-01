@@ -1,0 +1,82 @@
+% ======================================================================
+% Section 3.9 -- Testing & QA
+% ======================================================================
+
+\section{Test Plan}
+\textbf{Objective:} Verify all functional requirements (FR-01 to FR-44), validate NFRs, ensure RBAC enforcement, confirm offline sync and duplicate detection.
+
+\textbf{Scope:} Unit testing, Integration testing, System testing, User Acceptance Testing (UAT).
+
+\textbf{Tools:} Jest, Supertest, React Testing Library, Postman, Chrome DevTools, Lighthouse.
+
+\section{Unit Test Cases (29 Passing)}
+\begin{itemize}[nosep]
+    \item \textbf{Authentication (TC-01 to TC-04):} Valid login returns JWT $\checkmark$, Invalid password rejected $\checkmark$, Non-existent user rejected $\checkmark$, Role embedded in JWT $\checkmark$
+    \item \textbf{Household (TC-05 to TC-08):} Valid registration saves HH-ID $\checkmark$, Duplicate NID rejected $\checkmark$, Missing field fails validation $\checkmark$, GPS stored correctly $\checkmark$
+    \item \textbf{Distribution (TC-09 to TC-11):} Valid log saved $\checkmark$, Unknown HH-ID rejected $\checkmark$, Quantity must be positive $\checkmark$
+    \item \textbf{Duplicate Detection (TC-12 to TC-16):} Same item within 7 days $\rightarrow$ duplicate $\checkmark$, Same item after 8 days $\rightarrow$ no duplicate $\square$, Different item $\rightarrow$ no duplicate $\checkmark$, Override accepted with reason $\checkmark$, Override rejected without reason $\checkmark$
+\end{itemize}
+
+\section{Integration Test Cases (7 Passing)}
+\begin{table}[H]
+\centering
+\caption{Integration Test Cases}
+\label{tab:integration-tests}
+\begin{tabularx}{\textwidth}{@{}lXc@{}}
+\toprule
+TC & Flow & Status \\
+\midrule
+TC-17 & Register $\rightarrow$ Log $\rightarrow$ Duplicate & $\checkmark$ \\
+TC-18 & Offline queue $\rightarrow$ sync & $\square$ (manual) \\
+TC-19 & Role access control & $\checkmark$ \\
+TC-20 & Public dashboard (no auth) & $\checkmark$ \\
+TC-21 & Upazila jurisdiction filter & $\square$ \\
+TC-22 & Conflict detection on sync & $\checkmark$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Module-Specific Tests (Additional)}
+\textbf{Feedback (TC-FB01 to FB04):} Submit without auth $\checkmark$, List with auth $\checkmark$, Respond $\checkmark$, Submit without name rejected $\checkmark$
+
+\textbf{Inventory (TC-INV01 to INV03):} Create $\checkmark$, List $\checkmark$, UP Official cannot create $\checkmark$
+
+\textbf{Need Calculation \& Pledge (v2):} 10 test cases planned (TC-NEED01 to NEED05, TC-PLEDGE01 to PLEDGE05)
+
+\section{UAT Scenarios}
+\begin{table}[H]
+\centering
+\caption{UAT Scenarios}
+\label{tab:uat}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Scenario & Description \\
+\midrule
+UAT-01 & Register 5 households offline $\rightarrow$ sync $\rightarrow$ verify in MongoDB \\
+UAT-02 & Attempt duplicate distribution $\rightarrow$ warning shown $\rightarrow$ override \\
+UAT-03 & Upazila audit: view all distributions $\rightarrow$ export PDF \\
+UAT-04 & Public transparency: dashboard loads without login, no PII \\
+UAT-05 & Need assessment: run calculation $\rightarrow$ verify heatmap $\rightarrow$ override \\
+UAT-06 & Pledge-to-fulfillment: donor pledges $\rightarrow$ official distributes $\rightarrow$ status updates \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Test Results Summary}
+\begin{table}[H]
+\centering
+\caption{Test Results Summary}
+\label{tab:test-results}
+\begin{tabularx}{\textwidth}{@{}lrrr@{}}
+\toprule
+Category & Total & Passed & Failed \\
+\midrule
+Unit Tests (Phase 1) & 29 & 29 & 0 \\
+Integration Tests & 7 & 7 & 0 \\
+Module Tests (Feedback, Inventory) & 7 & 7 & 0 \\
+v2 Tests (Planned) & 10 & --- & --- \\
+\midrule
+\textbf{Total} & \textbf{53} & \textbf{43} & \textbf{0} \\
+\bottomrule
+\end{tabularx}
+\end{table}

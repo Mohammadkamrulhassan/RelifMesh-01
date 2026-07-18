@@ -65,7 +65,7 @@ export default function ReliefRequestForm() {
         })),
       }
       await createRequest(payload)
-      navigate('/relief-requests')
+      navigate('/app/relief-requests')
     } catch (err) {
       setError(err.error || 'Failed to submit request')
     } finally {
@@ -89,8 +89,8 @@ export default function ReliefRequestForm() {
           <div>
             <p className="input-label">Items Needed *</p>
             {items.map((item, index) => (
-              <div key={index} style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', alignItems: 'flex-end' }}>
-                <div style={{ flex: 2 }}>
+              <div key={index} style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+                <div style={{ flex: '2 1 180px', minWidth: '140px' }}>
                   <SelectField label="" name={`itemCategoryId-${index}`} value={item.itemCategoryId} onChange={e => handleItemChange(index, 'itemCategoryId', e.target.value)} required>
                     <option value="">Select item...</option>
                     {categories.map(c => (
@@ -98,10 +98,10 @@ export default function ReliefRequestForm() {
                     ))}
                   </SelectField>
                 </div>
-                <div style={{ flex: 1 }}>
+                <div style={{ flex: '1 0 80px' }}>
                   <Input label="" name={`quantity-${index}`} type="number" min="0.01" step="0.01" placeholder="Qty" value={item.quantity} onChange={e => handleItemChange(index, 'quantity', e.target.value)} required />
                 </div>
-                <div style={{ flex: 1 }}>
+                <div style={{ flex: '1 0 80px' }}>
                   <Input label="" name={`unit-${index}`} placeholder="Unit" value={item.unit} onChange={e => handleItemChange(index, 'unit', e.target.value)} required />
                 </div>
                 {items.length > 1 && (
@@ -125,7 +125,7 @@ export default function ReliefRequestForm() {
 
           <div className="page-actions" style={{ justifyContent: 'flex-start' }}>
             <Button type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit Request'}</Button>
-            <Button type="button" variant="secondary" onClick={() => navigate('/relief-requests')}>Cancel</Button>
+            <Button type="button" variant="secondary" onClick={() => navigate('/app/relief-requests')}>Cancel</Button>
           </div>
         </form>
       </Card>

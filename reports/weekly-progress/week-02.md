@@ -1,9 +1,9 @@
 # Weekly Progress — Week 2
 **Period:** June 1 – June 7, 2026
 
-## Achievements (v1)
+## Achievements
 - Backend: All 7 modules implemented (auth, households, distributions, alerts, reports, public, sync)
-- Frontend: All v1 pages built with Result09 design system
+- Frontend: All pages built with Result09 design system
 - Frontend: Fixed sidebar + topbar layout with mobile support
 - Frontend: Login split-screen, dark mode toggle, responsive design
 - Frontend: Dashboard, households, distributions, reports, admin pages
@@ -18,4 +18,3 @@
 - Complete sync service with conflict detection
 - Add photo upload endpoint
 - Update documentation to match implementation
-- Review newly-think v2 redesign specs

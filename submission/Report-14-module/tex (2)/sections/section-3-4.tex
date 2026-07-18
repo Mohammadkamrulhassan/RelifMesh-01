@@ -1,0 +1,613 @@
+% ======================================================================
+% Section 3.4 -- System Modeling (DFD & UML)
+% ======================================================================
+
+\section{Context Diagram (Level 0 DFD)}
+The context diagram shows ReliefMesh as a single process interacting with all external entities:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, transform shape, node distance=3cm]
+    \node[systembox, minimum width=6cm, minimum height=3cm, fill=rmstublue!8] (system) {\textbf{ReliefMesh System}\\ Disaster Relief\\ Coordination};
+    \node[externalnode, above left=2.0cm and 3.5cm of system] (up) {UP Official};
+    \node[externalnode, left=2.5cm of system] (ngo) {NGO Worker};
+    \node[externalnode, below left=2.0cm and 3.5cm of system] (upazila) {Upazila Officer};
+    \node[externalnode, below right=2.0cm and 3cm of system] (public) {General\\Public};
+    \node[storenode, below=2.5cm of system] (store) {Household Registry\\Distribution Logs};
+    \draw[arw] (up) to[bend right=10] node[left, font=\tiny, align=center] {HH data\\distribution} (system);
+    \draw[arw] (ngo) -- node[above, font=\tiny] {distro logs} (system);
+    \draw[arw] (upazila) to[bend right=10] node[left, font=\tiny, align=center] {audit\\queries} (system);
+    \draw[arw] (system) to[bend right=10] node[right, font=\tiny] {reports} (upazila);
+    \draw[arw] (system) -- node[right, font=\tiny] {aggregated} (public);
+    \draw[arw] (public) -- node[left, font=\tiny] {queries} (system);
+    \draw[arw] (system) -- (store);
+\end{tikzpicture}
+\captionof{figure}{Context Diagram (Level 0 DFD)}
+\label{fig:context-dfd}
+\end{center}
+
+\textbf{External Entities:} UP Official (inputs: household data, distribution logs; outputs: HH-ID, warnings), NGO Worker (inputs: distribution logs; outputs: warnings), Upazila Officer (inputs: audit queries; outputs: reports), General Public (inputs: dashboard queries; outputs: aggregated summaries).
+
+\section{Level 1 DFD}
+Decomposes the system into 7 major processes:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82, transform shape, font=\footnotesize, node distance=3.2cm]
+    % Styles
+    \tikzstyle{ee}=[rectangle, draw, fill=rmstuorange!10, text width=2.1cm, minimum height=0.6cm, align=center, rounded corners=2pt, inner sep=3pt];
+    \tikzstyle{proc}=[rectangle, draw, fill=rmstublue!8, text width=2.6cm, minimum height=0.7cm, align=center, inner sep=3pt];
+    \tikzstyle{ds}=[rectangle, draw, fill=rmstuteal!8, text width=1.9cm, minimum height=0.55cm, align=center, inner sep=3pt];
+    \tikzstyle{arr}=[-{Stealth[length=1.2mm]}, draw=gray!60];
+
+    % External entities (left column, spread across full height)
+    \node[ee] (up) at (-1.0,6.9) {UP Official};
+    \node[ee] (ngo) at (-1.0,3.7) {NGO Worker};
+    \node[ee] (upazila) at (-1.0,0.5) {Upazila Officer};
+    \node[ee] (public) at (-1.0,-2.7) {General Public};
+
+    % Processes (center column)
+    \node[proc] (p1) at (4.2,7.7) {P1: Auth};
+    \node[proc] (p2) at (4.2,5.9) {P2: HH Registration};
+    \node[proc] (p3) at (4.2,4.1) {P3: Distribution Log};
+    \node[proc] (p4) at (4.2,2.3) {P4: Duplicate Detection};
+    \node[proc] (p5) at (4.2,0.5) {P5: Dashboard \& Report};
+    \node[proc] (p6) at (4.2,-1.3) {P6: Need Calculation};
+    \node[proc] (p7) at (4.2,-3.1) {P7: Pledge Management};
+
+    % Data stores (right column)
+    \node[ds] (d1) at (8.6,7.7) {D1: Users};
+    \node[ds] (d2) at (8.6,5.9) {D2: HH Registry};
+    \node[ds] (d3) at (8.6,4.1) {D3: Distro Log};
+    \node[ds] (d4) at (8.6,2.3) {D4: Conflict Log};
+    \node[ds] (d5) at (8.6,0.5) {D5: Feedback};
+    \node[ds] (d6) at (8.6,-1.3) {D6: Inventory};
+    \node[ds] (d7) at (8.6,-3.1) {D7: NeedAssess};
+    \node[ds] (d8) at (9.6,-4.9) {D8: Pledge};
+
+    % External → Process arrows
+    \draw[arr] (up) -- (p1.west);
+    \draw[arr] (up) -- (p2.west);
+    \draw[arr] (up) -- (p3.west);
+    \draw[arr] (ngo) -- (p3.west);
+    \draw[arr] (upazila) -- (p5.west);
+    \draw[arr] (public) -- (p5.west);
+    \draw[arr] (upazila) -- (p6.west);
+    \draw[arr] (up) -- (p7.west);
+    \draw[arr] (ngo) -- (p7.west);
+
+    % Process → Data store arrows
+    \draw[arr] (p1) -- (d1);
+    \draw[arr] (p2) -- (d2);
+    \draw[arr] (p3) -- (d3);
+    \draw[arr] (p4) -- (d4);
+    \draw[arr] (p5) -- (d5);
+    \draw[arr] (p3) -- (d6);
+    \draw[arr] (p6) -- (d7);
+    \draw[arr] (p7) -- (d8);
+
+    % Data store → Process arrows (reads)
+    \draw[arr, -{Stealth[length=1.2mm]}, draw=gray!60] (d2.west) -- ++(-0.3,0) |- (p4);
+    \draw[arr, -{Stealth[length=1.2mm]}, draw=gray!60] (d2.west) -- ++(-0.3,0) |- (p6);
+    \draw[arr, -{Stealth[length=1.2mm]}, draw=gray!60] (d3.west) -- ++(-0.3,0) |- (p4);
+
+    % Process ↔ Process arrows
+    \draw[arr, teal] (p2.south) -- (p3.north) node[midway, right, font=\tiny] {HH data};
+    \draw[arr, teal] (p3.south) -- (p4.north) node[midway, right, font=\tiny] {check};
+    \draw[arr, teal, bend left] (p6.east) to node[right, font=\tiny] {score} (p7.east);
+
+\end{tikzpicture}
+\captionof{figure}{Level 1 DFD — Seven Major Processes}
+\label{fig:dfd-level1}
+\end{center}
+
+\textbf{Data Stores:} D1: User Store, D2: Household Registry, D3: Distribution Log, D4: Conflict Log, D5: Feedback Store, D6: Inventory Store, D7: NeedAssessment, D8: ReliefPledge.
+
+\section{Level 2 DFD --- P3: Distribution Log Entry}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, transform shape]
+    \node[externalnode] (user) {User};
+    \node[processnode, right=1.2cm of user] (p31) {P3.1: Validate\\HH ID};
+    \node[storenode, above right=0.2cm and 0.8cm of p31] (d2) {D2: Household\\Registry};
+    \node[processnode, below=0.8cm of p31] (p32) {P3.2: Duplicate\\Check};
+    \node[storenode, right=1cm of p32] (d3) {D3: Distribution\\Log};
+    \node[processnode, below left=0.6cm and 0.5cm of p32] (p33) {P3.3: Capture\\Distribution Data};
+    \node[processnode, below right=0.6cm and 0.5cm of p32] (p34) {P3.4: Show\\Warning};
+    \node[processnode, below=1cm of p33] (p35) {P3.5: Save Log};
+    \node[storenode, right=0.8cm of p35] (d3b) {D3: Distribution\\Log};
+    \draw[arw] (user) -- (p31);
+    \draw[arw] (p31) -- (d2);
+    \draw[arw] (p31) -- (p32);
+    \draw[arw] (p32) -- (d3);
+    \draw[arw] (p32) -- node[left] {No Dup} (p33);
+    \draw[arw] (p32) -- node[right] {Dup Found} (p34);
+    \draw[arw] (p33) -- (p35);
+    \draw[arw] (p34) -- (p35);
+    \draw[arw] (p35) -- (d3b);
+\end{tikzpicture}
+\captionof{figure}{Level 2 DFD --- P3: Distribution Log Entry}
+\label{fig:dfd-level2}
+\end{center}
+
+\section{Use Case Diagram}
+\begin{center}
+\begin{tikzpicture}[
+    scale=0.75, transform shape,
+    actor/.style={font=\footnotesize\bfseries, align=center},
+    uc/.style={ellipse, draw, minimum width=2.4cm, minimum height=0.6cm, align=center, font=\tiny, fill=rmstublue!6},
+    incl/.style={-{Stealth[length=1.2mm,open]}, dashed, draw=gray!60, thick},
+    ext/.style={-{Stealth[length=1.2mm,open]}, dashed, draw=rmstuorange!70, thick},
+    every node/.style={font=\footnotesize}
+]
+    % --- Actors (evenly spaced, 1.9 unit gaps to clear 2-line labels) ---
+    \node (up) at (0,7.6) {};
+    \draw[thick] (up) circle (0.15);
+    \draw[thick] (up) -- ++(0,-0.5);
+    \draw[thick] (-0.2,7.6) -- (0.2,7.6);
+    \draw[thick] (-0.2,6.9) -- (0.2,6.9);
+    \draw[thick] (up) -- ++(-0.2,-0.3) -- ++(-0.15,0);
+    \draw[thick] (up) -- ++(0.2,-0.3) -- ++(0.15,0);
+    \node[actor, below=0.15cm of up] (up_lbl) {UP Official};
+
+    \node (ngo) at (0,5.7) {};
+    \draw[thick] (ngo) circle (0.15);
+    \draw[thick] (ngo) -- ++(0,-0.5);
+    \draw[thick] (-0.2,5.7) -- (0.2,5.7);
+    \draw[thick] (-0.2,5.0) -- (0.2,5.0);
+    \draw[thick] (ngo) -- ++(-0.2,-0.3) -- ++(-0.15,0);
+    \draw[thick] (ngo) -- ++(0.2,-0.3) -- ++(0.15,0);
+    \node[actor, below=0.15cm of ngo] (ngo_lbl) {NGO Worker};
+
+    \node (upazila) at (0,3.8) {};
+    \draw[thick] (upazila) circle (0.15);
+    \draw[thick] (upazila) -- ++(0,-0.5);
+    \draw[thick] (-0.2,3.8) -- (0.2,3.8);
+    \draw[thick] (-0.2,3.1) -- (0.2,3.1);
+    \draw[thick] (upazila) -- ++(-0.2,-0.3) -- ++(-0.15,0);
+    \draw[thick] (upazila) -- ++(0.2,-0.3) -- ++(0.15,0);
+    \node[actor, below=0.15cm of upazila] (upa_lbl) {Upazila Officer};
+
+    \node (pub) at (0,1.9) {};
+    \draw[thick] (pub) circle (0.15);
+    \draw[thick] (pub) -- ++(0,-0.5);
+    \draw[thick] (-0.2,1.9) -- (0.2,1.9);
+    \draw[thick] (-0.2,1.2) -- (0.2,1.2);
+    \draw[thick] (pub) -- ++(-0.2,-0.3) -- ++(-0.15,0);
+    \draw[thick] (pub) -- ++(0.2,-0.3) -- ++(0.15,0);
+    \node[actor, below=0.15cm of pub] (pub_lbl) {General\\Public};
+
+    \node (donor) at (0,0.0) {};
+    \draw[thick] (donor) circle (0.15);
+    \draw[thick] (donor) -- ++(0,-0.5);
+    \draw[thick] (-0.2,0.0) -- (0.2,0.0);
+    \draw[thick] (-0.2,-0.7) -- (0.2,-0.7);
+    \draw[thick] (donor) -- ++(-0.2,-0.3) -- ++(-0.15,0);
+    \draw[thick] (donor) -- ++(0.2,-0.3) -- ++(0.15,0);
+    \node[actor, below=0.15cm of donor] (don_lbl) {Outside\\Donor};
+
+    \node (vol) at (0,-1.9) {};
+    \draw[thick] (vol) circle (0.15);
+    \draw[thick] (vol) -- ++(0,-0.5);
+    \draw[thick] (-0.2,-1.9) -- (0.2,-1.9);
+    \draw[thick] (-0.2,-2.6) -- (0.2,-2.6);
+    \draw[thick] (vol) -- ++(-0.2,-0.3) -- ++(-0.15,0);
+    \draw[thick] (vol) -- ++(0.2,-0.3) -- ++(0.15,0);
+    \node[actor, below=0.15cm of vol] (vol_lbl) {Local\\Volunteer};
+
+    % --- System boundary ---
+    \node[draw, dashed, inner sep=8pt, minimum width=8.2cm, minimum height=11.2cm, label={[font=\bfseries]north:ReliefMesh System}] at (7.6,2.9) {};
+
+    % --- Use cases (2 columns) ---
+    \node[uc] (uc1) at (4.4,8.4) {UC-01: Register\\Household};
+    \node[uc] (uc2) at (10.8,8.4) {UC-02: Log\\Distribution};
+    \node[uc] (uc9) at (10.8,6.6) {Duplicate Check};
+    \node[uc] (uc10) at (4.4,6.6) {Override Duplicate};
+    \node[uc] (uc3) at (4.4,4.8) {UC-03: View\\Dashboard};
+    \node[uc] (uc4) at (10.8,4.8) {UC-04: Sync\\Offline Data};
+    \node[uc] (uc11) at (10.8,3.0) {Conflict Detection};
+    \node[uc] (uc5) at (4.4,3.0) {UC-05: Audit\\Union};
+    \node[uc] (uc6) at (4.4,1.2) {UC-06: Submit\\Pledge};
+    \node[uc] (uc12) at (10.8,1.2) {Pledge Validation};
+    \node[uc] (uc7) at (4.4,-0.6) {UC-07: View\\Heatmap};
+    \node[uc] (uc13) at (10.8,-0.6) {Aggregate\\Ward Need};
+    \node[uc] (uc8) at (4.4,-2.4) {UC-08: Calc \&\\Override Need};
+
+    % --- Actor -> UC lines (staggered stub offsets to avoid crossing labels) ---
+    \draw (up_lbl.east) -- ++(0.4,0) |- (uc1.west);
+    \draw (up_lbl.east) -- ++(0.6,0) |- (uc2.west);
+    \draw (up_lbl.east) -- ++(0.8,0) |- (uc6.west);
+    \draw (ngo_lbl.east) -- ++(0.4,0) |- (uc2.west);
+    \draw (ngo_lbl.east) -- ++(0.6,0) |- (uc6.west);
+    \draw (upa_lbl.east) -- ++(0.4,0) |- (uc5.west);
+    \draw (upa_lbl.east) -- ++(0.6,0) |- (uc8.west);
+    \draw (pub_lbl.east) -- ++(0.4,0) |- (uc3.west);
+    \draw (don_lbl.east) -- ++(0.4,0) |- (uc6.west);
+    \draw (vol_lbl.east) -- ++(0.4,0) |- (uc1.west);
+
+    % --- <<include>> / <<extend>> relationships (real target nodes, no self-loops) ---
+    \draw[incl] (uc2.east) -- node[midway, above, font=\tiny] {\texttt{<<include>>}} (uc9.west);
+    \draw[ext]  (uc10.east) -- node[midway, above, font=\tiny] {\texttt{<<extend>>}} (uc2.west);
+    \draw[incl] (uc4.east) -- node[midway, above, font=\tiny] {\texttt{<<include>>}} (uc11.west);
+    \draw[incl] (uc6.east) -- node[midway, above, font=\tiny] {\texttt{<<include>>}} (uc12.west);
+    \draw[incl] (uc7.east) -- node[midway, above, font=\tiny] {\texttt{<<include>>}} (uc13.west);
+\end{tikzpicture}
+\captionof{figure}{Use Case Diagram}
+\label{fig:usecase}
+\end{center}
+
+\textbf{Actors:} UP Official, NGO Worker, Upazila Officer, General Public, Outside Individual Donor, Local Volunteer.
+
+\textbf{Key Use Cases:}
+\begin{itemize}[nosep]
+    \item UC-01: Register a Household
+    \item UC-02: Log a Relief Distribution
+    \item UC-03: View Public Dashboard
+    \item UC-04: Sync Offline Data
+    \item UC-05: Audit Union Distributions
+    \item UC-06: Submit Relief Pledge
+    \item UC-07: View Need Heatmap
+    \item UC-08: Calculate \& Override Area Need
+\end{itemize}
+
+\textbf{Relationships:} \texttt{Log Distribution} \textbf{includes} \texttt{Duplicate Check}; \texttt{Override Duplicate} \textbf{extends} \texttt{Log Distribution}; \texttt{Sync Offline Data} \textbf{includes} \texttt{Conflict Detection}; \texttt{Declare Pledge} \textbf{includes} \texttt{Pledge Validation}; \texttt{View Need Heatmap} \textbf{includes} \texttt{Aggregate Ward-Level Need}.
+
+\section{Class Diagram}
+\begin{center}
+\begin{tikzpicture}[
+    class/.style={rectangle, draw, align=left, text width=3.6cm, inner sep=4pt, font=\tiny, anchor=north},
+    every node/.style={font=\tiny}
+]
+    % --- Row 1: User, GeographicArea, Household ---
+    \node[class] (User) at (0,0) {
+        \textbf{\normalsize User}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - userId: string\\
+        - name: string\\
+        - email: string\\
+        - passwordHash: string\\
+        - role: enum\\
+        - organization: string\\
+        - jurisdictionId: string
+    };
+    \node[class] (Geo) at (5.2,0) {
+        \textbf{\normalsize GeographicArea}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - areaId: string\\
+        - name: string\\
+        - level: enum\\
+        - geometry: GeoJSON\\
+        + parentId: string?
+    };
+    \node[class] (Household) at (10.4,0) {
+        \textbf{\normalsize Household}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - hhId: string\\
+        - headName: string\\
+        - nid: string\\
+        - gps: GeoPt\\
+        - familySize: int\\
+        - vulnerabilityFlags: bits\\
+        - children\_0\_5: int\\
+        - over\_60: int\\
+        - photoUrl: string
+    };
+
+    % --- Row 2: DuplicateAlert, DistributionLog, NeedAssessment ---
+    \node[class] (Dup) at (0,-4.6) {
+        \textbf{\normalsize DuplicateAlert}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - alertId: string\\
+        - itemCategory: string\\
+        - resolvedBy: string\\
+        - overrideReason: text\\
+        + hhId: string\\
+        + priorLogId: string
+    };
+    \node[class] (Distro) at (5.2,-4.6) {
+        \textbf{\normalsize DistributionLog}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - logId: string\\
+        - itemCategory: string\\
+        - quantity: float\\
+        - unit: string\\
+        - gps: GeoPt\\
+        - photoUrl: string\\
+        - timestamp: datetime\\
+        - syncStatus: enum\\
+        - overrideFlag: bool\\
+        + hhId: string\\
+        + officerId: string\\
+        + pledgeId: string?
+    };
+    \node[class] (Need) at (10.4,-4.6) {
+        \textbf{\normalsize NeedAssessment}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - assessmentId: string\\
+        - calculatedQty: float\\
+        - overrideQty: float?\\
+        - overrideReason: text\\
+        + jurisdictionId: string\\
+        + itemCategoryId: string
+    };
+
+    % --- Row 3: Feedback, ReliefPledge, Inventory ---
+    \node[class] (Fb) at (0,-9.6) {
+        \textbf{\normalsize Feedback}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - feedbackId: string\\
+        - name: string\\
+        - contact: string\\
+        - category: string\\
+        - message: text\\
+        - response: text
+    };
+    \node[class] (Pledge) at (5.2,-9.6) {
+        \textbf{\normalsize ReliefPledge}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - pledgeId: string\\
+        - sourceType: enum\\
+        - pledgedQty: float\\
+        - remainingQty: float\\
+        - status: enum\\
+        + sourceId: string\\
+        + jurisdictionId: string\\
+        + itemCategoryId: string
+    };
+    \node[class] (Inv) at (10.4,-9.6) {
+        \textbf{\normalsize Inventory}\\[1pt]
+        \rule{3.5cm}{0.3pt}\\[2pt]
+        - inventoryId: string\\
+        - totalQuantity: float\\
+        - distributedQuantity: float\\
+        - unit: string\\
+        + itemCategoryId: string
+    };
+
+    % --- Relationships ---
+    \draw[-{Stealth[open]}] (Geo.north) -- node[above,font=\tiny] {belongs to} (Household.north);
+    \draw[-{Stealth[open]}] (Household.south) -- node[right,font=\tiny] {references} (Distro.north east);
+    \draw[-{Stealth[open]}] (User.south) -- node[left,font=\tiny] {logs} (Distro.north west);
+    \draw[-{Stealth[open]}] (Distro.west) -- node[above,font=\tiny] {triggers} (Dup.east);
+    \draw[-{Stealth[open]}] (Geo.south) -- node[left,font=\tiny] {assesses} (Need.north);
+    \draw[-{Stealth[open]}] (Distro.south) -- node[right,font=\tiny] {fulfilled by} (Pledge.north east);
+    \draw[-{Stealth[open]}] (Distro.south east) .. controls +(1.5,-1) and +(-1.5,1) .. node[below,font=\tiny] {deducts} (Inv.north west);
+    \draw[-{Stealth[open]}] (User.south west) .. controls +(-1,-1.5) and +(1,1.5) .. node[left,font=\tiny] {resolves} (Fb.north east);
+\end{tikzpicture}
+\captionof{figure}{Class Diagram --- Core Domain Model}
+\label{fig:class}
+\end{center}
+
+\textbf{Core Classes:}
+\begin{itemize}[nosep]
+    \item \textbf{User:} userId, name, email, passwordHash, role, organization, jurisdictionId
+    \item \textbf{Household:} hhId, headName, nid, gps, familySize, vulnerabilityFlags, children\_0\_5, over\_60, photoUrl
+    \item \textbf{DistributionLog:} logId, hhId, itemCategory, quantity, unit, officerId, gps, photoUrl, timestamp, syncStatus, overrideFlag, pledgeId
+    \item \textbf{DuplicateAlert:} alertId, hhId, itemCategory, priorLogId, resolvedBy, overrideReason
+    \item \textbf{NeedAssessment:} assessmentId, jurisdictionId, itemCategoryId, calculatedQty, overrideQty, overrideReason
+    \item \textbf{ReliefPledge:} pledgeId, sourceId, sourceType, jurisdictionId, itemCategoryId, pledgedQty, remainingQty, status
+    \item \textbf{GeographicArea:} areaId, name, level, parentId, geometry
+    \item \textbf{Feedback:} feedbackId, name, contact, category, message, response
+    \item \textbf{Inventory:} inventoryId, itemCategoryId, totalQuantity, distributedQuantity, unit
+\end{itemize}
+
+\textbf{Relationships:} GeographicArea (self-referencing hierarchy), Household belongs-to GeographicArea, DistributionLog references Household + User + ItemCategory + ReliefPledge (optional), DuplicateAlert references DistributionLog, NeedAssessment references GeographicArea + ItemCategory, ReliefPledge references GeographicArea + ItemCategory.
+
+\section{Sequence Diagrams}
+
+\subsection{SD-01: Household Registration (Offline)}
+\begin{center}
+\begin{tikzpicture}[
+    act/.style={rectangle, draw, fill=rmstublue3, minimum width=1.4cm, minimum height=0.6cm, align=center, font=\footnotesize\bfseries, rounded corners=2pt},
+    msg/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+    ret/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstuteal, thick, dashed},
+    every node/.style={font=\footnotesize}
+]
+\def\ax{0} \def\bx{2.3} \def\cx{4.2} \def\dx{6.2} \def\ex{8.2}
+\node[act] at (\ax,0) (a) {UP Official};
+\node[act] at (\bx,0) (b) {App};
+\node[act] at (\cx,0) (c) {GPS};
+\node[act] at (\dx,0) (d) {Local DB};
+\node[act] at (\ex,0) (e) {Server};
+\foreach \x/\n in {\ax/a,\bx/b,\cx/c,\dx/d,\ex/e} \draw[dashed,gray!30] (\x,-0.35)--++(0,-5.2);
+\draw[msg] (\ax,-0.7)--(\bx,-0.7) node[midway,above,font=\tiny] {Open App};
+\draw[msg] (\bx,-1.2)--(\cx,-1.2) node[midway,above,font=\tiny] {Capture GPS};
+\draw[ret] (\cx,-1.5)--(\bx,-1.5) node[midway,above,font=\tiny] {Coords};
+\draw[msg] (\bx,-2.0)--(\dx,-2.0) node[midway,above,font=\tiny] {Save};
+\draw[ret] (\dx,-2.3)--(\bx,-2.3) node[midway,above,font=\tiny] {HH-ID};
+\draw[ret] (\bx,-2.8)--(\ax,-2.8) node[midway,above,font=\tiny] {Confirm};
+\node[font=\itshape\tiny] at (\ex,-3.3) {[Network Restored]};
+\draw[msg] (\dx,-3.8)--(\ex,-3.8) node[midway,above,font=\tiny] {Sync};
+\draw[ret] (\ex,-4.1)--(\dx,-4.1) node[midway,above,font=\tiny] {ACK};
+\node[font=\tiny] at (\dx,-4.7) {Clear Queue};
+\end{tikzpicture}
+\captionof{figure}{SD-01: Household Registration (Offline)}
+\label{fig:sd01}
+\end{center}
+
+\subsection{SD-02: Distribution Log with Duplicate Check}
+\begin{center}
+\begin{tikzpicture}[
+    act/.style={rectangle, draw, fill=rmstublue3, minimum width=1.4cm, minimum height=0.6cm, align=center, font=\footnotesize\bfseries, rounded corners=2pt},
+    msg/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+    ret/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstuteal, thick, dashed},
+    every node/.style={font=\footnotesize}
+]
+\def\ax{0} \def\bx{2.5} \def\cx{5.0} \def\dx{7.5}
+\node[act] at (\ax,0) (a) {Officer};
+\node[act] at (\bx,0) (b) {HH Registry};
+\node[act] at (\cx,0) (c) {Distro Log};
+\node[act] at (\dx,0) (d) {Duplicate\\Engine};
+\foreach \x/\n in {\ax/a,\bx/b,\cx/c,\dx/d} \draw[dashed,gray!30] (\x,-0.35)--++(0,-4.5);
+\draw[msg] (\ax,-0.7)--(\bx,-0.7) node[midway,above,font=\tiny] {Search Household};
+\draw[ret] (\bx,-1.0)--(\ax,-1.0) node[midway,above,font=\tiny] {HH Data};
+\draw[msg] (\ax,-1.5)--(\dx,-1.5) node[midway,above,font=\tiny] {Check (7d, same item)};
+\draw[msg] (\dx,-1.8)--(\cx,-1.8) node[midway,above,font=\tiny] {Query};
+\draw[ret] (\cx,-2.1)--(\dx,-2.1) node[midway,above,font=\tiny] {No Dup};
+\draw[ret] (\dx,-2.4)--(\ax,-2.4) node[midway,above,font=\tiny] {OK};
+\draw[msg] (\ax,-2.9)--(\cx,-2.9) node[midway,above,font=\tiny] {Enter \& Save};
+\draw[msg] (\cx,-3.6) -- ++(0.9,0) node[midway,above,font=\tiny] {Sync} -- ++(0,-0.4) -- (\cx,-4.0);
+\end{tikzpicture}
+\captionof{figure}{SD-02: Distribution Log with Duplicate Check}
+\label{fig:sd02}
+\end{center}
+
+\subsection{SD-03: Sync Conflict Resolution}
+\begin{center}
+\begin{tikzpicture}[
+    act/.style={rectangle, draw, fill=rmstublue3, minimum width=1.4cm, minimum height=0.6cm, align=center, font=\footnotesize\bfseries, rounded corners=2pt},
+    msg/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+    ret/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstuteal, thick, dashed},
+    every node/.style={font=\footnotesize}
+]
+\def\ax{0} \def\bx{3.0} \def\cx{6.0}
+\node[act] at (\ax,0) (a) {App};
+\node[act] at (\bx,0) (b) {Server};
+\node[act] at (\cx,0) (c) {Conflict Log};
+\foreach \x/\n in {\ax/a,\bx/b,\cx/c} \draw[dashed,gray!30] (\x,-0.35)--++(0,-4.0);
+\draw[msg] (\ax,-0.7)--(\bx,-0.7) node[midway,above,font=\tiny] {Sync Record};
+\draw[msg] (\bx,-1.2)--(\cx,-1.2) node[midway,above,font=\tiny] {Check};
+\draw[ret] (\cx,-1.5)--(\bx,-1.5) node[midway,above,font=\tiny] {Conflict Found};
+\draw[ret] (\bx,-2.0)--(\ax,-2.0) node[midway,above,font=\tiny] {Conflict};
+\draw[msg] (\ax,-2.7) -- ++(0.9,0) node[midway,above,font=\tiny] {Save Both} -- ++(0,-0.4) -- (\ax,-3.1);
+\node[font=\tiny] at (\ax,-3.3) {Conflict Notice};
+\end{tikzpicture}
+\captionof{figure}{SD-03: Sync Conflict Resolution}
+\label{fig:sd03}
+\end{center}
+
+\subsection{SD-04: Need Calculation with Override}
+\begin{center}
+\begin{tikzpicture}[
+    act/.style={rectangle, draw, fill=rmstublue3, minimum width=1.4cm, minimum height=0.6cm, align=center, font=\footnotesize\bfseries, rounded corners=2pt},
+    msg/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+    ret/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstuteal, thick, dashed},
+    every node/.style={font=\footnotesize}
+]
+\def\ax{0} \def\bx{2.8} \def\cx{5.0} \def\dx{7.2}
+\node[act] at (\ax,0) (a) {UP Official};
+\node[act] at (\bx,0) (b) {Dashboard};
+\node[act] at (\cx,0) (c) {Demographics};
+\node[act] at (\dx,0) (d) {Need Store};
+\foreach \x/\n in {\ax/a,\bx/b,\cx/c,\dx/d} \draw[dashed,gray!30] (\x,-0.35)--++(0,-4.5);
+\draw[msg] (\ax,-0.7)--(\bx,-0.7) node[midway,above,font=\tiny] {Open Ward};
+\draw[msg] (\bx,-1.2)--(\cx,-1.2) node[midway,above,font=\tiny] {Read Demo};
+\draw[ret] (\cx,-1.5)--(\bx,-1.5) node[midway,above,font=\tiny] {Data};
+\draw[msg,align=center] (\bx,-2.2) -- (\dx,-2.2) node[midway,above,font=\tiny] {Apply Sphere\\Rates};
+\draw[ret] (\dx,-2.5)--(\bx,-2.5) node[midway,above,font=\tiny] {Calculated};
+\draw[ret] (\bx,-2.8)--(\ax,-2.8) node[midway,above,font=\tiny] {Show Need};
+\draw[msg] (\ax,-3.3)--(\dx,-3.3) node[midway,above,font=\tiny] {Override Qty};
+\draw[msg] (\dx,-3.8) -- ++(0.9,0) node[midway,above,font=\tiny] {Store Override} -- ++(0,-0.4) -- (\dx,-4.2);
+\draw[ret] (\dx,-4.1)--(\ax,-4.1) node[midway,above,font=\tiny] {Heatmap Updated};
+\end{tikzpicture}
+\captionof{figure}{SD-04: Need Calculation with Override}
+\label{fig:sd04}
+\end{center}
+
+\subsection{SD-05: Pledge Declaration $\rightarrow$ Fulfillment}
+\begin{center}
+\begin{tikzpicture}[
+    act/.style={rectangle, draw, fill=rmstublue3, minimum width=1.4cm, minimum height=0.6cm, align=center, font=\footnotesize\bfseries, rounded corners=2pt},
+    msg/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+    ret/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstuteal, thick, dashed},
+    every node/.style={font=\footnotesize}
+]
+\def\ax{0} \def\bx{2.8} \def\cx{5.6}
+\node[act] at (\ax,0) (a) {Donor};
+\node[act] at (\bx,0) (b) {System};
+\node[act] at (\cx,0) (c) {UP Official};
+\foreach \x/\n in {\ax/a,\bx/b,\cx/c} \draw[dashed,gray!30] (\x,-0.35)--++(0,-4.8);
+\draw[msg] (\ax,-0.7)--(\bx,-0.7) node[midway,above,font=\tiny] {Declare Pledge};
+\draw[msg] (\bx,-1.2) -- ++(0.9,0) node[midway,above,font=\tiny] {Validate} -- ++(0,-0.4) -- (\bx,-1.6);
+\draw[ret] (\bx,-1.7)--(\ax,-1.7) node[midway,above,font=\tiny] {Pledge ID};
+\node[font=\itshape\tiny] at (\cx,-2.2) {[Later]};
+\draw[msg] (\cx,-2.7)--(\bx,-2.7) node[midway,above,font=\tiny] {Log Distro w/ ref};
+\draw[msg] (\bx,-3.2) -- ++(0.9,0) node[midway,above,font=\tiny] {Lookup Pledge} -- ++(0,-0.4) -- (\bx,-3.6);
+\draw[ret] (\bx,-3.9)--(\cx,-3.9) node[midway,above,font=\tiny] {Saved};
+\draw[ret] (\bx,-4.4)--(\ax,-4.4) node[midway,above,font=\tiny] {Fulfilled};
+\end{tikzpicture}
+\captionof{figure}{SD-05: Pledge Declaration $\rightarrow$ Fulfillment}
+\label{fig:sd05}
+\end{center}
+
+\section{Activity Diagrams}
+
+\subsection{Relief Distribution Workflow}
+\begin{center}
+\begin{tikzpicture}[
+    start/.style={ellipse, draw, fill=rmstugreen2, minimum width=1.8cm, minimum height=0.5cm, align=center, font=\small},
+    proc/.style={rectangle, draw, fill=rmstublue3, minimum width=3.6cm, minimum height=0.6cm, align=center, font=\small, rounded corners=2pt},
+    dec/.style={diamond, draw, fill=rmstuorange2, align=center, font=\small, aspect=1.8, minimum width=2cm, minimum height=1cm, inner sep=1pt},
+    arr/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+]
+\node[start] (s) at (0,0) {Start};
+\node[proc] (open) at (0,-1.1) {Officer Opens App};
+\node[proc] (search) at (0,-2.2) {Search Household};
+\node[dec] (found) at (0,-3.5) {Found?};
+\node[proc] (reg) at (-3.2,-5.0) {Register New HH};
+\node[proc] (sel) at (3.2,-5.0) {Select HH};
+\node[proc] (item) at (0,-6.3) {Select Item \& Qty};
+\node[proc] (dupchk) at (0,-7.4) {Duplicate Check};
+\node[dec] (dup) at (0,-8.7) {Duplicate?};
+\node[proc] (over) at (-3.2,-10.2) {Override};
+\node[proc] (nodup) at (3.2,-10.2) {No Dup};
+\node[proc] (photo) at (0,-11.5) {Capture Photo + GPS};
+\node[proc] (save) at (0,-12.6) {Save};
+\node[dec] (online) at (0,-13.9) {Online?};
+\node[proc] (queue) at (-3.2,-15.4) {Queue Offline};
+\node[proc] (syn) at (3.2,-15.4) {Sync};
+\node[start] (end) at (0,-16.7) {Confirmation};
+
+\draw[arr] (s) -- (open);
+\draw[arr] (open) -- (search);
+\draw[arr] (search) -- (found);
+\draw[arr] (found) -- node[left,font=\tiny] {No} (reg);
+\draw[arr] (found) -- node[right,font=\tiny] {Yes} (sel);
+\draw[arr] (reg) |- (item);
+\draw[arr] (sel) |- (item);
+\draw[arr] (item) -- (dupchk);
+\draw[arr] (dupchk) -- (dup);
+\draw[arr] (dup) -- node[left,font=\tiny] {Yes} (over);
+\draw[arr] (dup) -- node[right,font=\tiny] {No} (nodup);
+\draw[arr] (over) |- (photo);
+\draw[arr] (nodup) |- (photo);
+\draw[arr] (photo) -- (save);
+\draw[arr] (save) -- (online);
+\draw[arr] (online) -- node[left,font=\tiny] {No} (queue);
+\draw[arr] (online) -- node[right,font=\tiny] {Yes} (syn);
+\draw[arr] (queue) |- (end);
+\draw[arr] (syn) |- (end);
+\end{tikzpicture}
+\captionof{figure}{Activity Diagram --- Relief Distribution Workflow}
+\label{fig:activity-relief}
+\end{center}
+
+\subsection{Pledge-to-Distribution Workflow}
+\begin{center}
+\begin{tikzpicture}[
+    node distance=0.7cm,
+    start/.style={ellipse, draw, fill=rmstugreen2, minimum width=1.8cm, minimum height=0.5cm, align=center, font=\small},
+    proc/.style={rectangle, draw, fill=rmstublue3, minimum width=4.5cm, minimum height=0.6cm, align=center, font=\small, rounded corners=2pt},
+    dec/.style={diamond, draw, fill=rmstuorange2, align=center, font=\small, aspect=1.5, minimum width=2cm, minimum height=1.2cm},
+    arr/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+]
+\node[start] (s) {Start};
+\node[proc, below=of s] (heat) {Source Views Heatmap};
+\node[proc, below=of heat] (ward) {Identifies Ward};
+\node[proc, below=of ward] (pledge) {Declares Pledge};
+\node[proc, below=of pledge] (val) {Validate Area/Item};
+\node[proc, below=of val] (pend) {Pledge Created (PENDING)};
+\node[proc, below=of pend] (notify) {UP Official Notified};
+\node[proc, below=of notify] (distro) {Log Distribution (ref pledge\_id)};
+\node[dec, below=1.2cm of distro] (qty) {Pledged Qty Reached?};
+\node[start, below left=1.6cm and 1.2cm of qty] (end) {Heatmap Updates};
+\node[proc, below right=1.6cm and 1.2cm of qty] (comp) {COMPLETED};
+\draw[arr] (s)--(heat); \draw[arr] (heat)--(ward);
+\draw[arr] (ward)--(pledge); \draw[arr] (pledge)--(val);
+\draw[arr] (val)--(pend); \draw[arr] (pend)--(notify);
+\draw[arr] (notify)--(distro); \draw[arr] (distro)--(qty);
+\draw[arr] (qty)--node[left,font=\tiny] {No} (end);
+\draw[arr] (qty)--node[right,font=\tiny] {Yes} (comp);
+\draw[arr] (comp) |- (end);
+\draw[arr] (end.west) -| ++(-1.8,3.2) |- (distro.west);
+\end{tikzpicture}
+\captionof{figure}{Activity Diagram --- Pledge-to-Distribution Workflow}
+\label{fig:activity-pledge}
+\end{center}

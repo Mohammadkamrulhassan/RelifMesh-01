@@ -9,7 +9,10 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 })
 
-export default function MapView({ markers = [], center = [22.6512, 92.1712], zoom = 10, className = '' }) {
+const FENI_CENTER = [23.0141, 91.3961]
+const FENI_ZOOM = 12
+
+export default function MapView({ markers = [], center = FENI_CENTER, zoom = FENI_ZOOM, className = '', onReady }) {
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
 
@@ -19,6 +22,7 @@ export default function MapView({ markers = [], center = [22.6512, 92.1712], zoo
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(mapInstance.current)
+    if (onReady) onReady(mapInstance.current)
     return () => {
       mapInstance.current?.remove()
       mapInstance.current = null
@@ -28,9 +32,20 @@ export default function MapView({ markers = [], center = [22.6512, 92.1712], zoo
   useEffect(() => {
     if (!mapInstance.current) return
     const layer = L.layerGroup().addTo(mapInstance.current)
+    const latLngs = []
     markers.forEach(m => {
-      L.marker([m.lat, m.lng]).addTo(layer).bindPopup(m.popup || '')
+      const ll = L.latLng(m.lat, m.lng)
+      latLngs.push(ll)
+      L.marker(ll).addTo(layer).bindPopup(m.popup || '')
     })
+    // Auto-fit bounds to markers when data loads
+    if (latLngs.length >= 2) {
+      mapInstance.current.fitBounds(latLngs, { padding: [40, 40], maxZoom: 14 })
+    } else if (latLngs.length === 1) {
+      mapInstance.current.setView(latLngs[0], FENI_ZOOM)
+    } else {
+      mapInstance.current.setView(center, zoom)
+    }
     return () => layer.clearLayers()
   }, [markers])
 

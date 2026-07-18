@@ -1,0 +1,16 @@
+# Build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.pdf
+*.toc
+*.out
+*.log
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*-blx.bib

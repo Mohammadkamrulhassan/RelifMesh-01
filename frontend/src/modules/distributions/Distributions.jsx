@@ -70,7 +70,7 @@ export default function Distributions() {
           <h1 className="page-header-title">Distributions</h1>
           <p className="page-header-subtitle">{logs.length} log{logs.length !== 1 ? 's' : ''} recorded</p>
         </div>
-        {canCreate && <Link to="/distributions/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>Log Distribution</Button></Link>}
+        {canCreate && <Link to="/app/distributions/new"><Button leftIcon={<span style={{ fontSize: '1.1rem', lineHeight: 1 }}>+</span>}>Log Distribution</Button></Link>}
       </div>
       <div style={{ display: 'flex', gap: 'var(--space-3)', marginBottom: 'var(--space-4)', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: '200px', maxWidth: '320px' }}>
@@ -102,8 +102,8 @@ export default function Distributions() {
               </thead>
               <tbody>
                 {logs.map(log => (
-                  <tr key={log._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/distributions/${log._id}`)}>
-                    <td style={{ fontWeight: 500 }}>{log.householdId?.headName || log.householdId}</td>
+                  <tr key={log._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/app/distributions/${log._id}`)}>
+                    <td style={{ fontWeight: 500 }}>{log.householdId?.headName || log.householdId?._id?.slice(-6) || '—'}</td>
                     <td>{log.itemCategoryId?.name || log.unit}</td>
                     <td>{log.quantity}</td>
                     <td style={{ color: 'var(--color-text-secondary)' }}>{formatDateTime(log.distributedAt)}</td>
@@ -116,7 +116,7 @@ export default function Distributions() {
                       <td onClick={e => e.stopPropagation()}>
                         <div style={{ display: 'flex', gap: 'var(--space-1)' }}>
                           {canEdit && (
-                            <Button size="xs" variant="ghost" onClick={() => navigate(`/distributions/${log._id}/edit`)}>
+                            <Button size="xs" variant="ghost" onClick={() => navigate(`/app/distributions/${log._id}/edit`)}>
                               Edit
                             </Button>
                           )}

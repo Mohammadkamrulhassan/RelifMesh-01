@@ -1,222 +1,162 @@
 # Section 3.11 — Deployment & Maintenance
-**Project:** ReliefMesh — Disaster Response & Relief Management System
+**Project:** ReliefMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-06-10
+**Last Updated:** 2026-06-09
 
 ---
 
-## 3.11.1 Deployment Overview (v2)
+## 3.11.1 Deployment Overview
 
-ReliefMesh v2 uses a **Docker Compose** deployment for consistency across dev, staging, and production.
+ReliefMesh uses a **zero-cost cloud deployment** strategy appropriate for the prototype phase:
 
 | Component | Platform | Tier |
 |-----------|----------|------|
-| Backend (Node.js + Express) | Railway / VPS | Free / Hobby |
-| Frontend (React PWA) | Vercel / Netlify | Free |
-| Database | **MongoDB Atlas** (free M0 cluster) | Free (512MB) |
-| Cache (optional) | Redis / Upstash | Free (30MB) |
-| Photo storage | Cloudinary (free tier) | Free (25GB) |
-| CI/CD | GitHub Actions | Free |
-| Containerization | Docker Compose | Local dev |
+| Frontend (React PWA) | Netlify | Free |
+| Backend (Node.js API) | Railway | Free / Hobby |
+| MongoDB | MongoDB Atlas (free cluster) | Free (512MB) |
+| Photo storage | Local FS (multer) / Cloudinary (optional) | Local for prototype |
+| Domain | Netlify default subdomain | Free |
 
 ---
 
-## 3.11.2 Setup Procedure
+## 3.11.2 Deployment Steps
 
-### Step 1 — Create MongoDB Atlas Cluster
+### Step 1 — Prepare Repository
+```bash
+# Ensure .env is in .gitignore
+echo ".env" >> .gitignore
 
+# Verify build works locally
+cd frontend && npm run build     # generates dist/ folder
+cd ../backend && node server.js  # confirm no startup errors
+```
+
+### Step 2 — Set Up MongoDB Atlas
 ```
 1. Go to https://www.mongodb.com/atlas → Sign up for free account
-2. Deploy a free M0 shared cluster (AWS, 512MB storage)
-3. Under SECURITY → Database Access → Add Database User:
-     Username: your_db_user
-     Authentication Method: Password
-     Password: your_db_password  (save this)
-4. Under SECURITY → Network Access → Add IP Address:
-     IP Address: 0.0.0.0/0
-     Comment: Allow all (dev only)
-5. Click Connect → Drivers → Copy connection string:
-   mongodb+srv://<db_user>:<db_password>@cluster0.xxxxx.mongodb.net
+2. Create a free M0 cluster (shared RAM, 512MB storage)
+3. Under Security → Database Access → Add a database user
+4. Under Security → Network Access → Add IP 0.0.0.0/0 (allow all)
+5. Click Connect → Drivers → Copy the connection string:
+   mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/reliefmesh?retryWrites=true
 ```
 
-> **Important:** The connection string from Atlas may not include a database name. The application automatically appends `/relifmesh` as the database name if none is present in the URI.
-
-### Step 2 — Configure .env
-
-Copy `backend/.env.example` to `backend/.env` and fill in:
-
-```env
-MONGODB_URI=mongodb+srv://your_user:your_pass@cluster0.xxxxx.mongodb.net/relifmesh?retryWrites=true&w=majority
-JWT_SECRET=<random-32-char-string>
-JWT_REFRESH_SECRET=<another-random-32-char-string>
-SMS_PROVIDER=mock
-REDIS_URL=redis://localhost:6379
-PORT=5000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:5173
+### Step 3 — Deploy Backend to Railway
+```
+1. Go to https://railway.app → New Project → Deploy from GitHub
+2. Select: Team-Skipper/reliefmesh → /backend
+3. Set environment variables in Railway dashboard:
+   MONGODB_URI        (the Atlas connection string from Step 2)
+   JWT_SECRET         (generate a random 32-char string)
+   CLOUDINARY_CLOUD_NAME
+   CLOUDINARY_API_KEY
+   CLOUDINARY_API_SECRET
+   NODE_ENV=production
+4. Railway auto-detects Node.js; runs `npm start`
+5. Railway will automatically seed the database on first start
+6. Note the generated URL: https://reliefmesh-api.railway.app
 ```
 
-### Step 3 — Install & Run
+### Step 4 — Deploy Frontend to Netlify
+```
+1. Go to https://netlify.com → New site → Import from GitHub
+2. Select: Team-Skipper/reliefmesh → /frontend
+3. Build command: npm run build
+4. Publish directory: dist
+5. Set environment variable:
+   VITE_API_BASE_URL=https://reliefmesh-api.railway.app/v1
+6. Deploy → note URL: https://reliefmesh.netlify.app
+```
 
+### Step 5 — Verify Deployment
+```
+[x] API health check: GET https://reliefmesh-api.railway.app/v1/health → { status: "ok" }
+[x] Frontend loads: https://reliefmesh.netlify.app
+[x] Login works with seeded test account
+[x] Register a household → stored in MongoDB → appears in dashboard
+[x] Public dashboard loads without login
+[x] Feedback submission works (POST /v1/feedback)
+[x] Inventory items viewable (GET /v1/inventory)
+[x] Profile page loads and updates correctly
+[x] Pagination works on household and distribution lists
+[x] Lighthouse PWA score ≥ 80
+```
+
+---
+
+## 3.11.3 Environment Configuration Reference
+
+| Variable | Used By | Description |
+|----------|---------|-------------|
+| `MONGODB_URI` | Backend | MongoDB connection string (Atlas or local) |
+| `JWT_SECRET` | Backend | Signing key for JWTs (min 32 chars) |
+| `JWT_EXPIRES_IN` | Backend | Token lifetime (e.g., `7d`) |
+| `CLOUDINARY_CLOUD_NAME` | Backend | Cloudinary account name |
+| `CLOUDINARY_API_KEY` | Backend | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Backend | Cloudinary API secret |
+| `NODE_ENV` | Backend | `development` or `production` |
+| `PORT` | Backend | Server port (Railway sets automatically) |
+| `VITE_API_BASE_URL` | Frontend | Backend API base URL |
+
+---
+
+## 3.11.4 Backup & Recovery Plan
+
+### Database Backup
+- **MongoDB Atlas** provides automated backups on paid tiers. For prototype, weekly manual export:
 ```bash
-cd backend
-npm install
-npm run dev
+mongodump --uri="$MONGODB_URI" --out=backup_$(date +%Y%m%d)
 ```
 
-**First run behavior:**
-1. Connects to MongoDB Atlas
-2. Calls `mongoose.syncIndexes()` — fixes unique sparse indexes (e.g., `email` field with null values)
-3. Detects empty database → auto-seeds:
-   - 3 jurisdictions (Dhaka, Sylhet districts with unions)
-   - 4 v1 users (email/password)
-   - 9 v2 users (phone-based, all 7 roles)
-   - 5 item categories
-4. Starts Express server on port 5000
-
-### Step 4 — Verify
-
-```bash
-# Health check
-curl http://localhost:5000/v1/health
-# → { "status": "ok" }
-
-# OTP auth flow
-curl -X POST http://localhost:5000/v2/auth/send-otp \
-  -H "Content-Type: application/json" \
-  -d '{"phone":"+8801700000008"}'
-# → { "message": "OTP sent...", "otp": "123456" }  (dev mode returns OTP)
+### Recovery Procedure
 ```
+1. Restore MongoDB:
+   mongorestore --uri="$MONGODB_URI" backup_YYYYMMDD/
+
+2. Verify integrity:
+   npm run db:status    (shows document count per collection)
+```
+
+### Photo Backup
+- Cloudinary retains all uploaded media — no local backup needed for prototype.
 
 ---
 
-## 3.11.3 Docker Compose Setup (Local Dev)
+## 3.11.5 Known Limitations & Future Roadmap
 
-```yaml
-version: "3.8"
-services:
-  mongo:
-    image: mongo:8
-    ports: ["27017:27017"]
-    volumes: [mongo-data:/data/db]
+### Known Limitations (Prototype — Phase 1)
+| Limitation | Impact | Reason |
+|-----------|--------|--------|
+| No NID validation against national DB | Cannot verify identity | Government API not accessible |
+| No real-time sync (polling only) | Slight delay in cross-device updates | WebSocket not implemented in prototype |
+| MongoDB Atlas free tier: 512MB storage | Limits scale beyond prototype | Budget constraint |
+| Single-language UI (Bengali/English toggle) | Non-Bengali speakers may struggle | Scope decision |
+| No automated CI/CD pipeline | Manual deploy required | Prototype phase |
 
-  redis:
-    image: redis:7-alpine
-    ports: ["6379:6379"]
+### Known Limitations (v2 Features — Phase 2)
+| Limitation | Impact | Reason |
+|-----------|--------|--------|
+| GeoJSON boundary files large (wards) | Slower dashboard load on low-end devices | File size not optimized (no TopoJSON) |
+| Need calculation uses Sphere rates only | May not reflect local consumption patterns | No local market-rate calibration |
+| Pledge-to-fulfillment tracking is manual | No automated pledge-matching to donors | Notifications not implemented (SMS/email) |
+| Heatmap not real-time | Refresh required to see new need data | Polling-based; no WebSocket subscription yet |
+| No public pledge verification | Outside pledges rely on trust | No payment/escrow integration in scope |
 
-  backend:
-    build: ./backend
-    ports: ["5000:5000"]
-    depends_on: [mongo, redis]
-    env_file: ./backend/.env
-
-  frontend:
-    build: ./frontend
-    ports: ["5173:5173"]
-    depends_on: [backend]
-    environment:
-      - VITE_API_BASE_URL=http://localhost:5000/api
-
-volumes:
-  mongo-data:
-```
-
-> **Note:** When using Docker, set `MONGODB_URI=mongodb://mongo:27017/relifmesh` (service name `mongo` instead of `localhost`).
-
----
-
-## 3.11.4 Environment Configuration Reference
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `MONGODB_URI` | Yes | — | MongoDB connection string (Atlas SRV or local) |
-| `JWT_SECRET` | Yes | — | Access token signing key (min 32 chars) |
-| `JWT_REFRESH_SECRET` | Yes | — | Refresh token signing key |
-| `JWT_EXPIRES_IN` | No | `15m` | Access token lifetime |
-| `JWT_REFRESH_EXPIRES_IN` | No | `7d` | Refresh token lifetime |
-| `REDIS_URL` | No | `redis://localhost:6379` | Redis connection (in-memory fallback if unavailable) |
-| `SMS_PROVIDER` | No | `mock` | `mock` for dev (OTP returned in response), `twilio` for production |
-| `TWILIO_*` | No | — | Twilio credentials (if `SMS_PROVIDER=twilio`) |
-| `CLOUDINARY_*` | No | — | Cloudinary photo upload credentials |
-| `PORT` | No | `5000` | Server port |
-| `NODE_ENV` | No | `development` | Controls OTP visibility in API responses |
-| `FRONTEND_URL` | No | `http://localhost:5173` | CORS allowed origin |
-
----
-
-## 3.11.5 Atlas Connection Details
-
-The database connection in `config/database.js`:
-
-```js
-// Auto-detects Atlas via mongodb+srv:// prefix
-const opts = {
-  serverSelectionTimeoutMS: 10000,
-  socketTimeoutMS: 45000,
-}
-if (env.isAtlas) {
-  opts.retryWrites = true
-  opts.w = 'majority'
-  opts.appName = 'reliefmesh'
-}
-```
-
-- **SSL/TLS:** Enabled by default with `mongodb+srv://`
-- **Retry writes:** `w=majority` with `retryWrites=true`
-- **Index sync:** `mongoose.syncIndexes()` runs after every connection to keep indexes aligned with schema changes
-- **Database name:** Auto-appends `/relifmesh` if the URI path is empty
-
-### Troubleshooting Atlas Connection
-
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| `ECONNREFUSED` | IP not whitelisted | Add `0.0.0.0/0` in Network Access |
-| `Authentication failed` | Wrong credentials | Check Database Access user/password |
-| `Duplicate key (email: null)` | Old non-sparse index | `syncIndexes()` fixes this automatically |
-| `Connection timeout` | Atlas free tier cold start | Wait 30s, retry; free tier spins down after inactivity |
-
----
-
-## 3.11.6 CI/CD Pipeline (GitHub Actions)
-
-```yaml
-name: CI/CD
-
-on:
-  push:
-    branches: [main, dev]
-  pull_request:
-    branches: [main]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      mongo:
-        image: mongo:8
-        ports: ["27017:27017"]
-      redis:
-        image: redis:7-alpine
-        ports: ["6379:6379"]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm ci
-      - run: npm test
-      - run: npm run lint
-```
-
----
-
-## 3.11.7 Known Limitations & Roadmap
-
-| Limitation | Impact | Workaround |
-|-----------|--------|------------|
-| No real SMS (mock provider) | OTP not actually sent by SMS | OTP visible in API response (dev only) |
-| Atlas free tier cold start | First connection after inactivity is slow | Connection retries with 3s delay |
-| In-memory OTP store (no Redis) | OTPs lost on server restart | Falls back gracefully; Redis for production |
-| No TypeScript migration yet | JS codebase | Planned for Phase 8 |
+### Future Roadmap (Post-semester / Production)
+| Feature | Priority | Notes |
+|---------|----------|-------|
+| NID API integration (national DB) | High | Requires government MOU |
+| Real-time WebSocket sync | Medium | Replace polling with socket.io |
+| Native Android app (React Native) | Medium | Better camera/GPS access |
+| AI-based household need scoring | Low | ML model for vulnerability prioritization |
+| Multi-district multi-disaster support | High | Extend jurisdiction model |
+| End-to-end encryption of PII | High | For production compliance |
+| SMS notification for households | Medium | Alert families when aid logged |
+| Integration with DDM national system | High | Long-term government adoption |
+| **TopoJSON boundary compression** | **Medium** | Reduce GeoJSON file sizes for ward-level boundaries |
+| **Local market-rate calibration** | **Low** | Allow admins to adjust Sphere rates per district |
+| **Automated pledge–donor matching** | **Medium** | Notify donors when their area needs replenishment |
+| **WebSocket heatmap updates** | **Medium** | Push need updates to connected dashboard clients |
 
 ---
 

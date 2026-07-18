@@ -1,0 +1,62 @@
+% ======================================================================
+% Section 3.14 -- Presentation & Demonstration
+% ======================================================================
+
+\section{Presentation Structure}
+\begin{table}[H]
+\centering
+\caption{Presentation Structure}
+\label{tab:presentation}
+\begin{tabularx}{\textwidth}{@{}clX@{}}
+\toprule
+Slide & Time (min) & Content \\
+\midrule
+1 & 0:30 & Title + Team introduction \\
+2 & 1:00 & Problem statement (current system pains) \\
+3 & 1:30 & Objective + Scope \\
+4 & 1:00 & System architecture (Context + Tech stack) \\
+5 & 2:00 & Live demo walkthrough \\
+6 & 1:00 & Key features: Offline, Duplicate detection, Sync \\
+7 & 1:00 & Key features: Need assessment, Pledge, Heatmap \\
+8 & 1:00 & Security \& Access Control \\
+9 & 1:00 & Testing summary \\
+10 & 0:30 & Future roadmap \\
+11 & 1:00 & Q\&A \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Live Demo Walkthrough}
+\textbf{Total duration:} 7--10 minutes.
+
+\begin{enumerate}[nosep]
+    \item \textbf{Public Dashboard} (0:30) --- Open localhost URL, no login required
+    \item \textbf{Login \& Role} (0:30) --- Log in as UP Official, observe dashboard
+    \item \textbf{Register Household} (1:00) --- Create a new household, show GPS + photo capability
+    \item \textbf{Log Distribution} (1:00) --- Search household, distribute item, capture photo
+    \item \textbf{Duplicate Alert} (1:00) --- Attempt same-day duplicate $\rightarrow$ warning shown $\rightarrow$ demonstrate override with reason
+    \item \textbf{Offline \& Sync} (1:00) --- Disconnect WiFi $\rightarrow$ operate offline $\rightarrow$ reconnect $\rightarrow$ sync and verify
+    \item \textbf{Upazila Dashboard} (0:30) --- Login as Upazila Officer, show cross-union analytics
+    \item \textbf{Reports} (0:30) --- Export report (PDF/CSV)
+    \item \textbf{Feedback} (0:30) --- Submit feedback, show admin response
+    \item \textbf{Inventory} (0:30) --- View, create, permission enforcement
+    \item \textbf{Need Dashboard \& Pledge (v2)} (1:00) --- Run calculation, show heatmap, declare pledge
+\end{enumerate}
+
+\section{Key Talking Points}
+\begin{itemize}[nosep]
+    \item \textbf{Offline-first:} Real-world relief zones have no internet. ReliefMesh works fully offline and syncs when connectivity returns.
+    \item \textbf{Duplicate prevention:} 7-day lookback prevents double-counting. Override requires a reason (audit trail).
+    \item \textbf{Transparency:} Public dashboard shows real-time allocation data. No login needed. Aggregated, no PII.
+    \item \textbf{Need-based:} v2 shifts from ``who asked?'' to ``who needs most?'' using Sphere standards + local demographics.
+    \item \textbf{Accountability:} Every action is logged --- who, what, when, where (GPS), why (reason).
+\end{itemize}
+
+\section{Common Q\&A Preparation}
+\begin{itemize}[nosep]
+    \item \textbf{Q:} How does offline work? --- \textbf{A:} localforage stores data in IndexedDB. Sync engine pushes/pulls on reconnect with conflict resolution.
+    \item \textbf{Q:} What about data security? --- \textbf{A:} JWT with bcrypt, RBAC, rate limiting, helmet headers, PII never exposed in public endpoints.
+    \item \textbf{Q:} Can this scale? --- \textbf{A:} MongoDB sharding + horizontal API scaling. Designed for Union $\rightarrow$ Upazila $\rightarrow$ District hierarchy.
+    \item \textbf{Q:} How is this different from paper-based systems? --- \textbf{A:} Real-time visibility, duplicate prevention, GPS audit trail, automated reports.
+    \item \textbf{Q:} What is the tech stack? --- \textbf{A:} MERN stack (MongoDB, Express, React, Node.js) with localforage for offline, Leaflet for maps, Vite for build.
+\end{itemize}

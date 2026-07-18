@@ -114,7 +114,7 @@ export default function DistributionForm() {
       } else {
         await createDistribution(payload)
       }
-      navigate('/distributions')
+      navigate('/app/distributions')
     } catch (err) {
       if (!isEditing && err.status === 409) {
         setDuplicateWarning(err.priorLog)
@@ -185,7 +185,7 @@ export default function DistributionForm() {
 
           <div className="page-actions" style={{ justifyContent: 'flex-start' }}>
             <Button type="submit" disabled={submitting}>{submitting ? 'Saving...' : isEditing ? 'Save Changes' : 'Log Distribution'}</Button>
-            <Button type="button" variant="secondary" onClick={() => navigate(isEditing ? `/distributions/${id}` : '/distributions')}>Cancel</Button>
+            <Button type="button" variant="secondary" onClick={() => navigate(isEditing ? `/app/distributions/${id}` : '/app/distributions')}>Cancel</Button>
           </div>
         </form>
       </Card>

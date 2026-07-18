@@ -26,7 +26,7 @@ const reliefRequestSchema = new mongoose.Schema({
     lng: { type: Number },
     address: { type: String },
   },
-  jurisdictionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Jurisdiction' },
+  jurisdictionId: { type: mongoose.Schema.Types.ObjectId, ref: 'GeographicArea' },
   reviewedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   reviewedAt: { type: Date },
   reviewNotes: { type: String, default: null },

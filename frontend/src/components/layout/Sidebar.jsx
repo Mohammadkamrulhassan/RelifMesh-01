@@ -21,7 +21,7 @@ export default function Sidebar({ isOpen, isMobileOpen, onToggle, onMobileClose 
       >
         <div className="sidebar-logo">
           <div className="sidebar-logo-mark" aria-hidden="true">R</div>
-          <span className="sidebar-logo-text">RelifMesh</span>
+          <span className="sidebar-logo-text">ReliefMesh</span>
         </div>
 
         <nav className="sidebar-nav" aria-label="Main navigation">

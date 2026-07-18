@@ -21,22 +21,30 @@ import ReliefRequestList from './modules/reliefRequests/ReliefRequestList'
 import ReliefRequestForm from './modules/reliefRequests/ReliefRequestForm'
 import ReliefRequestDetail from './modules/reliefRequests/ReliefRequestDetail'
 import ReliefRequestAdmin from './modules/reliefRequests/ReliefRequestAdmin'
+import NeedDashboard from './modules/needs/NeedDashboard'
+import PledgeList from './modules/pledges/PledgeList'
+import PledgeForm from './modules/pledges/PledgeForm'
+import PledgeDetail from './modules/pledges/PledgeDetail'
+import LandingPage from './modules/landing/LandingPage'
+import OverviewPage from './modules/landing/OverviewPage'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
   if (loading) return <div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" /></div>
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) return <Navigate to="/" replace />
   return children
 }
 
 function AppRoutes() {
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/overview" element={<OverviewPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/public" element={<PublicDashboard />} />
-      <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route index element={<Navigate to="/dashboard" replace />} />
+      <Route path="/app" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+        <Route index element={<Navigate to="/app/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="households" element={<Households />} />
         <Route path="households/new" element={<HouseholdForm />} />
@@ -55,6 +63,10 @@ function AppRoutes() {
         <Route path="relief-requests/new" element={<ReliefRequestForm />} />
         <Route path="relief-requests/:id" element={<ReliefRequestDetail />} />
         <Route path="relief-requests/admin" element={<ReliefRequestAdmin />} />
+        <Route path="need-dashboard" element={<NeedDashboard />} />
+        <Route path="pledges" element={<PledgeList />} />
+        <Route path="pledges/new" element={<PledgeForm />} />
+        <Route path="pledges/:id" element={<PledgeDetail />} />
       </Route>
     </Routes>
   )

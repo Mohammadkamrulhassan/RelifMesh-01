@@ -1,0 +1,205 @@
+% ======================================================================
+% Section 3.7 -- UI/UX Design
+% ======================================================================
+
+\section{Information Architecture}
+\begingroup
+\small
+\begin{center}
+\begin{tikzpicture}[
+    iab/.style={rectangle, draw, rounded corners=2pt, align=center, font=\small\bfseries, minimum width=2.4cm},
+    ias/.style={rectangle, draw, rounded corners=2pt, align=center, font=\footnotesize, minimum width=1.8cm},
+    iag/.style={rectangle, draw, rounded corners=2pt, align=center, font=\tiny, fill=rmstugray3, minimum width=1.4cm, inner sep=2pt},
+    ar/.style={-{Stealth[length=1.5mm,width=1.5mm]}, draw=gray, thin},
+]
+\node[iab, fill=rmstublue!10] (root) {ReliefMesh};
+
+\node[ias, fill=rmstuorange2, below left=0.5cm and 4.2cm of root] (pub) {Public};
+\node[iag, below=0.15cm of pub] (pub1) {/dashboard};
+\node[iag, below=0.1cm of pub1] (pub2) {/overview};
+
+\node[ias, fill=rmstuteal2, below left=0.5cm and 1.4cm of root] (login) {Login};
+\node[iag, below=0.15cm of login] (lg1) {/register};
+
+\node[ias, fill=rmstublue3, below right=0.5cm and 1.8cm of root] (auth) {Auth App};
+
+% Auth App children split into two columns of 7/6 to control height
+\node[iag, below=0.6cm of auth] (a1) {Dashboard};
+\node[iag, below=0.1cm of a1] (a2) {Households};
+\node[iag, below=0.1cm of a2] (a3) {Distributions};
+\node[iag, below=0.1cm of a3] (a4) {Pledges};
+\node[iag, below=0.1cm of a4] (a5) {Need Dash};
+\node[iag, below=0.1cm of a5] (a6) {Requests};
+\node[iag, below=0.1cm of a6] (a7) {Feedback};
+
+\node[iag, right=0.6cm of a1] (a8) {Alerts};
+\node[iag, below=0.1cm of a8] (a9) {Inventory};
+\node[iag, below=0.1cm of a9] (a10) {Reports};
+\node[iag, below=0.1cm of a10] (a11) {Admin};
+\node[iag, below=0.1cm of a11] (a12) {Profile};
+\node[iag, below=0.1cm of a12] (a13) {Sync};
+
+\draw[ar] (root) -- (pub);
+\draw[ar] (root) -- (login);
+\draw[ar] (root) -- (auth);
+\draw[ar] (pub) -- (pub1.north);
+\draw[ar] (pub1) -- (pub2);
+\draw[ar] (login) -- (lg1.north);
+\draw[ar] (auth) -- (a1);
+\draw[ar] (a1) -- (a2);
+\draw[ar] (a2) -- (a3);
+\draw[ar] (a3) -- (a4);
+\draw[ar] (a4) -- (a5);
+\draw[ar] (a5) -- (a6);
+\draw[ar] (a6) -- (a7);
+\draw[ar] (auth) -- (a8);
+\draw[ar] (a8) -- (a9);
+\draw[ar] (a9) -- (a10);
+\draw[ar] (a10) -- (a11);
+\draw[ar] (a11) -- (a12);
+\draw[ar] (a12) -- (a13);
+\end{tikzpicture}
+\captionof{figure}{ReliefMesh Information Architecture}
+\end{center}
+\endgroup
+
+\section{Key User Flows}
+
+\newcommand{\flowstep}[1]{\tikz[baseline=-0.5ex]{\node[rectangle, draw, fill=rmstublue!8, rounded corners=2pt, align=center, font=\footnotesize, inner sep=4pt] {#1};}}
+\newcommand{\flowarr}{\,{\color{rmstugray}$\rightarrow$}\,}
+
+\subsection{Flow 1 --- Register Household}
+\begin{center}
+\begin{tikzpicture}[
+    fs/.style={rectangle, draw, fill=rmstublue!8, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.6cm, inner sep=4pt},
+    fa/.style={-{Stealth[length=1.5mm]}, draw=rmstugray, thick}
+]
+\node[fs] (a1) at (0,0) {Open App};
+\node[fs] (a2) at (2.3,0) {New\\Household};
+\node[fs] (a3) at (4.6,0) {Auto-capture\\GPS};
+\node[fs] (a4) at (7.1,0) {Fill Form\\(name, NID, size, flags)};
+\node[fs] (a5) at (0,-1.3) {Take Photo};
+\node[fs] (a6) at (2.3,-1.3) {Save};
+\node[fs] (a7) at (4.6,-1.3) {Online: sync\\Offline: queue};
+\node[fs] (a8) at (7.1,-1.3) {Confirmation};
+\draw[fa] (a1)--(a2); \draw[fa] (a2)--(a3); \draw[fa] (a3)--(a4);
+\draw[fa] (a4.south) -- ++(0,-0.3) -| (a5.north);
+\draw[fa] (a5)--(a6); \draw[fa] (a6)--(a7); \draw[fa] (a7)--(a8);
+\end{tikzpicture}
+\captionof{figure}{Flow 1 --- Register Household}
+\end{center}
+
+\subsection{Flow 2 --- Log Distribution}
+\begin{center}
+\begin{tikzpicture}[
+    fs/.style={rectangle, draw, fill=rmstuteal!8, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.6cm, inner sep=4pt},
+    fa/.style={-{Stealth[length=1.5mm]}, draw=rmstugray, thick}
+]
+\node[fs] (b1) at (0,0) {Search\\Household};
+\node[fs] (b2) at (2.3,0) {Select};
+\node[fs] (b3) at (4.6,0) {Duplicate\\Check};
+\node[fs] (b4) at (7.3,0) {Proceed /\\Override w/ reason};
+\node[fs] (b5) at (0,-1.3) {Select Item\\\& Quantity};
+\node[fs] (b6) at (2.3,-1.3) {Photo + GPS};
+\node[fs] (b7) at (4.6,-1.3) {Submit};
+\draw[fa] (b1)--(b2); \draw[fa] (b2)--(b3); \draw[fa] (b3)--(b4);
+\draw[fa] (b4.south) -- ++(0,-0.3) -| (b5.north);
+\draw[fa] (b5)--(b6); \draw[fa] (b6)--(b7);
+\end{tikzpicture}
+\captionof{figure}{Flow 2 --- Log Distribution}
+\end{center}
+
+\subsection{Flow 3 --- Public Dashboard}
+\begin{center}
+\begin{tikzpicture}[
+    fs/.style={rectangle, draw, fill=rmstuorange!10, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.6cm, inner sep=4pt},
+    fa/.style={-{Stealth[length=1.5mm]}, draw=rmstugray, thick}
+]
+\node[fs] (c1) at (0,0) {Open URL\\(no login)};
+\node[fs] (c2) at (2.6,0) {View summary\\cards};
+\node[fs] (c3) at (5.2,0) {View map\\with markers};
+\node[fs] (c4) at (7.9,0) {Click marker\\for breakdown};
+\node[fs] (c5) at (10.5,0) {Apply filters};
+\draw[fa] (c1)--(c2); \draw[fa] (c2)--(c3); \draw[fa] (c3)--(c4); \draw[fa] (c4)--(c5);
+\end{tikzpicture}
+\captionof{figure}{Flow 3 --- Public Dashboard}
+\end{center}
+
+\subsection{Flow 4 --- Calculate Need}
+\begin{center}
+\begin{tikzpicture}[
+    fs/.style={rectangle, draw, fill=rmstublue3!30, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.6cm, inner sep=4pt},
+    fa/.style={-{Stealth[length=1.5mm]}, draw=rmstugray, thick}
+]
+\node[fs] (d1) at (0,0) {Select Ward};
+\node[fs] (d2) at (2.6,0) {Auto-calculate\\(demographics $\times$ rates)};
+\node[fs] (d3) at (5.6,0) {View item-level\\breakdown};
+\node[fs] (d4) at (0,-1.3) {Optional:\\Override};
+\node[fs] (d5) at (2.6,-1.3) {Save};
+\node[fs] (d6) at (5.0,-1.3) {Heatmap\\updates};
+\draw[fa] (d1)--(d2); \draw[fa] (d2)--(d3);
+\draw[fa] (d3.south) -- ++(0,-0.3) -| (d4.north);
+\draw[fa] (d4)--(d5); \draw[fa] (d5)--(d6);
+\end{tikzpicture}
+\captionof{figure}{Flow 4 --- Calculate Need}
+\end{center}
+
+\subsection{Flow 5 --- Pledge Source}
+\begin{center}
+\begin{tikzpicture}[
+    fs/.style={rectangle, draw, fill=rmstugreen2!40, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.6cm, inner sep=4pt},
+    fa/.style={-{Stealth[length=1.5mm]}, draw=rmstugray, thick}
+]
+\node[fs] (e1) at (0,0) {View Heatmap};
+\node[fs] (e2) at (2.6,0) {Identify\\under-served ward};
+\node[fs] (e3) at (5.6,0) {Declare Pledge};
+\node[fs] (e4) at (0,-1.3) {Select area,\\item, quantity};
+\node[fs] (e5) at (2.6,-1.3) {Submit};
+\node[fs] (e6) at (5.0,-1.3) {Pledge visible\\on map};
+\draw[fa] (e1)--(e2); \draw[fa] (e2)--(e3);
+\draw[fa] (e3.south) -- ++(0,-0.3) -| (e4.north);
+\draw[fa] (e4)--(e5); \draw[fa] (e5)--(e6);
+\end{tikzpicture}
+\captionof{figure}{Flow 5 --- Pledge Source}
+\end{center}
+
+\section{Design System}
+
+\subsection{Color Palette (Result09 Design System)}
+\begin{itemize}[nosep]
+    \item \textbf{Light Theme:} Primary \#2563eb, Surface \#ffffff, Text \#1e293b, Danger \#ef4444, Warning \#f59e0b, Success \#22c55e
+    \item \textbf{Dark Theme:} Surface \#0f172a, Card \#1e293b, Text \#f1f5f9
+    \item \textbf{Sidebar:} Dark panel with \#0f172a background, \#3b82f6 active indicator
+\end{itemize}
+
+\subsection{Typography}
+Inter font family (300--900 weights), App Title 22px/700, Section Header 18px/600, Body 16px/400, Caption 13px/400
+
+\subsection{Component Standards}
+\begin{itemize}[nosep]
+    \item Buttons: min height 40px, border-radius 8px, 6 variants
+    \item Input fields: min height 44px, clear label, error/hint/success states
+    \item Cards: 12px border-radius, 1px border, subtle shadow
+    \item Data tables: full-width, striped rows, sticky header
+    \item Sidebar: fixed dark panel, collapsible, mobile overlay
+    \item Topbar: breadcrumbs, theme toggle, sync status indicator
+\end{itemize}
+
+\section{Accessibility \& Low-Literacy Design}
+\begin{table}[H]
+\centering
+\caption{Accessibility \& Low-Literacy Design Decisions}
+\label{tab:a11y}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Consideration & Design Decision \\
+\midrule
+Low literacy & Large icons alongside text labels \\
+Bengali support & All field labels in Bengali on field screens \\
+Minimal typing & Dropdowns, GPS auto-capture, photo instead of text \\
+Poor lighting & High contrast UI; $48\times48$\,px minimum tap targets \\
+One-handed use & Primary actions at bottom of screen (thumb zone) \\
+Offline indicator & Persistent status bar showing online/offline/sync \\
+\bottomrule
+\end{tabularx}
+\end{table}

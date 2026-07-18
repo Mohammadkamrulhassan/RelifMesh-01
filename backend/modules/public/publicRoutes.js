@@ -6,6 +6,8 @@ const router = Router()
 router.get('/dashboard', ctrl.dashboard)
 router.get('/map', ctrl.mapData)
 router.get('/item-categories', ctrl.itemCategories)
+router.get('/activities', ctrl.recentActivities)
+router.get('/distribution-heatmap', ctrl.distributionHeatmap)
 router.get('/admin-dashboard', authenticate, ctrl.adminDashboard)
 
 module.exports = router

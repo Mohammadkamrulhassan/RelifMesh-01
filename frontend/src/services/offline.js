@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 
-const store = localforage.createInstance({ name: 'relifmesh_offline' })
+const store = localforage.createInstance({ name: 'reliefmesh_offline' })
 
 export async function savePending(key, data) {
   const pending = await store.getItem('pendingOps') || []

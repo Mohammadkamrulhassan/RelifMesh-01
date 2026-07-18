@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+<mxfile host="ReliefMesh" modified="2026-06-20T10:00:00.000Z">
   <diagram id="erd" name="Entity Relationship Diagram">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="ent-users" value="&lt;b&gt;USERS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;name (String)&lt;br&gt;email (String) UNIQUE&lt;br&gt;passwordHash (String)&lt;br&gt;role (Enum)&lt;br&gt;FK jurisdictionId (ObjectId?)&lt;br&gt;phone (String?)&lt;br&gt;address (String?)&lt;br&gt;isActive (Boolean)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
           <mxGeometry x="30" y="30" width="220" height="180" as="geometry" />
         </mxCell>
-        <mxCell id="ent-households" value="&lt;b&gt;HOUSEHOLDS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;headName (String)&lt;br&gt;nid (String) UNIQUE&lt;br&gt;gps ({lat, lng})&lt;br&gt;familySize (Number)&lt;br&gt;familyMembers ([Object])&lt;br&gt;vulnerabilityFlags ([String])&lt;br&gt;FK jurisdictionId (ObjectId)&lt;br&gt;FK registeredBy (ObjectId)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="400" y="30" width="220" height="200" as="geometry" />
+        <mxCell id="ent-households" value="&lt;b&gt;HOUSEHOLDS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;headName (String)&lt;br&gt;nid (String) UNIQUE&lt;br&gt;gps ({lat, lng})&lt;br&gt;familySize (Number)&lt;br&gt;familyMembers ([Object])&lt;br&gt;vulnerabilityFlags ({elderly, disabled, pregnant})&lt;br&gt;children_0_5 (Number)&lt;br&gt;over_60 (Number)&lt;br&gt;adults_18_59 (Number)&lt;br&gt;FK jurisdictionId (ObjectId)&lt;br&gt;FK registeredBy (ObjectId)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="400" y="30" width="220" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="ent-distlogs" value="&lt;b&gt;DISTRIBUTION_LOGS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;FK householdId (ObjectId)&lt;br&gt;FK officerId (ObjectId)&lt;br&gt;FK itemCategoryId (ObjectId)&lt;br&gt;quantity (Number)&lt;br&gt;unit (String)&lt;br&gt;gps ({lat, lng})&lt;br&gt;photoUrl (String?)&lt;br&gt;distributedAt (Date)&lt;br&gt;syncStatus (Enum)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="30" y="330" width="220" height="210" as="geometry" />
+        <mxCell id="ent-distlogs" value="&lt;b&gt;DISTRIBUTION_LOGS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;FK householdId (ObjectId)&lt;br&gt;FK officerId (ObjectId)&lt;br&gt;FK itemCategoryId (ObjectId?)&lt;br&gt;FK pledgeId (ObjectId?)&lt;br&gt;items ([{itemCategoryId, quantity, unit}])&lt;br&gt;quantity (Number)&lt;br&gt;unit (String)&lt;br&gt;gps ({lat, lng})&lt;br&gt;photoUrl (String?)&lt;br&gt;distributedAt (Date)&lt;br&gt;syncStatus (Enum)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="30" y="330" width="220" height="260" as="geometry" />
         </mxCell>
         <mxCell id="ent-reliefreq" value="&lt;b&gt;RELIEF_REQUESTS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;FK citizenId (ObjectId)&lt;br&gt;items ([Object])&lt;br&gt;description (String?)&lt;br&gt;status (Enum)&lt;br&gt;priority (Enum)&lt;br&gt;location ({lat, lng})&lt;br&gt;FK jurisdictionId (ObjectId?)&lt;br&gt;FK reviewedBy (ObjectId?)&lt;br&gt;reviewedAt (Date?)&lt;br&gt;reviewNotes (String?)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="400" y="330" width="220" height="230" as="geometry" />
@@ -20,11 +20,20 @@
         <mxCell id="ent-feedback" value="&lt;b&gt;FEEDBACK&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;FK userId (ObjectId)&lt;br&gt;message (String)&lt;br&gt;isRead (Boolean)&lt;br&gt;createdAt (Date)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="750" y="30" width="200" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="ent-itemcats" value="&lt;b&gt;ITEM_CATEGORIES&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;name (String)&lt;br&gt;isActive (Boolean)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="750" y="330" width="200" height="80" as="geometry" />
+        <mxCell id="ent-itemcats" value="&lt;b&gt;ITEM_CATEGORIES&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;name (String)&lt;br&gt;unit (String)&lt;br&gt;per_person_per_day_qty (Number)&lt;br&gt;isActive (Boolean)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="750" y="330" width="200" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="ent-jurisdictions" value="&lt;b&gt;JURISDICTIONS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;name (String)&lt;br&gt;level (Enum)&lt;br&gt;FK parentId (ObjectId?)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="ent-jurisdictions" value="&lt;b&gt;JURISDICTIONS (DEPRECATED)&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;name (String)&lt;br&gt;level (Enum)&lt;br&gt;FK parentId (ObjectId?)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="750" y="520" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ent-geographic-areas" value="&lt;b&gt;GEOGRAPHIC_AREAS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;name (String)&lt;br&gt;level (Enum: DIVISION | DISTRICT | UPAZILA | UNION | WARD)&lt;br&gt;FK parentId (ObjectId?)&lt;br&gt;coordinates ({lat, lng})&lt;br&gt;population (Number)&lt;br&gt;isActive (Boolean)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="400" y="650" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ent-need-assessments" value="&lt;b&gt;NEED_ASSESSMENTS&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;FK areaId (ObjectId)&lt;br&gt;FK itemCategoryId (ObjectId)&lt;br&gt;calculated_qty (Number)&lt;br&gt;override_qty (Number?)&lt;br&gt;override_reason (String?)&lt;br&gt;FK overriddenBy (ObjectId?)&lt;br&gt;coverageDays (Number)&lt;br&gt;demographics ({totalPopulation, children_0_5, over_60, adults_18_59})&lt;br&gt;calculated_at (Date)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="660" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ent-relief-pledges" value="&lt;b&gt;RELIEF_PLEDGES&lt;/b&gt;&lt;hr&gt;PK _id (ObjectId)&lt;br&gt;source_type (Enum: GOVERNMENT | NGO | INDIVIDUAL | CORPORATE)&lt;br&gt;source_name (String)&lt;br&gt;source_contact (String?)&lt;br&gt;FK areaId (ObjectId)&lt;br&gt;FK itemCategoryId (ObjectId)&lt;br&gt;total_qty (Number)&lt;br&gt;distributed_qty (Number)&lt;br&gt;status (Enum: PENDING | IN_FULFILLMENT | COMPLETED | CANCELLED)&lt;br&gt;FK pledgedBy (ObjectId)&lt;br&gt;fulfilled_date (Date?)" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="750" y="680" width="240" height="210" as="geometry" />
         </mxCell>
         <mxCell id="rel-user-hh" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
@@ -81,10 +90,10 @@
         <mxCell id="rel-ic-dist-label" value="itemCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-ic-dist" connectable="0">
           <mxGeometry x="-0.3" y="1" relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-jur-hh" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;" edge="1" parent="1">
+        <mxCell id="rel-jur-hh" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="750" y="570" as="sourcePoint" />
-            <mxPoint x="620" y="160" as="targetPoint" />
+            <mxPoint x="520" y="650" as="sourcePoint" />
+            <mxPoint x="510" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="rel-jur-hh-label" value="jurisdictionId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-jur-hh" connectable="0">
@@ -98,6 +107,92 @@
         </mxCell>
         <mxCell id="rel-user-rr-review-label" value="reviewedBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-user-rr-review" connectable="0">
           <mxGeometry x="-0.5" y="1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-ga-self" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="810" as="sourcePoint" />
+            <mxPoint x="580" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-ga-self-label" value="parentId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-ga-self" connectable="0">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-ga-na" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="730" as="sourcePoint" />
+            <mxPoint x="270" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-ga-na-label" value="areaId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-ga-na" connectable="0">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-ga-rp" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="730" as="sourcePoint" />
+            <mxPoint x="750" y="785" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-ga-rp-label" value="areaId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-ga-rp" connectable="0">
+          <mxGeometry x="0.1" y="-1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-ic-na" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="440" as="sourcePoint" />
+            <mxPoint x="270" y="780" as="targetPoint" />
+            <mxArray as="points">
+              <mxPoint x="850" y="520" />
+              <mxPoint x="270" y="520" />
+            </mxArray>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-ic-na-label" value="itemCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-ic-na" connectable="0">
+          <mxGeometry x="-0.4" y="-1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-ic-rp" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="440" as="sourcePoint" />
+            <mxPoint x="870" y="680" as="targetPoint" />
+            <mxArray as="points">
+              <mxPoint x="850" y="680" />
+            </mxArray>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-ic-rp-label" value="itemCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-ic-rp" connectable="0">
+          <mxGeometry x="0" y="-1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-user-na" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="140" y="210" as="sourcePoint" />
+            <mxPoint x="100" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-user-na-label" value="overriddenBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-user-na" connectable="0">
+          <mxGeometry x="-0.3" y="1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-user-rp" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="120" as="sourcePoint" />
+            <mxPoint x="750" y="785" as="targetPoint" />
+            <mxArray as="points">
+              <mxPoint x="250" y="200" />
+              <mxPoint x="750" y="200" />
+            </mxArray>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-user-rp-label" value="pledgedBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-user-rp" connectable="0">
+          <mxGeometry x="-0.4" y="-1" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-rp-dist" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="750" y="785" as="sourcePoint" />
+            <mxPoint x="250" y="460" as="targetPoint" />
+            <mxArray as="points">
+              <mxPoint x="250" y="785" />
+            </mxArray>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-rp-dist-label" value="pledgeId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" parent="rel-rp-dist" connectable="0">
+          <mxGeometry x="-0.5" y="-1" relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

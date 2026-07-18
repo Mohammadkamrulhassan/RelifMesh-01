@@ -10,10 +10,11 @@
 3. Plan remaining work
 
 ## Discussion & Decisions
-- Backend: All v1 modules implemented (auth, households, distributions, alerts, reports, public, sync basic)
-- Frontend: All v1 pages built, Result09 design system applied
+- Backend: All modules implemented (auth, households, distributions, alerts, reports, public, sync basic)
+- Frontend: All pages built, Result09 design system applied
 - Decision to restyle frontend with Result09 design pattern (CSS custom properties + component classes)
 - Sidebar/topbar layout approved
+- Dashboard route fixed to be inside protected layout
 
 ## Action Items
 | Task | Owner | Due |

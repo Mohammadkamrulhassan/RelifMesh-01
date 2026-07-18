@@ -1,7 +1,7 @@
 import { get, post, put } from '../../services/api'
 
-export function listHouseholds() {
-  return get('/households')
+export function listHouseholds(params = '') {
+  return get(`/households${params}`)
 }
 
 export function getHousehold(id) {

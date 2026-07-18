@@ -34,7 +34,7 @@ export default function DistributionDetail() {
     try {
       await deleteDistribution(id)
       addToast('Distribution deleted', 'success')
-      navigate('/distributions')
+      navigate('/app/distributions')
     } catch (err) {
       addToast(err.error || 'Failed to delete', 'error')
     } finally {
@@ -119,9 +119,9 @@ export default function DistributionDetail() {
       </Card>
 
       <div className="page-actions">
-        {canEdit && <Link to={`/distributions/${id}/edit`}><Button>Edit</Button></Link>}
+        {canEdit && <Link to={`/app/distributions/${id}/edit`}><Button>Edit</Button></Link>}
         {canDelete && <Button variant="danger" onClick={handleDelete} loading={deleting} disabled={deleting}>Delete</Button>}
-        <Button variant="secondary" onClick={() => navigate('/distributions')}>Back to List</Button>
+        <Button variant="secondary" onClick={() => navigate('/app/distributions')}>Back to List</Button>
       </div>
     </div>
   )

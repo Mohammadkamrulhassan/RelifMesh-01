@@ -1,8 +1,7 @@
 # Individual Contribution — Iftekhar Alam Nahid
 
-**Role:** UI/UX Designer & Presentation Lead
+**Role:** UI/UX Designer
 
-## v1 Contributions
 | Area | Contribution |
 |------|-------------|
 | **UI Design System** | Co-designed the Result09 design tokens, component classes, and responsive grid |
@@ -12,12 +11,4 @@
 | **Reports Page** | Designed the CSV/PDF export UI for Upazila Officers |
 | **Admin Panel** | Designed the alert management interface for duplicate review |
 | **Sidebar Icons** | Selected and integrated SVG icons for navigation items |
-| **Presentation Prep** | Prepared presentation slides and demo video for final defense |
-
-## v2 Contributions
-| Area | Contribution |
-|------|-------------|
-| **Admin Command Center UI** | Designed live dashboard with stats cards, SOS heat map, real-time alerts |
-| **Mission Dashboard UI** | Volunteer mission list, status tracking, chat integration |
-| **Chat UI** | Mission-scoped chat interface with real-time message display |
-| **Presentation & Defense** | Updated slide deck with v2 features, demo script, viva preparation |
+| **Presentation Prep** | Preparing presentation slides and demo video for final defense |

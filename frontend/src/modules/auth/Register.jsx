@@ -25,7 +25,7 @@ export default function Register() {
     try {
       const { token, user } = await post('/auth/register/citizen', form)
       setAuth(user, token)
-      navigate('/relief-requests')
+      navigate('/app/relief-requests')
     } catch (err) {
       setError(err.error || 'Registration failed')
     } finally {
@@ -38,7 +38,7 @@ export default function Register() {
       <div className="auth-brand-panel" aria-hidden="true">
         <div>
           <p className="auth-brand-logo">
-            Relif<span className="auth-brand-accent">Mesh</span>
+            Relief<span className="auth-brand-accent">Mesh</span>
           </p>
           <p className="auth-brand-tagline">
             Register as a citizen to request disaster relief assistance.

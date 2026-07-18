@@ -1,0 +1,91 @@
+% ======================================================================
+% Section 3.11 -- Deployment & Maintenance
+% ======================================================================
+
+\section{Deployment Overview}
+\begin{table}[H]
+\centering
+\caption{Deployment Overview}
+\label{tab:deployment}
+\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\toprule
+Component & Platform & Tier \\
+\midrule
+Frontend (React PWA) & Netlify & Free \\
+Backend (Node.js API) & Railway & Free / Hobby \\
+MongoDB & MongoDB Atlas & Free (512MB) \\
+Photo storage & Local FS / Cloudinary & Local for prototype \\
+Domain & Netlify default subdomain & Free \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Deployment Steps}
+
+\subsection{Prepare Repository}
+\texttt{.env} in \texttt{.gitignore}, verify build works locally.
+
+\subsection{Set Up MongoDB Atlas}
+Create free M0 cluster, add database user, whitelist IP \texttt{0.0.0.0/0}, copy connection string.
+
+\subsection{Deploy Backend to Railway}
+New Project $\rightarrow$ Deploy from GitHub $\rightarrow$ Set environment variables (\texttt{MONGODB\_URI}, \texttt{JWT\_SECRET}, \texttt{NODE\_ENV=production}).
+
+\subsection{Deploy Frontend to Netlify}
+New site $\rightarrow$ Import from GitHub $\rightarrow$ Build command \texttt{npm run build}, Publish directory \texttt{dist}, Set \texttt{VITE\_API\_BASE\_URL}.
+
+\subsection{Verify Deployment}
+\begin{itemize}[nosep]
+    \item[x] API health check: \texttt{GET /v1/health} $\rightarrow$ \texttt{\{ status: ``ok'' \}}
+    \item[x] Frontend loads at Netlify URL
+    \item[x] Login works with seeded test accounts
+    \item[x] Household registration $\rightarrow$ MongoDB $\rightarrow$ dashboard
+    \item[x] Public dashboard loads without login
+    \item[x] Feedback submission, inventory, profile, pagination all working
+\end{itemize}
+
+\section{Environment Variables}
+\begin{table}[H]
+\centering
+\caption{Environment Variables}
+\label{tab:env}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Variable & Description \\
+\midrule
+\texttt{MONGODB\_URI} & MongoDB connection string \\
+\texttt{JWT\_SECRET} & Signing key for JWTs (min 32 chars) \\
+\texttt{JWT\_EXPIRES\_IN} & Token lifetime (e.g., \texttt{7d}) \\
+\texttt{CLOUDINARY\_*} & Cloudinary credentials (optional) \\
+\texttt{NODE\_ENV} & \texttt{development} or \texttt{production} \\
+\texttt{PORT} & Server port \\
+\texttt{VITE\_API\_BASE\_URL} & Frontend API base URL \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Backup \& Recovery}
+\textbf{Database:} MongoDB Atlas automated backups (paid tier) or weekly manual \texttt{mongodump}.
+
+\textbf{Recovery:} \texttt{mongorestore} then \texttt{npm run db:status} to verify.
+
+\section{Future Roadmap}
+\begin{table}[H]
+\centering
+\caption{Future Roadmap}
+\label{tab:roadmap}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Feature & Priority \\
+\midrule
+NID API integration (national DB) & High \\
+Real-time WebSocket sync & Medium \\
+Native Android app (React Native) & Medium \\
+Multi-district multi-disaster support & High \\
+End-to-end encryption of PII & High \\
+SMS notification for households & Medium \\
+TopoJSON boundary compression & Medium \\
+Automated pledge-donor matching & Medium \\
+\bottomrule
+\end{tabularx}
+\end{table}

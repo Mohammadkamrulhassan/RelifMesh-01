@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className="bg-primary-800 text-white px-6 py-3 flex items-center justify-between shadow-md">
       <div className="flex items-center gap-3">
-        <h1 className="text-xl font-bold tracking-tight">RelifMesh</h1>
+        <h1 className="text-xl font-bold tracking-tight">ReliefMesh</h1>
         <span className="text-primary-200 text-xs hidden sm:inline">Disaster Relief Coordination</span>
       </div>
       <div className="flex items-center gap-4">

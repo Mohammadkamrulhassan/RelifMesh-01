@@ -1,0 +1,106 @@
+% ======================================================================
+% Section 3.8 -- Implementation Plan
+% ======================================================================
+
+\section{Phase 1: Core Modules (Weeks 1--16)}
+\begin{table}[H]
+\centering
+\caption{Phase 1: Core Modules}
+\label{tab:phase1}
+\begin{tabularx}{\textwidth}{@{}cllX@{}}
+\toprule
+\# & Module & Owner & Status \\
+\midrule
+M1 & Project setup (repo, tooling) & Kamrul & $\checkmark$ Complete \\
+M2 & MongoDB schemas + Mongoose models & Kamrul & $\checkmark$ Complete \\
+M3 & Authentication API (register, login, JWT) & Kamrul & $\checkmark$ Complete \\
+M4 & Household registration (API + frontend) & Kamrul, Sayeda & $\checkmark$ Complete \\
+M5 & Offline support --- IndexedDB (localforage) & Kamrul & $\checkmark$ Complete \\
+M6 & Distribution log (API + frontend) & Kamrul, Sayeda & $\checkmark$ Complete \\
+M7 & Duplicate detection engine & Kamrul & $\checkmark$ Complete \\
+M8 & Duplicate alert UI + override & Sayeda, Nahid & $\checkmark$ Complete \\
+M9 & Sync engine (push/pull) + conflict log & Kamrul & $\checkmark$ Complete \\
+M10 & Upazila Officer dashboard & Sayeda & $\checkmark$ Complete \\
+M11 & Public dashboard + map view & Nahid & $\checkmark$ Complete \\
+M12 & Report export (PDF/CSV) & Kamrul & $\checkmark$ Complete \\
+M13 & Testing (unit + integration + UAT) & Abidul & $\checkmark$ Complete \\
+M14 & Bug fixes + polish & All & $\checkmark$ Complete \\
+M15 & Demo video + presentation prep & Nahid, Abid & $\checkmark$ Complete \\
+M16 & Feedback module & Kamrul, Sayeda & $\checkmark$ Complete \\
+M17 & Inventory/stock tracking & Kamrul & $\checkmark$ Complete \\
+M18 & User profile management & Kamrul, Nahid & $\checkmark$ Complete \\
+M19 & Pagination + search & Kamrul & $\checkmark$ Complete \\
+M20 & Enhanced dashboard & Kamrul & $\checkmark$ Complete \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Phase 2: v2 Features (Post-Semester)}
+\begin{table}[H]
+\centering
+\caption{Phase 2: v2 Features}
+\label{tab:phase2}
+\begin{tabularx}{\textwidth}{@{}cllX@{}}
+\toprule
+\# & Module & Owner & Priority \\
+\midrule
+M21 & GeographicArea model + boundary API & Kamrul & High \\
+M22 & ItemCategory: per\_person\_per\_day\_qty & Kamrul & High \\
+M23 & Household: age-bracket fields & Kamrul & High \\
+M24 & Need calculation engine + API & Kamrul & High \\
+M25 & Need dashboard UI & Sayeda, Nahid & High \\
+M26 & Pledge model + CRUD API & Kamrul & High \\
+M27 & Pledge UI & Sayeda & High \\
+M28 & Heatmap rendering & Nahid & High \\
+M29 & Pledge-Distribution linking & Kamrul & Medium \\
+M30 & Auto-update pledge remaining\_qty & Kamrul & Medium \\
+M31 & E2E testing for need + pledge & Abidul & High \\
+M32 & Volunteer registration + matching & All & Medium \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Development Environment}
+\textbf{Prerequisites:} Node.js $\ge$ 20.x LTS, npm $\ge$ 10.x, MongoDB $\ge$ 8.x
+
+\textbf{Setup:}
+\begin{lstlisting}[language=bash]
+git clone https://github.com/Team-Skipper/reliefmesh.git
+cd backend && cp ../.env.example .env && npm install && npm run seed && npm run dev
+cd ../frontend && npm install && npm run dev
+\end{lstlisting}
+
+\section{Coding Standards}
+\begin{itemize}[nosep]
+    \item Language: JavaScript (ES2022+), no TypeScript (team familiarity)
+    \item Linter: ESLint with Airbnb config
+    \item Formatter: Prettier (2-space indent, single quotes)
+    \item Files: kebab-case, Functions: camelCase, Components: PascalCase, DB: snake\_case
+    \item All async operations use \texttt{async/await}
+\end{itemize}
+
+\section{Git Branching Strategy}
+\begin{center}
+\begin{tikzpicture}[
+    br/.style={rectangle, draw, rounded corners=3pt, minimum width=2.8cm, minimum height=0.55cm, align=center, font=\footnotesize\bfseries},
+    arr/.style={-{Stealth[length=1.5mm]}, thick},
+    h/.style={draw=none, font=\tiny, sloped}
+]
+\node[br, fill=rmstublue!15] (main) at (0,0) {\texttt{main}};
+\node[br, fill=rmstuteal!15] (develop) at (0,-1.2) {\texttt{develop}};
+\node[br, fill=rmstuorange!12] (feat1) at (-2.8,-2.4) {\texttt{feature/household}};
+\node[br, fill=rmstuorange!12] (feat2) at (0,-2.4) {\texttt{feature/dist-log}};
+\node[br, fill=rmstuorange!12] (feat3) at (2.8,-2.4) {\texttt{feature/alerts}};
+\draw[arr] (main) -- (develop);
+\draw[arr] (develop.south) -- ++(0,-0.3) -| (feat1.north);
+\draw[arr] (develop.south) -- ++(0,-0.3) -| (feat2.north);
+\draw[arr] (develop.south) -- ++(0,-0.3) -| (feat3.north);
+\draw[arr, dashed, gray] (feat1.east) -- ++(0.5,0) |- (develop.east);
+\draw[arr, dashed, gray] (feat2.east) -- ++(0.5,0) |- (develop.east);
+\draw[arr, dashed, gray] (feat3.east) -- ++(0.5,0) |- (develop.east);
+\end{tikzpicture}
+\captionof{figure}{Git Branching Strategy --- Git Flow Adapted}
+\label{fig:git-branching}
+\end{center}
+
+Rules: No direct commits to \texttt{main}, PRs require 1 reviewer, daily commits, commit types: \texttt{feat:}, \texttt{fix:}, \texttt{docs:}, \texttt{style:}, \texttt{test:}, \texttt{chore:}

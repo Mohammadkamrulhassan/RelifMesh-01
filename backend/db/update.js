@@ -67,6 +67,30 @@ async function updateDatabase() {
       operations.push('inventories')
     }
 
+    if (!collections.includes('geographicareas')) {
+      console.log('  [CREATE] geographicareas collection')
+      await db.createCollection('geographicareas')
+      operations.push('geographicareas')
+    }
+
+    if (!collections.includes('needassessments')) {
+      console.log('  [CREATE] needassessments collection')
+      await db.createCollection('needassessments')
+      operations.push('needassessments')
+    }
+
+    if (!collections.includes('reliefpledges')) {
+      console.log('  [CREATE] reliefpledges collection')
+      await db.createCollection('reliefpledges')
+      operations.push('reliefpledges')
+    }
+
+    if (!collections.includes('reliefrequests')) {
+      console.log('  [CREATE] reliefrequests collection')
+      await db.createCollection('reliefrequests')
+      operations.push('reliefrequests')
+    }
+
     if (operations.length > 0) {
       console.log('\nCreated', operations.length, 'missing collection(s).')
       console.log('Run  npm run seed  to populate with test data.')

@@ -1,0 +1,91 @@
+% ======================================================================
+% Section 3.10 -- Security & Access Control
+% ======================================================================
+
+\section{Threat Model (STRIDE)}
+\begin{table}[H]
+\centering
+\caption{STRIDE Threat Model}
+\label{tab:stride}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+Threat & Category & Mitigation \\
+\midrule
+Fake officer identity & Spoofing & JWT + bcrypt password hashing \\
+Modify distribution log & Tampering & Logs immutable once synced \\
+Deny making a log entry & Repudiation & All logs include officer\_id + timestamp + GPS \\
+Expose household PII & Information Disclosure & PII only in private endpoints; public data aggregated \\
+Flood API with requests & DoS & Rate limiting (express-rate-limit) \\
+Elevate privilege & Elevation of Privilege & RBAC on every protected route \\
+Falsify pledge data & Spoofing & Public pledges require email; admin requires auth \\
+Tamper need calculation & Tampering & Override logged with officer\_id + timestamp + reason \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Authentication Mechanism}
+\textbf{Method:} JWT (HS256, 7-day expiry, secret in \texttt{.env})
+
+\textbf{Login Flow:}
+
+\begin{center}
+\begin{tikzpicture}[
+    act/.style={rectangle, draw, fill=rmstublue3, minimum width=1.6cm, minimum height=0.6cm, align=center, font=\footnotesize\bfseries, rounded corners=2pt},
+    msg/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstugray, thick},
+    ret/.style={-{Stealth[length=1.8mm,width=1.8mm]}, draw=rmstuteal, thick, dashed},
+    every node/.style={font=\footnotesize}
+]
+\def\ax{0} \def\bx{3.5} \def\cx{7.0}
+\node[act] at (\ax,0) (a) {Client};
+\node[act] at (\bx,0) (b) {Server};
+\node[act] at (\cx,0) (c) {Database};
+\foreach \x/\n in {\ax/a,\bx/b,\cx/c} \draw[dashed,gray!30] (\x,-0.35)--++(0,-5.0);
+\draw[msg] (\ax,-0.7)--node[midway,above,font=\tiny] {POST /auth/login} (\bx,-0.7);
+\draw[msg] (\bx,-1.2)--node[midway,above,font=\tiny] {Lookup user} (\cx,-1.2);
+\draw[ret] (\cx,-1.5)--node[midway,above,font=\tiny] {User record} (\bx,-1.5);
+\node[font=\tiny] at (\bx,-2.0) {bcrypt.compare};
+\node[font=\tiny] at (\bx,-2.6) {Generate JWT};
+\draw[ret] (\bx,-3.2)--node[midway,above,font=\tiny] {\{token, user\}} (\ax,-3.2);
+\node[font=\itshape\tiny] at (\ax,-3.8) {[All subsequent requests]};
+\draw[msg] (\ax,-4.3)--node[midway,above,font=\tiny] {Bearer token} (\bx,-4.3);
+\node[font=\tiny] at (\bx,-4.7) {jwt.verify $\rightarrow$ req.user};
+\end{tikzpicture}
+\captionof{figure}{Login Flow --- JWT Authentication Sequence}
+\label{fig:login-flow}
+\end{center}
+
+\textbf{JWT Payload:} \texttt{\{ sub: ``user-uuid'', role: ``UP\_OFFICIAL'', jurisdiction\_id: ``union-uuid'', iat, exp \}}
+
+\section{Role-Based Access Control}
+\textbf{Roles \& Core Permissions:}
+
+\begin{table}[H]
+\centering
+\caption{Roles \& Permissions Matrix}
+\label{tab:rbac}
+\begin{tabularx}{\textwidth}{@{}lcccl@{}}
+\toprule
+Permission & Public & UP Official & NGO & Upazila\\ Officer \\
+\midrule
+View public dashboard & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+Register household & $\times$ & $\checkmark$ & $\times$ & $\times$ \\
+Log distribution & $\times$ & $\checkmark$ & $\checkmark$ & $\times$ \\
+Override duplicate & $\times$ & $\checkmark$ & $\checkmark$ & $\times$ \\
+View all unions & $\times$ & $\times$ & $\times$ & $\checkmark$ \\
+Export reports & $\times$ & $\times$ & $\times$ & $\checkmark$ \\
+Manage users & $\times$ & $\times$ & $\times$ & $\checkmark$ \\
+Override need assessment & $\times$ & $\checkmark$ & $\times$ & $\checkmark$ \\
+Declare pledge & $\times$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Jurisdiction Enforcement:} Every data query is filtered by \texttt{jurisdiction\_id}. A UP Official can only access their union's data; an Upazila Officer can access all unions under their Upazila.
+
+\section{Data Privacy Design}
+\textbf{PII Handling:} NID numbers are Sensitive PII --- visible only to authenticated users in the same jurisdiction, never in public responses. GPS coordinates are approximate in reports.
+
+\textbf{Public Dashboard Rules:} Only aggregated counts per union (no per-household breakdown), no NID/name/GPS in public responses, pre-computed and cached endpoint.
+
+\section{Input Validation \& Injection Prevention}
+All inputs validated server-side with \texttt{express-validator} (trim, length checks, regex patterns). No raw SQL string concatenation --- parameterized queries throughout. React escapes output by default. Security headers via \texttt{helmet} middleware. Rate limiting: 200 requests per 15 minutes per IP.

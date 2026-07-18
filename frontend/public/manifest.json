@@ -1,6 +1,6 @@
 {
-  "name": "RelifMesh",
-  "short_name": "RelifMesh",
+  "name": "ReliefMesh",
+  "short_name": "ReliefMesh",
   "description": "Disaster Relief Coordination System",
   "start_url": "/",
   "display": "standalone",

@@ -1,0 +1,145 @@
+% ======================================================================
+% Section 3.3 -- Requirements Engineering (SRS)
+% ======================================================================
+
+\section{Functional Requirements}
+
+\subsection{Authentication \& User Management (FR-01 to FR-05)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-01:} Users register with name, role, organization, password
+    \item \textbf{FR-02:} JWT-based authentication via email/username and password
+    \item \textbf{FR-03:} Four roles: UP Official, Upazila Officer, NGO Worker, Public Viewer
+    \item \textbf{FR-04:} Data access restricted by role and geographic jurisdiction
+    \item \textbf{FR-05:} Upazila Officers create/manage UP Official accounts
+\end{itemize}
+
+\subsection{Household Registration (FR-06 to FR-10)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-06:} Register household with: head name, NID, GPS, family size, vulnerability flags
+    \item \textbf{FR-07:} Capture photo during registration
+    \item \textbf{FR-08:} Assign unique Household ID (HH-ID)
+    \item \textbf{FR-09:} Search/edit households by HH-ID or name
+    \item \textbf{FR-10:} Works offline; syncs when connectivity restored
+\end{itemize}
+
+\subsection{Relief Distribution Logging (FR-11 to FR-14)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-11:} Log distribution: HH-ID, item type, quantity, unit, officer, GPS, timestamp, photo
+    \item \textbf{FR-12:} Predefined item categories (Food, WASH, Shelter, Other)
+    \item \textbf{FR-13:} Works offline; auto-syncs
+    \item \textbf{FR-14:} Logs immutable once synced; corrections as new entries with amendment flag
+\end{itemize}
+
+\subsection{Duplicate Detection (FR-15 to FR-18)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-15:} Check same household + same item category within 7-day window
+    \item \textbf{FR-16:} Warning with prior distribution details on duplicate
+    \item \textbf{FR-17:} Override with mandatory reason
+    \item \textbf{FR-18:} All overrides logged with officer ID, timestamp, reason
+\end{itemize}
+
+\subsection{Public Dashboard (FR-19 to FR-22)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-19:} Display total distributions by union, item, date --- no household PII
+    \item \textbf{FR-20:} Accessible without login
+    \item \textbf{FR-21:} Map view with union-level markers
+    \item \textbf{FR-22:} Aggregated data updates at least once per hour
+\end{itemize}
+
+\subsection{Reporting \& Export (FR-23 to FR-24)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-23:} Export distribution report (CSV/PDF) filtered by union, date range, item category
+    \item \textbf{FR-24:} Household coverage report showing registered vs.\ distributed per union
+\end{itemize}
+
+\subsection{Sync \& Offline (FR-25 to FR-27)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-25:} Queue offline actions in local storage
+    \item \textbf{FR-26:} Auto-sync queued data on reconnection
+    \item \textbf{FR-27:} Detect and log sync conflicts; last-write-wins with manual review flag
+\end{itemize}
+
+\subsection{Feedback (FR-28 to FR-30)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-28:} Submit feedback without authentication (name, contact, category, message)
+    \item \textbf{FR-29:} Categories: Complaint, Suggestion, Inquiry, Appreciation, Other
+    \item \textbf{FR-30:} Authorized users view and respond to feedback
+\end{itemize}
+
+\subsection{Inventory (FR-31 to FR-33)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-31:} Track inventory levels (total, distributed, remaining)
+    \item \textbf{FR-32:} Create and update inventory items
+    \item \textbf{FR-33:} All authenticated users view inventory
+\end{itemize}
+
+\subsection{User Profile (FR-34)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-34:} View and update profile (name, organization)
+\end{itemize}
+
+\subsection{Geographic Need Mapping (FR-35 to FR-44)}
+\begin{itemize}[nosep]
+    \item \textbf{FR-35:} Four-level jurisdiction model: District, Upazila, Union, Ward
+    \item \textbf{FR-36:} Auto-calculate relief need from demographics $\times$ per-person rates
+    \item \textbf{FR-37:} Override calculated need with reason
+    \item \textbf{FR-38:} Aggregate need and distribution data at all hierarchy levels
+    \item \textbf{FR-39:} Heatmap showing served vs.\ unmet areas (no PII)
+    \item \textbf{FR-40:} Any source submit a Relief Pledge (area, items, quantities)
+    \item \textbf{FR-41:} Pledge lifecycle: PLEDGED $\rightarrow$ EN\_ROUTE $\rightarrow$ ARRIVED $\rightarrow$ COMPLETED
+    \item \textbf{FR-42:} Distribution Log may reference a Pledge
+    \item \textbf{FR-43:} Public map shows active pledges (no Personl identity exposed)
+    \item \textbf{FR-44:} Distinguish source types: GOVERNMENT, NGO, OUTSIDE\_INDIVIDUAL, LOCAL
+\end{itemize}
+
+\section{Non-Functional Requirements}
+\begin{table}[H]
+\centering
+\caption{Non-Functional Requirements}
+\label{tab:nfr}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+ID & Category & Requirement \\
+\midrule
+NFR-01 & Performance & Public dashboard loads within 3 seconds on 3G \\
+NFR-02 & Performance & Distribution submission within 2 seconds (online) \\
+NFR-03 & Availability & 99\% uptime during declared disaster periods \\
+NFR-04 & Scalability & Supports 500 concurrent users \\
+NFR-05 & Security & All API endpoints authenticated except public dashboard \\
+NFR-06 & Security & HTTPS/TLS for all data transmission \\
+NFR-07 & Security & Passwords hashed with bcrypt (cost factor $\ge$ 10) \\
+NFR-08 & Privacy & NID numbers never on public-facing views \\
+NFR-09 & Usability & Core flows completable in $\le$ 5 taps on mobile \\
+NFR-10 & Usability & Bengali language labels for field-facing screens \\
+NFR-11 & Reliability & Offline sync failure rate $<$ 5\% \\
+NFR-12 & Maintainability & All endpoints documented \\
+NFR-13 & Portability & PWA on Android Chrome \\
+NFR-14 & Performance & Heatmap renders full district within 3 seconds on 3G \\
+NFR-15 & Usability & Pledge submission $\le$ 6 fields \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Requirements Traceability Matrix}
+\begin{table}[H]
+\centering
+\caption{Requirements Traceability Matrix}
+\label{tab:rtm}
+\begin{tabularx}{\textwidth}{@{}lXXX@{}}
+\toprule
+Requirement & Module & Use Case & Test Case \\
+\midrule
+FR-01 to FR-04 & Auth & --- & TC-01 to TC-04 \\
+FR-06 to FR-10 & Household & UC-01 & TC-05 to TC-07 \\
+FR-11 to FR-13 & Distribution & UC-02 & TC-08 to TC-11 \\
+FR-15 to FR-17 & Duplicate & UC-02 & TC-12 to TC-16 \\
+FR-19 to FR-20 & Dashboard & UC-03 & TC-19 to TC-20 \\
+FR-23 to FR-24 & Reports & UC-05 & TC-16 \\
+FR-25 to FR-27 & Sync & UC-04 & TC-17 to TC-18, TC-22 \\
+FR-28 to FR-30 & Feedback & --- & TC-FB01 to TC-FB04 \\
+FR-31 to FR-33 & Inventory & --- & TC-INV01 to TC-INV03 \\
+FR-36 to FR-37 & Need Calc & UC-08 & TC-NEED01 to TC-NEED05 \\
+FR-40 to FR-42 & Pledge & UC-06 & TC-PLEDGE01 to TC-PLEDGE05 \\
+\bottomrule
+\end{tabularx}
+\end{table}

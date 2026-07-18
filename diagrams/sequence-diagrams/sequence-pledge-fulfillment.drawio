@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="ReliefMesh" modified="2026-06-10T10:00:00.000Z">
+  <diagram id="sequence-pledge" name="Sequence - Pledge to Distribution Fulfillment (SD04)">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Lifeline: NGO Worker / Donor (Actor) -->
+        <mxCell id="ll-ngo" value="NGO Worker&#10;/ Donor" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-ngo" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="55" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: Upazila Officer (Actor) -->
+        <mxCell id="ll-officer" value="Upazila&#10;Officer" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="20" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-officer" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: PledgeForm (UI) -->
+        <mxCell id="ll-pledgeform" value="PledgeForm" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-pledgeform" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="285" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: PledgeList (UI) -->
+        <mxCell id="ll-pledgelist" value="PledgeList" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="20" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-pledgelist" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="405" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: DistributionForm (UI) -->
+        <mxCell id="ll-distform" value="DistributionForm" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="20" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-distform" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="530" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: PledgeController -->
+        <mxCell id="ll-pledgectrl" value="PledgeController" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="20" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-pledgectrl" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="670" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: DistributionController -->
+        <mxCell id="ll-distctrl" value="DistributionController" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="20" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-distctrl" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="815" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: ReliefPledge -->
+        <mxCell id="ll-pledge" value="ReliefPledge" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="20" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-pledge" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="955" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline: DistributionLog -->
+        <mxCell id="ll-distlog" value="DistributionLog" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="20" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-distlog" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="60" width="10" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- === PLEDGE CREATION FLOW === -->
+
+        <!-- 1. NGO Worker -> PledgeForm -->
+        <mxCell id="arrow1" value="1. fills source, area,&#10;item, qty, submits" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-ngo" target="lifeline-pledgeform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 2. PledgeForm -> PledgeController -->
+        <mxCell id="arrow2" value="2. POST /pledges&#10;(create pledge,&#10;status=PENDING)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-pledgeform" target="lifeline-pledgectrl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- PledgeController activation -->
+        <mxCell id="act-create-pledge" value="Create&#10;pledge" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="160" width="70" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 3. PledgeController -> ReliefPledge -->
+        <mxCell id="arrow3" value="3. create({source, area,&#10;item, total_qty})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-pledgectrl" target="lifeline-pledge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 4. PledgeController -> PledgeForm (return) -->
+        <mxCell id="arrow4" value="4. return new pledge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-pledgectrl" target="lifeline-pledgeform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 5. PledgeForm -> NGO Worker -->
+        <mxCell id="arrow5" value="5. confirmation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-pledgeform" target="lifeline-ngo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- === BREAK: FULFILLMENT SECTION === -->
+
+        <mxCell id="label-fulfill" value="&lt;b&gt;&lt;i&gt;--- Later — Officer fulfills pledge via distribution ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="280" width="380" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 6. Upazila Officer -> DistributionForm -->
+        <mxCell id="arrow6" value="6. creates distribution,&#10;selects pledgeId&#10;from dropdown" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-officer" target="lifeline-distform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 7. DistributionForm -> DistributionController -->
+        <mxCell id="arrow7" value="7. POST /distributions&#10;(household, item, qty,&#10;pledgeId)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-distform" target="lifeline-distctrl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- DistributionController activation -->
+        <mxCell id="act-dist" value="Process&#10;distribution" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="783" y="390" width="70" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 8. DistributionController -> DistributionLog -->
+        <mxCell id="arrow8" value="8. pre-save hook:&#10;increment ReliefPledge&#10;.distributed_qty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-distctrl" target="lifeline-distlog">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 9. DistributionLog -> ReliefPledge -->
+        <mxCell id="arrow9" value="9. $inc {distributed_qty}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-distlog" target="lifeline-pledge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 10. ReliefPledge auto-update status (activation box) -->
+        <mxCell id="act-status" value="Auto-update status:&#10;IN_FULFILLMENT if&#10;remaining&gt;0,&#10;COMPLETED if=0" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="928" y="470" width="80" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- 11. DistributionController -> DistributionForm (return) -->
+        <mxCell id="arrow11" value="11. return distribution" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-distctrl" target="lifeline-distform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 12. DistributionForm -> Upazila Officer -->
+        <mxCell id="arrow12" value="12. distribution logged,&#10;pledge auto-updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-distform" target="lifeline-officer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- === OPTIONAL: VIEW PLEDGE DETAIL === -->
+
+        <mxCell id="label-optional" value="&lt;b&gt;&lt;i&gt;--- Optional: View Pledge Detail ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="640" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 13. Upazila Officer -> PledgeList -->
+        <mxCell id="arrow13" value="13. views pledge detail&#10;(remaining_qty =&#10;total - distributed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-officer" target="lifeline-pledgelist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 14. PledgeList -> PledgeController -->
+        <mxCell id="arrow14" value="14. GET /pledges/:id" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-pledgelist" target="lifeline-pledgectrl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- PledgeController activation -->
+        <mxCell id="act-view" value="Fetch &amp;&#10;populate" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="642" y="720" width="60" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 15. PledgeController -> ReliefPledge -->
+        <mxCell id="arrow15" value="15. findById + populate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-pledgectrl" target="lifeline-pledge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 16. PledgeController -> PledgeList (return) -->
+        <mxCell id="arrow16" value="16. return full pledge&#10;with remaining_qty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-pledgectrl" target="lifeline-pledgelist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

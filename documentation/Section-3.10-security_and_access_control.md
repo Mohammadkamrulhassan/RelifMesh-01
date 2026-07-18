@@ -1,215 +1,198 @@
 # Section 3.10 — Security & Access Control
-**Project:** ReliefMesh — Disaster Response & Relief Management System
+**Project:** ReliefMesh — Disaster Relief Coordination System for Local Government
 **Team:** Team_Skipper | **Course:** CSE-3208 System Analysis & Design Lab
-**Last Updated:** 2026-06-10
+**Last Updated:** 2026-06-09
 
 ---
 
-## 3.10.1 Authentication (v2 — Implemented)
+## 3.10.1 Threat Model (STRIDE)
 
-ReliefMesh v2 uses **Phone Number + OTP** authentication for all users.
+STRIDE is a standard threat classification framework: **S**poofing, **T**ampering, **R**epudiation, **I**nformation Disclosure, **D**enial of Service, **E**levation of Privilege.
 
-### OTP Flow (Implemented)
+| Threat | Category | Example in ReliefMesh | Mitigation |
+|--------|----------|----------------------|------------|
+| Fake officer identity | Spoofing | Attacker logs in as UP Official to falsify distribution logs | JWT authentication + bcrypt password hashing |
+| Modify distribution log | Tampering | User edits a submitted log to hide duplicate distribution | Logs are immutable once synced; amendments create new entries |
+| Deny making a log entry | Repudiation | Officer claims they never logged a distribution | All logs include officer_id + timestamp + GPS; full audit trail |
+| Expose household PII | Information Disclosure | Public dashboard leaks NID or name | PII only in private endpoints; public data aggregated at union level |
+| Flood API with requests | Denial of Service | Bot hammers `/distributions` endpoint | Rate limiting middleware (express-rate-limit) |
+| NGO worker views Upazila data | Elevation of Privilege | NGO worker accesses admin-only reports | RBAC enforced on every protected route; JWT role decoded server-side |
+| Falsify pledge data | Spoofing | Attacker pledges resources without authorization | Public pledges require valid email verification; admin pledges require auth |
+| Tamper need calculation | Tampering | Attacker overrides `calculated_qty` to inflate need for an area | Need override logged with officer_id + timestamp + reason; audit trail |
+| Fake pledge fulfillment | Repudiation | Donor claims they pledged more than delivered | Pledge lifecycle tracked; each distribution linked via pledge_id reduces remaining_qty |
+| Expose area-level demographics | Information Disclosure | Heatmap endpoint reveals per-household census data | Heatmap returns only aggregated intensity; no individual-level data in public mode |
 
+---
+
+## 3.10.2 Authentication Mechanism
+
+### Method: JWT (JSON Web Token)
+
+**Login Flow:**
 ```
-[User enters phone number]
-        │
-        ▼
-[POST /v2/auth/send-otp]
-        │
-        ▼
-[Server generates 6-digit OTP (crypto.randomInt)]
-  ├── Hashes OTP with SHA-256
-  ├── Stores hash in Redis (5 min TTL) OR in-memory Map
-  └── In dev mode (NODE_ENV=development):
-        OTP is returned in the response body
-        In production: OTP would be sent via SMS gateway
-        │
-        ▼
-[POST /v2/auth/verify-otp]
-  { phone, otp }
-        │
-        ▼
-[Server hashes input OTP → compares with stored hash]
-  ├── Match → Delete OTP from store
-  │           Issue JWT access token (15 min TTL)
-  │           Issue refresh token (7 day TTL)
-  │           Store refresh token for rotation
-  │           Auto-create user if first-time phone
-  │           Return { accessToken, refreshToken, user }
-  │
-  └── No match → Increment attempt counter (max 5)
-                  Return 401 with remaining attempts
-                  After 5 failures → block phone for 30 min
+Client             Server
+ │                │
+ │──POST /auth/login─────────────►│
+ │ { email, password }      │
+ │                │──Lookup user by email
+ │                │──Compare password with bcrypt hash
+ │                │──Generate JWT (payload: user_id, role, jurisdiction_id)
+ │◄──{ token: "eyJ..." }─────────│
+ │                │
+ │──GET /households (with JWT)───►│
+ │ Authorization: Bearer eyJ... │──Decode JWT → extract role + jurisdiction
+ │                │──Check permission
+ │◄──{ households: [...] }───────│
 ```
 
-### Rate Limiting (Implemented)
-
-| Limit | Value | Implementation |
-|-------|-------|----------------|
-| OTP send | 3 requests per 10 min per phone | Increment counter with 10 min TTL |
-| OTP verify | 5 attempts per phone | Counter cleared on success; block 30 min after 5 failures |
-| General API | 200 requests per 15 min | `express-rate-limit` middleware |
-
-If rate limit is exceeded, the API returns:
+**JWT Payload Structure:**
 ```json
 {
-  "error": "Too many OTP requests. Try again in X min.",
-  "retryAfter": 345
+ "sub": "user-uuid-here",
+ "role": "UP_OFFICIAL",
+ "jurisdiction_id": "union-uuid-here",
+ "iat": 1748300000,
+ "exp": 1748904800
 }
 ```
 
-### Token Strategy (Implemented)
-
-| Token | Storage | TTL | Purpose |
-|-------|---------|-----|---------|
-| **Access Token** | Memory (client) | 15 min (`JWT_EXPIRES_IN`) | API auth header |
-| **Refresh Token** | Client + Server store | 7 days (`JWT_REFRESH_EXPIRES_IN`) | Token renewal with rotation |
-| **OTP Code** | Redis / In-Memory | 5 min | Phone verification |
-
-### Refresh Token Rotation
-
-Each use of a refresh token:
-1. Server **consumes** the old token (deletes from store)
-2. Server verifies the old token's JWT signature
-3. Server issues a **new** access token + **new** refresh token
-4. If an old, already-consumed refresh token is reused → rejected (401)
-
-This prevents replay attacks if a refresh token is stolen.
-
-### Security Measures
-
-| Measure | Implementation |
-|---------|----------------|
-| OTP hashing | SHA-256 before storage (not plaintext) |
-| Rate limiting | Redis-cached counters (or in-memory fallback) |
-| Max verify attempts | 5 → phone blocked for 30 min |
-| JWT signing | HS256 with env secret (RS256 planned for production) |
-| Refresh rotation | Old token invalidated on each use |
-| Dev mode safety | OTP returned in response body only when `NODE_ENV=development` |
-| No password storage | Phone/OTP users have no `passwordHash` |
+**Settings:**
+- Algorithm: `HS256`
+- Expiry: `7 days`
+- Secret: stored in `.env`, never in code
+- Token transmitted via `Authorization: Bearer` header only — never in URL query params
 
 ---
 
-## 3.10.2 Role Definitions
+## 3.10.3 Role-Based Access Control (RBAC)
 
-| Role | Description |
-|------|-------------|
-| `victim` | Disaster-affected individual requesting SOS/relief |
-| `volunteer` | Rescue worker assigned to missions |
-| `ngo` | NGO admin managing campaigns & inventory |
-| `govt` | Government official overseeing relief distribution |
-| `donor` | Individual/organization donating to campaigns |
-| `admin` | System administrator with full access |
-| `super_admin` | Elevated admin with user management & audit access |
+### Roles & Permissions Matrix
 
----
+| Permission | Public | Outside Donor | UP Official | NGO Worker | Upazila Officer |
+|-----------|:------:|:-------------:|:-----------:|:----------:|:---------------:|
+| View public dashboard | [x] | [x] | [x] | [x] | [x] |
+| View heatmap + pledge summary | [x] | [x] | [x] | [x] | [x] |
+| Register household | [ ] | [ ] | [x] | [ ] | [ ] |
+| Log distribution | [ ] | [ ] | [x] | [x] | [ ] |
+| Override duplicate | [ ] | [ ] | [x] | [x] | [ ] |
+| View own union data | [ ] | [ ] | [x] | [x] | [x] |
+| View all unions (jurisdiction) | [ ] | [ ] | [ ] | [ ] | [x] |
+| Export reports | [ ] | [ ] | [ ] | [ ] | [x] |
+| Manage user accounts | [ ] | [ ] | [ ] | [ ] | [x] |
+| Review sync conflicts | [ ] | [ ] | [x] (own) | [x] (own) | [x] (all) |
+| View duplicate alert log | [ ] | [ ] | [x] (own) | [x] (own) | [x] (all) |
+| Submit feedback | [x] | [x] | [x] | [x] | [x] |
+| Manage feedback | [ ] | [ ] | [ ] | [ ] | [x] |
+| View inventory | [ ] | [ ] | [x] | [x] | [x] |
+| Manage inventory | [ ] | [ ] | [ ] | [ ] | [x] |
+| View/update own profile | [ ] | [ ] | [x] | [x] | [x] |
+| Declare pledge (for an area) | [ ] | [x] | [x] | [x] | [x] |
+| View / filter pledges (own area) | [ ] | [x] (own) | [x] (union) | [x] (union) | [x] (upazila) |
+| Override need assessment qty | [ ] | [ ] | [x] | [ ] | [x] |
+| Run need calculation | [ ] | [ ] | [x] | [ ] | [x] |
 
-## 3.10.3 Role-Based Permission Matrix (v2)
+### Jurisdiction Enforcement
+Beyond role, every data query is filtered by `jurisdiction_id`:
+- A UP Official can only read/write data tagged to their union.
+- An Upazila Officer can read data from all unions whose `parent_id` matches their Upazila.
+- Server always validates: `decoded_jwt.jurisdiction_id` is an ancestor of the requested resource's jurisdiction.
 
-| Resource | victim | volunteer | ngo | govt | donor | admin | super_admin |
-|----------|--------|-----------|-----|------|-------|-------|-------------|
-| **Profile (own)** | CRUD | CRUD | CRUD | CRUD | CRUD | CRUD | CRUD |
-| **Profile (others)** | — | — | — | — | — | R | CRUD |
-| **SOS (create)** | C | C | C | C | — | C | C |
-| **SOS (own history)** | R | — | — | — | — | R | R |
-| **SOS (all)** | — | R | — | R | — | R | R |
-| **SOS (delete)** | — | — | — | — | — | D | D |
-| **Missions (view)** | Own | All assigned | — | R | — | R | CRUD |
-| **Missions (assign)** | — | — | — | — | — | U | U |
-| **Missions (status)** | — | Own | — | — | — | U | U |
-| **Relief Request** | C | U | CRUD | CRUD | — | R | R |
-| **Distribution** | — | C | C | C | — | R | CRUD |
-| **Campaign (create)** | — | — | CRUD | CRUD | — | — | — |
-| **Campaign (verify)** | — | — | — | — | — | U | U |
-| **Campaign (all)** | R | R | R | R | R | CRUD | CRUD |
-| **Donation** | — | — | R | R | C | R | CRUD |
-| **Shelter (create)** | — | — | CRUD | CRUD | — | — | CRUD |
-| **Shelter (view)** | R | R | R | R | R | R | R |
-| **Inventory** | — | — | CRUD (own) | R | — | R | CRUD |
-| **Chat (mission)** | Own mission | Own mission | — | — | — | R | R |
-| **Notifications** | Own | Own | Own | Own | Own | Own | Own |
-| **Audit Logs** | — | — | — | — | — | R | CRUD |
-| **User Management** | — | — | — | — | — | — | CRUD |
-| **System Config** | — | — | — | — | — | — | CRUD |
+### RBAC Middleware (pseudocode)
+```javascript
+// middleware/authorize.js
+function authorize(...allowedRoles) {
+ return (req, res, next) => {
+  const { role, jurisdiction_id } = req.user; // decoded from JWT
+  if (!allowedRoles.includes(role)) {
+   return res.status(403).json({ error: 'Forbidden' });
+  }
+  req.userJurisdiction = jurisdiction_id;
+  next();
+ };
+}
 
-Legend: C = Create, R = Read, U = Update, D = Delete
-
----
-
-## 10.4 Data Protection
-
-| Measure | Implementation |
-|---------|----------------|
-| OTP hashing | SHA-256 (not stored in plaintext) |
-| Password hashing | bcrypt (cost factor 10) — for v1 email/password users |
-| JWT signing | HS256 with 32+ character secret |
-| API rate limiting | 200 req/15 min global; 3 OTP/10 min per phone |
-| Input validation | express-validator on all routes |
-| XSS protection | Helmet.js, React escape by default |
-| MongoDB injection | Mongoose schema validation |
-| HTTPS enforcement | Production only; TLS 1.3 |
-
----
-
-## 10.5 Implementation Details
-
-### OTP Service (`backend/services/otpStore.js`)
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      OtpStore (Singleton)                        │
-├─────────────────────────────────────────────────────────────────┤
-│  _init()                                                         │
-│    ├── Try Redis connection (ioredis)                            │
-│    ├── If Redis fails → in-memory Map fallback                   │
-│    └── Logs which store is active                                │
-│                                                                  │
-│  sendOtp(phone)                                                  │
-│    ├── Check rate limit (3/10min) → 429 if exceeded              │
-│    ├── Generate 6-digit OTP                                      │
-│    ├── Hash with SHA-256                                         │
-│    ├── Store hash (Redis EX 300s / Map with expiry)              │
-│    └── Return OTP (visible only in dev mode)                     │
-│                                                                  │
-│  verifyOtp(phone, otp)                                           │
-│    ├── Check attempt counter → 423 if ≥5 failures               │
-│    ├── Hash input OTP, compare with stored hash                  │
-│    ├── Match → delete from store, return { valid: true }         │
-│    └── No match → increment counter, return error                │
-│                                                                  │
-│  consumeRefreshToken(token)                                      │
-│    ├── Look up token in store                                    │
-│    ├── Found → delete from store, return phone                   │
-│    └── Not found → return null                                   │
-└─────────────────────────────────────────────────────────────────┘
+// Usage in routes
+router.post('/households', authenticate, authorize('UP_OFFICIAL'), createHousehold);
+router.get('/reports/export', authenticate, authorize('UPAZILA_OFFICER'), exportReport);
 ```
 
-### Auth Controller (`backend/modules/auth-v2/authV2Controller.js`)
+---
 
+## 3.10.4 Data Privacy Design
+
+### PII Handling
+| Data Field | Classification | Where Visible |
+|-----------|---------------|---------------|
+| Head-of-household name | PII | Authenticated users only |
+| NID number | Sensitive PII | Authenticated users only; never in logs/responses |
+| GPS (household) | Location data | Authenticated users; approximate only in reports |
+| Family vulnerability flags | Sensitive | Authenticated users only |
+| Photo URL | Sensitive | Authenticated users only |
+| Distribution item + quantity | Public aggregate | Public dashboard (no individual linkage) |
+| Officer ID | Internal | Audit logs; not shown publicly |
+
+### Public Dashboard Rules
+- Only aggregated counts per union (no per-household breakdown)
+- No NID, name, or GPS coordinates in public responses
+- API response for `/public/dashboard` is pre-computed and cached — never directly queries household table
+
+### Data Retention
+- All distribution logs retained permanently (audit purposes)
+- Photos stored indefinitely in Cloudinary (prototype: manual cleanup after semester)
+- No right-to-erasure implementation in prototype scope
+
+---
+
+## 3.10.5 Input Validation & Injection Prevention
+
+### Server-Side Validation (all inputs)
+```javascript
+// Example: household registration validation
+const { body, validationResult } = require('express-validator');
+
+const validateHousehold = [
+ body('head_name').trim().isLength({ min: 2, max: 100 }).escape(),
+ body('nid').trim().matches(/^[0-9]{10,17}$/),
+ body('family_size').isInt({ min: 1, max: 50 }),
+ body('gps_lat').isFloat({ min: -90, max: 90 }),
+ body('gps_lng').isFloat({ min: -180, max: 180 }),
+];
 ```
-sendOtp(req, res)
-  ├── Calls otpStore.sendOtp(phone)
-  ├── If rate limited → 429 { error, retryAfter }
-  └── 200 { message: "OTP sent to +880****08", otp: "..." }
 
-verifyOtp(req, res)
-  ├── Calls otpStore.verifyOtp(phone, otp)
-  ├── If invalid → 401 { error }
-  ├── Find or auto-create User by phone
-  ├── Sign accessToken (JWT, 15 min)
-  ├── Sign refreshToken (JWT, 7 days)
-  ├── Store refreshToken in otpStore
-  └── 200 { accessToken, refreshToken, user }
+### SQL Injection Prevention
+- No raw SQL string concatenation — all DB queries use parameterized queries:
+```javascript
+// Safe
+const result = await db.query(
+ 'SELECT * FROM households WHERE jurisdiction_id = $1',
+ [jurisdictionId]
+);
 
-refresh(req, res)
-  ├── Calls otpStore.consumeRefreshToken(refreshToken)
-  ├── If null → 401 { error: "Invalid or expired refresh token" }
-  ├── Verify JWT signature of old refresh token
-  ├── Find user
-  ├── Issue new access + refresh tokens
-  ├── Store new refresh token
-  └── 200 { accessToken, refreshToken }
+// Never
+const result = await db.query(
+ `SELECT * FROM households WHERE jurisdiction_id = '${jurisdictionId}'`
+);
+```
+
+### XSS Prevention
+- All user input escaped before storage (`express-validator`'s `.escape()`)
+- React escapes output by default — no `dangerouslySetInnerHTML` used
+- `Content-Security-Policy` header set on all API responses
+
+### Other Security Headers (via `helmet` middleware)
+```javascript
+const helmet = require('helmet');
+app.use(helmet()); // Sets: X-Frame-Options, X-Content-Type-Options, HSTS, CSP
+```
+
+### Rate Limiting
+```javascript
+const rateLimit = require('express-rate-limit');
+app.use('/api/', rateLimit({
+ windowMs: 15 * 60 * 1000, // 15 minutes
+ max: 200,         // max 200 requests per window per IP
+ message: { error: 'Too many requests, slow down.' }
+}));
 ```
 
 ---

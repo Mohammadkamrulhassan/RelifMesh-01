@@ -107,10 +107,10 @@ export default function HouseholdForm() {
       } else {
         await createHousehold(payload)
       }
-      navigate('/households')
+      navigate('/app/households')
     } catch (err) {
-      const msg = err.details ? err.details.map(d => `${d.param}: ${d.msg}`).join('; ') : err.error
-      setError(msg || 'Failed to save household')
+      const msg = err.details ? err.details.map(d => `${d.param}: ${d.msg}`).join('; ') : (err.message || err.error || 'Failed to save household')
+      setError(msg)
     } finally {
       setSubmitting(false)
     }
@@ -145,7 +145,7 @@ export default function HouseholdForm() {
                   <div key={i} style={{ padding: 'var(--space-3)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', position: 'relative' }}>
                     <Button type="button" variant="ghost" size="sm" onClick={() => removeMember(i)}
                       style={{ position: 'absolute', top: '4px', right: '4px', color: 'var(--color-danger)', fontSize: '0.75rem' }}>×</Button>
-                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1.5fr 1.5fr', gap: 'var(--space-2)' }}>
+                    <div className="form-member-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1.5fr 1.5fr', gap: 'var(--space-2)' }}>
                       <Input name={`m_name_${i}`} placeholder="Name" value={m.name} onChange={e => handleMemberChange(i, 'name', e.target.value)} required />
                       <Input name={`m_age_${i}`} type="number" placeholder="Age" min="0" max="150" value={m.age} onChange={e => handleMemberChange(i, 'age', e.target.value)} required />
                       <div>
@@ -173,7 +173,7 @@ export default function HouseholdForm() {
 
           <div>
             <p className="input-label" style={{ marginBottom: 'var(--space-2)' }}>GPS Location</p>
-            <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
+            <div className="form-gps-row" style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
               <InputField name="gps.lat" placeholder="Latitude" value={form.gps.lat} onChange={handleChange} className="mb-0 flex-1" />
               <InputField name="gps.lng" placeholder="Longitude" value={form.gps.lng} onChange={handleChange} className="mb-0 flex-1" />
             </div>
@@ -196,7 +196,7 @@ export default function HouseholdForm() {
 
           <div className="page-actions" style={{ justifyContent: 'flex-start' }}>
             <Button type="submit" disabled={submitting}>{submitting ? 'Saving...' : (isEdit ? 'Update' : 'Register')}</Button>
-            <Button type="button" variant="secondary" onClick={() => navigate('/households')}>Cancel</Button>
+            <Button type="button" variant="secondary" onClick={() => navigate('/app/households')}>Cancel</Button>
           </div>
         </form>
       </Card>

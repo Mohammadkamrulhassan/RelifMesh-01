@@ -88,4 +88,16 @@ async function listUsers(req, res, next) {
   } catch (err) { next(err) }
 }
 
-module.exports = { login, register, registerCitizen, getProfile, updateProfile, listUsers }
+async function updateUser(req, res, next) {
+  try {
+    const { jurisdictionId, isActive } = req.body
+    const updates = {}
+    if (jurisdictionId) updates.jurisdictionId = jurisdictionId
+    if (isActive !== undefined) updates.isActive = isActive
+    const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true })
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    res.json({ user })
+  } catch (err) { next(err) }
+}
+
+module.exports = { login, register, registerCitizen, getProfile, updateProfile, listUsers, updateUser }

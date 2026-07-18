@@ -1,7 +1,7 @@
 {
-  "name": "relifmesh-backend",
+  "name": "reliefmesh-backend",
   "version": "1.0.0",
-  "description": "RelifMesh — Disaster Relief Coordination API",
+  "description": "ReliefMesh — Disaster Relief Coordination API",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,7 +10,7 @@
     "db:status": "node db/status.js",
     "db:update": "node db/update.js",
     "db:reset": "node db/update.js && node db/seeds/seed.js",
-    "test": "jest --forceExit --detectOpenHandles",
+    "test": "jest --forceExit --detectOpenHandles --runInBand",
     "test:watch": "jest --watch --forceExit"
   },
   "dependencies": {
@@ -21,7 +21,6 @@
     "express-rate-limit": "^7.4.0",
     "express-validator": "^7.2.0",
     "helmet": "^7.1.0",
-    "ioredis": "^5.11.1",
     "json2csv": "^6.0.0-alpha.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.0",

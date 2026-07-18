@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const itemCategorySchema = new mongoose.Schema({
   name: { type: String, required: true },
   parentCategoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'ItemCategory', default: null },
+  unit: { type: String, default: 'pcs' },
+  per_person_per_day_qty: { type: Number, default: 1, min: 0 },
   isActive: { type: Boolean, default: true },
 })
 

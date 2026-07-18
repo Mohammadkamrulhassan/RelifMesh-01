@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 import ErrorBoundary from '../common/ErrorBoundary'
 
-const THEME_KEY = 'relifmesh-theme'
+const THEME_KEY = 'reliefmesh-theme'
 
 export default function Layout() {
   const [isDark, setIsDark] = useState(() => {

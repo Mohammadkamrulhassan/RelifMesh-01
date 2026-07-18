@@ -11,9 +11,10 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [showDemo, setShowDemo] = useState(false)
 
   if (user) {
-    navigate(user.role === 'CITIZEN' ? '/relief-requests' : '/households', { replace: true })
+    navigate(user.role === 'CITIZEN' ? '/app/relief-requests' : '/app/households', { replace: true })
     return null
   }
 
@@ -23,7 +24,7 @@ export default function Login() {
     setSubmitting(true)
     try {
       const u = await login(email, password)
-      navigate(u?.role === 'CITIZEN' ? '/relief-requests' : '/households')
+      navigate(u?.role === 'CITIZEN' ? '/app/relief-requests' : '/app/households')
     } catch (err) {
       setError(err.error || 'Login failed')
     } finally {
@@ -36,7 +37,7 @@ export default function Login() {
       <div className="auth-brand-panel" aria-hidden="true">
         <div>
           <p className="auth-brand-logo">
-            Relif<span className="auth-brand-accent">Mesh</span>
+            Relief<span className="auth-brand-accent">Mesh</span>
           </p>
           <p className="auth-brand-tagline">
             Disaster relief coordination system with{' '}
@@ -48,7 +49,7 @@ export default function Login() {
       <div className="auth-panel">
         <div className="auth-card">
           <h1 className="auth-card-title">Welcome back</h1>
-          <p className="auth-card-sub">Sign in to your RelifMesh account</p>
+          <p className="auth-card-sub">Sign in to your ReliefMesh account</p>
 
           {error && (
             <div style={{ marginBottom: '20px' }}>
@@ -93,9 +94,57 @@ export default function Login() {
           <p style={{ marginTop: '16px', fontSize: '0.85rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
             Don't have an account? <Link to="/register" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>Register as Citizen</Link>
           </p>
-          <p style={{ marginTop: '8px', fontSize: '0.75rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-            Test: upazila@relifmesh.test / upofficial@relifmesh.test / ngo@relifmesh.test / citizen@relifmesh.test
-          </p>
+
+          {showDemo ? (
+            <div className="demo-credentials">
+              <div className="demo-credentials-header">
+                <p className="demo-credentials-title">Demo Credentials</p>
+                <button type="button" className="demo-credentials-toggle" onClick={() => setShowDemo(false)}>Hide</button>
+              </div>
+              <table className="demo-credentials-table">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>upazila@reliefmesh.test</td>
+                    <td>password123</td>
+                    <td><span className="badge badge-info">UPAZILA_OFFICER</span></td>
+                  </tr>
+                  <tr>
+                    <td>upofficial@reliefmesh.test</td>
+                    <td>password123</td>
+                    <td><span className="badge badge-primary">UP_OFFICIAL</span></td>
+                  </tr>
+                  <tr>
+                    <td>ngo@reliefmesh.test</td>
+                    <td>password123</td>
+                    <td><span className="badge badge-success">NGO_WORKER</span></td>
+                  </tr>
+                  <tr>
+                    <td>citizen@reliefmesh.test</td>
+                    <td>password123</td>
+                    <td><span className="badge badge-warning">CITIZEN</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p style={{ marginTop: '20px', textAlign: 'center' }}>
+              <button
+                type="button"
+                className="demo-credentials-toggle"
+                onClick={() => setShowDemo(true)}
+                style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', cursor: 'pointer', background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '2px' }}
+              >
+                Show demo credentials
+              </button>
+            </p>
+          )}
         </div>
       </div>
     </div>

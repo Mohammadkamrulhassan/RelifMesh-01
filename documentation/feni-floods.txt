@@ -1,0 +1,10 @@
+feni-floods-before-after.png:
+link: https://www.linkedin.com/posts/md2azharulislam_feni-flood-inundationmap-2025-1-before-activity-7350138959961706496-OCJ2/
+
+metadata:
+Feni Flood Inundation Map 2025
+
+1. Before Flood: 01-06-2025 to 31-06-2025
+2. During Flood: 01-07-2025 to 10-07-2025
+
+When we select the "During Floods" map, we notice that new areas shaded in blue indicate regions that have been newly flooded. Some blue patches are visible in both the "Before Floods" and "During Floods" maps, representing existing water bodies. Any additional blue areas seen only on the "During Floods" map indicate regions that experienced flooding.

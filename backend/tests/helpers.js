@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const path = require('path')
 const User = require('../modules/auth/authModel')
-const { Jurisdiction, ItemCategory } = require('../modules/public/publicModel')
+const GeographicArea = require('../modules/areas/areaModel')
+const { ItemCategory } = require('../modules/public/publicModel')
 
 const URI_FILE = path.resolve(__dirname, '.mongo-uri')
 
@@ -19,9 +20,16 @@ async function seedTestData() {
   const existing = await User.countDocuments()
   if (existing > 0) return
 
-  const district = await Jurisdiction.create({ name: 'Test District', level: 'DISTRICT' })
-  const upazila = await Jurisdiction.create({ name: 'Test Upazila', level: 'UPAZILA', parentId: district._id })
-  const union = await Jurisdiction.create({ name: 'Test Union', level: 'UNION', parentId: upazila._id })
+  const district = await GeographicArea.create({ name: 'Test District', level: 'DISTRICT' })
+  const upazila = await GeographicArea.create({ name: 'Test Upazila', level: 'UPAZILA', parentId: district._id })
+  const union = await GeographicArea.create({ name: 'Test Union', level: 'UNION', parentId: upazila._id })
+  const ward = await GeographicArea.create({
+    name: 'Test Ward 1',
+    level: 'WARD',
+    parentId: union._id,
+    coordinates: { lat: 23.5, lng: 91.2 },
+    population: 5000,
+  })
 
   await User.create([
     {
@@ -48,13 +56,11 @@ async function seedTestData() {
     },
   ])
 
-  await ItemCategory.create([
-    { name: 'Rice' },
-    { name: 'Dal' },
-    { name: 'Drinking Water' },
-  ])
+  const riceCat = await ItemCategory.create({ name: 'Rice', per_person_per_day_qty: 0.4, isActive: true })
+  await ItemCategory.create({ name: 'Dal', per_person_per_day_qty: 0.1, isActive: true })
+  await ItemCategory.create({ name: 'Drinking Water', per_person_per_day_qty: 3, isActive: true })
 
-  return { district, upazila, union }
+  return { district, upazila, union, ward, riceCat }
 }
 
 async function getToken(role) {

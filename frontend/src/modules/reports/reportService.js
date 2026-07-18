@@ -19,7 +19,7 @@ export async function triggerExport(format = 'csv', filters = {}) {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = `relifmesh-report.${format}`
+  a.download = `reliefmesh-report.${format}`
   a.click()
   URL.revokeObjectURL(url)
 }

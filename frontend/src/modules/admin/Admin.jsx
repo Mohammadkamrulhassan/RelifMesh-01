@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { listAlerts, resolveAlert, listUsers } from './adminService'
+import { listHouseholds } from '../households/householdService'
 import { formatDateTime, roleLabel } from '../../utils/formatters'
 import Card from '../../components/common/Card'
 import Loading from '../../components/common/Loading'
@@ -16,12 +18,14 @@ export default function Admin() {
   const [reason, setReason] = useState('')
   const [roleFilter, setRoleFilter] = useState('')
   const [usersLoading, setUsersLoading] = useState(false)
+  const [householdStats, setHouseholdStats] = useState(null)
 
   useEffect(() => {
-    Promise.all([listAlerts(), listUsers()])
-      .then(([alertsData, usersData]) => {
+    Promise.all([listAlerts(), listUsers(), listHouseholds('?limit=1')])
+      .then(([alertsData, usersData, householdData]) => {
         setAlerts(alertsData.alerts)
         setUsers(usersData.users)
+        setHouseholdStats({ total: householdData.total, pages: householdData.pages })
       })
       .catch(err => setError(err.error || 'Failed to load'))
       .finally(() => setLoading(false))
@@ -63,9 +67,25 @@ export default function Admin() {
       <div className="page-header">
         <div>
           <h1 className="page-header-title">Admin</h1>
-          <p className="page-header-subtitle">User management & duplicate alert resolution</p>
+          <p className="page-header-subtitle">System overview, user management & duplicate alert resolution</p>
         </div>
       </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+        <Link to="/app/households" style={{ textDecoration: 'none' }}>
+          <Card style={{ cursor: 'pointer', transition: 'box-shadow var(--transition-base)', textAlign: 'center', padding: 'var(--space-6)' }}
+            onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow-md)'}
+            onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-sm)'}
+          >
+            <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>
+              {householdStats ? householdStats.total : '—'}
+            </p>
+            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: 'var(--space-1)' }}>
+              Total Households
+            </p>
+          </Card>
+        </Link>
+      </div>
+
       <Card style={{ marginBottom: 'var(--space-6)' }}>
         <h2 className="page-section-title">Registered Users <span className="badge badge-info">{users.length}</span></h2>
         <div style={{ marginBottom: 'var(--space-3)', maxWidth: '200px' }}>

@@ -16,7 +16,7 @@
 | `/var/log/auth.log` | Authentication logs |
 | `/etc/ssh/sshd_config` | SSH server config |
 | `/etc/crontab` | System-wide cron jobs |
-| `/home/username/` | User's personal files |
+| `/home/username/` | User's Personl files |
 | `/root/` | Home of root user |
 | `/boot/` | Kernel & bootloader files |
 | `/etc/skel/` | Template for new user homes |

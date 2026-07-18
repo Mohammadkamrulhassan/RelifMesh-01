@@ -1,0 +1,120 @@
+% ======================================================================
+% Section 3.7 -- UI/UX Design
+% ======================================================================
+
+\section{Information Architecture}
+\begingroup
+\small
+\begin{center}
+\begin{tikzpicture}[
+    iab/.style={rectangle, draw, rounded corners=2pt, align=center, font=\small\bfseries, minimum width=2.4cm},
+    ias/.style={rectangle, draw, rounded corners=2pt, align=center, font=\footnotesize, minimum width=1.8cm},
+    iag/.style={rectangle, draw, rounded corners=2pt, align=center, font=\tiny, fill=rmstugray3, minimum width=1.4cm, inner sep=2pt},
+    ar/.style={-{Stealth[length=1.5mm,width=1.5mm]}, draw=gray, thin},
+]
+\node[iab, fill=rmstublue!10] (root) {ReliefMesh};
+
+\node[ias, fill=rmstuorange2, below left=0.5cm and 1.8cm of root] (pub) {Public};
+\node[iag, below=0.15cm of pub] (pub1) {/dashboard};
+\node[iag, below=0.1cm of pub1] (pub2) {/overview};
+
+\node[ias, fill=rmstuteal2, below=0.6cm of root] (login) {Login};
+\node[iag, below=0.15cm of login] (lg1) {/register};
+
+\node[ias, fill=rmstublue3, below right=0.5cm and 1.8cm of root] (auth) {Auth App};
+
+\node[iag, below=0.15cm of auth] (a1) {Dashboard};
+\node[iag, below=0.1cm of a1] (a2) {Households};
+\node[iag, below=0.1cm of a2] (a3) {Distributions};
+\node[iag, below=0.1cm of a3] (a4) {Pledges};
+\node[iag, below=0.1cm of a4] (a5) {Need Dash};
+\node[iag, below=0.1cm of a5] (a6) {Requests};
+\node[iag, below=0.1cm of a6] (a7) {Feedback};
+\node[iag, below=0.1cm of a7] (a8) {Alerts};
+\node[iag, below=0.1cm of a8] (a9) {Inventory};
+\node[iag, below=0.1cm of a9] (a10) {Reports};
+\node[iag, below=0.1cm of a10] (a11) {Admin};
+\node[iag, below=0.1cm of a11] (a12) {Profile};
+\node[iag, below=0.1cm of a12] (a13) {Sync};
+
+\draw[ar] (root) -- (pub);
+\draw[ar] (root) -- (login);
+\draw[ar] (root) -- (auth);
+\draw[ar] (pub) -- (pub1.north);
+\draw[ar] (pub1) -- (pub2);
+\draw[ar] (login) -- (lg1.north);
+\draw[ar] (auth) -- (a1);
+\draw[ar] (a1) -- (a2);
+\draw[ar] (a2) -- (a3);
+\draw[ar] (a3) -- (a4);
+\draw[ar] (a4) -- (a5);
+\draw[ar] (a5) -- (a6);
+\draw[ar] (a6) -- (a7);
+\draw[ar] (a7) -- (a8);
+\draw[ar] (a8) -- (a9);
+\draw[ar] (a9) -- (a10);
+\draw[ar] (a10) -- (a11);
+\draw[ar] (a11) -- (a12);
+\draw[ar] (a12) -- (a13);
+\end{tikzpicture}
+\captionof{figure}{ReliefMesh Information Architecture}
+\end{center}
+\endgroup
+
+\section{Key User Flows}
+
+\subsection{Flow 1 --- Register Household}
+Open App $\rightarrow$ New Household $\rightarrow$ Auto-capture GPS $\rightarrow$ Fill Form (name, NID, family size, flags) $\rightarrow$ Take Photo $\rightarrow$ Save $\rightarrow$ (Online: sync / Offline: queue) $\rightarrow$ Confirmation
+
+\subsection{Flow 2 --- Log Distribution}
+Search Household $\rightarrow$ Select $\rightarrow$ Duplicate Check $\rightarrow$ (Proceed / Override with reason) $\rightarrow$ Select Item \& Quantity $\rightarrow$ Photo + GPS $\rightarrow$ Submit
+
+\subsection{Flow 3 --- Public Dashboard}
+Open URL (no login) $\rightarrow$ View summary cards $\rightarrow$ View map with markers $\rightarrow$ Click marker for breakdown $\rightarrow$ Apply filters
+
+\subsection{Flow 4 --- Calculate Need}
+Select Ward $\rightarrow$ Auto-calculate from demographics $\times$ Sphere rates $\rightarrow$ View item-level breakdown $\rightarrow$ (Optional: Override) $\rightarrow$ Save $\rightarrow$ Heatmap updates
+
+\subsection{Flow 5 --- Pledge Source}
+View Heatmap $\rightarrow$ Identify under-served ward $\rightarrow$ Declare Pledge $\rightarrow$ Select area, item, quantity $\rightarrow$ Submit $\rightarrow$ Pledge visible on map
+
+\section{Design System}
+
+\subsection{Color Palette (Result09 Design System)}
+\begin{itemize}[nosep]
+    \item \textbf{Light Theme:} Primary \#2563eb, Surface \#ffffff, Text \#1e293b, Danger \#ef4444, Warning \#f59e0b, Success \#22c55e
+    \item \textbf{Dark Theme:} Surface \#0f172a, Card \#1e293b, Text \#f1f5f9
+    \item \textbf{Sidebar:} Dark panel with \#0f172a background, \#3b82f6 active indicator
+\end{itemize}
+
+\subsection{Typography}
+Inter font family (300--900 weights), App Title 22px/700, Section Header 18px/600, Body 16px/400, Caption 13px/400
+
+\subsection{Component Standards}
+\begin{itemize}[nosep]
+    \item Buttons: min height 40px, border-radius 8px, 6 variants
+    \item Input fields: min height 44px, clear label, error/hint/success states
+    \item Cards: 12px border-radius, 1px border, subtle shadow
+    \item Data tables: full-width, striped rows, sticky header
+    \item Sidebar: fixed dark panel, collapsible, mobile overlay
+    \item Topbar: breadcrumbs, theme toggle, sync status indicator
+\end{itemize}
+
+\section{Accessibility \& Low-Literacy Design}
+\begin{table}[H]
+\centering
+\caption{Accessibility \& Low-Literacy Design Decisions}
+\label{tab:a11y}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Consideration & Design Decision \\
+\midrule
+Low literacy & Large icons alongside text labels \\
+Bengali support & All field labels in Bengali on field screens \\
+Minimal typing & Dropdowns, GPS auto-capture, photo instead of text \\
+Poor lighting & High contrast UI; $48\times48$\,px minimum tap targets \\
+One-handed use & Primary actions at bottom of screen (thumb zone) \\
+Offline indicator & Persistent status bar showing online/offline/sync \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,5 +1,6 @@
 const ReliefRequest = require('./reliefRequestModel')
 const User = require('../auth/authModel')
+const GeographicArea = require('../areas/areaModel')
 
 async function create(req, res, next) {
   try {
@@ -63,7 +64,22 @@ async function listAll(req, res, next) {
   try {
     const { page = 1, limit = 20, status, priority } = req.query
     const filter = {}
-    if (req.user.jurisdictionId) filter.jurisdictionId = req.user.jurisdictionId
+    if (req.user.jurisdictionId) {
+      const area = await GeographicArea.findById(req.user.jurisdictionId)
+      if (area && area.level === 'UPAZILA') {
+        const unions = await GeographicArea.find({ parentId: area._id, level: 'UNION' })
+        const unionIds = unions.map(u => u._id)
+        const wards = await GeographicArea.find({ parentId: { $in: unionIds }, level: 'WARD' })
+        const wardIds = wards.map(w => w._id)
+        filter.jurisdictionId = { $in: [null, area._id, ...unionIds, ...wardIds] }
+      } else if (area && area.level === 'UNION') {
+        const wards = await GeographicArea.find({ parentId: area._id, level: 'WARD' })
+        const wardIds = wards.map(w => w._id)
+        filter.jurisdictionId = { $in: [null, area._id, ...wardIds] }
+      } else {
+        filter.jurisdictionId = req.user.jurisdictionId
+      }
+    }
     if (status) filter.status = status
     if (priority) filter.priority = priority
     const skip = (parseInt(page) - 1) * parseInt(limit)

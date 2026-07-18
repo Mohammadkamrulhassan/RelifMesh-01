@@ -42,8 +42,8 @@ export default function HouseholdDetail() {
           <p className="page-header-subtitle">Household Details</p>
         </div>
         <div className="page-actions">
-          <Link to={`/households/${id}/edit`}><Button variant="secondary">Edit</Button></Link>
-          <Button variant="ghost" onClick={() => navigate('/households')}>Back</Button>
+          <Link to={`/app/households/${id}/edit`}><Button variant="secondary">Edit</Button></Link>
+          <Button variant="ghost" onClick={() => navigate('/app/households')}>Back</Button>
         </div>
       </div>
 

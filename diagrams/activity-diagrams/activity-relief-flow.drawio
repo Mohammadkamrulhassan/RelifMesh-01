@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="RelifMesh" modified="2026-06-10T10:00:00.000Z">
+<mxfile host="ReliefMesh" modified="2026-06-20T10:00:00.000Z">
   <diagram id="activity-relief-flow" name="Relief Request Activity Flow">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -21,6 +21,11 @@
         <!-- Official lane -->
         <mxCell id="lane-official" value="OFFICIAL&#10;(UP/UPAZILA)" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="620" y="20" width="300" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- NGO / DONOR lane -->
+        <mxCell id="lane-ngo" value="NGO / DONOR" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="920" y="20" width="300" height="800" as="geometry" />
         </mxCell>
 
         <!-- === CITIZEN ACTIVITIES === -->
@@ -77,9 +82,24 @@
           <mxGeometry x="390" y="390" width="160" height="50" as="geometry" />
         </mxCell>
 
+        <!-- Calculate Need Assessment -->
+        <mxCell id="sys-need" value="Calculate Need&#10;Assessment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="450" width="160" height="50" as="geometry" />
+        </mxCell>
+
         <!-- Update status -->
         <mxCell id="sys-update" value="Update Request&#10;Status + ReviewedBy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="390" y="490" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Save Pledge -->
+        <mxCell id="sys-pledge-save" value="Save Pledge from&#10;NGO/Donor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="530" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Auto-Update Pledge Status -->
+        <mxCell id="sys-pledge-status" value="Auto-Update&#10;Pledge Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="610" width="160" height="50" as="geometry" />
         </mxCell>
 
         <!-- === OFFICIAL ACTIVITIES === -->
@@ -97,6 +117,38 @@
         <!-- Review -->
         <mxCell id="off-review" value="Review Request&#10;(Approve / Reject)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="690" y="390" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- View Need Assessment -->
+        <mxCell id="off-need" value="View Need&#10;Assessment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="690" y="450" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Set Override Quantities -->
+        <mxCell id="off-override" value="Set Override&#10;Quantities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="690" y="530" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === NGO / DONOR ACTIVITIES === -->
+
+        <!-- Donor Login/Register -->
+        <mxCell id="ngo-login" value="Donor&#10;Login/Register" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="990" y="110" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Create Relief Pledge -->
+        <mxCell id="ngo-pledge" value="Create&#10;Relief Pledge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="990" y="210" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Track Pledge Status -->
+        <mxCell id="ngo-track" value="Track&#10;Pledge Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="990" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- NGO End -->
+        <mxCell id="ngo-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="760" width="20" height="20" as="geometry" />
         </mxCell>
 
         <!-- === FLOWS === -->
@@ -171,6 +223,58 @@
 
         <!-- act-view -> end -->
         <mxCell id="f-view-end" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="act-view" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- === V2 FLOWS === -->
+
+        <!-- sys-notify -> sys-need (within system) -->
+        <mxCell id="f-notify-need" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sys-notify" target="sys-need">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- off-need -> sys-need (cross-lane: View Need Assessment -> Calculate Need Assessment) -->
+        <mxCell id="f-need-calc" value="POST /need/calculate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-need" target="sys-need">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-need -> off-override (cross-lane: Assessment data) -->
+        <mxCell id="f-calc-override" value="Assessment data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-need" target="off-override">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- off-override -> sys-notify (cross-lane dashed: override triggers re-notify) -->
+        <mxCell id="f-override-notify" value="POST /need/:id/override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-override" target="sys-notify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ngo-pledge -> sys-pledge-save (cross-lane: Create Relief Pledge -> Save Pledge) -->
+        <mxCell id="f-pledge-sys" value="POST /pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="ngo-pledge" target="sys-pledge-save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-pledge-save -> sys-pledge-status (within system) -->
+        <mxCell id="f-sys-pledge-auto" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sys-pledge-save" target="sys-pledge-status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- sys-pledge-status -> ngo-track (cross-lane dashed: status update) -->
+        <mxCell id="f-auto-track" value="Pledge status update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-pledge-status" target="ngo-track">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- off-override -> sys-pledge-save (cross-lane: Officer also creates pledges) -->
+        <mxCell id="f-override-pledge" value="Officer also&#10;creates pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-override" target="sys-pledge-save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ngo-login -> sys-jwt (cross-lane dashed: auth login) -->
+        <mxCell id="f-ngo-login-sys" value="POST /auth/login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="ngo-login" target="sys-jwt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ngo-track -> ngo-end (within NGO lane) -->
+        <mxCell id="f-track-end" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ngo-track" target="ngo-end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
