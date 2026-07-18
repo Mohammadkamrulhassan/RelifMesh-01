@@ -1,0 +1,32 @@
+% ==================================================================
+% CHAPTER 2: LITERATURE REVIEW
+% ==================================================================
+\chapter{Literature Review}
+
+\section{Disaster Relief Coordination Systems}
+
+Disaster relief coordination has been studied extensively in humanitarian informatics. The Harvard Humanitarian Initiative (2025) found that agencies responding to disasters in Bangladesh routinely prepare individual response plans with goals so diverse they rarely agree on common objectives, making coordination challenging. A 2023 study of Union Parishad flood relief in Chittagong found that inadequate coordination among local representatives significantly undermined relief efforts, and both officials and residents lacked adequate knowledge of relief distribution processes.
+
+Existing digital coordination platforms such as \textbf{Sahana Eden} and the \textbf{HDX} (Humanitarian Data Exchange) provide wide-area situational awareness but are designed for national and international responders, not for day-to-day use by Union Parishad-level officials in Bangladesh. They require stable internet connectivity, centralized data entry, and significant training, making them unsuitable for the connectivity-constrained and resource-limited local government context that ReliefMesh targets.
+
+\section{Offline-First Web Applications}
+
+Offline-first architecture is a well-established pattern for low-connectivity environments. Service Workers, the Cache API, and IndexedDB (through libraries such as localforage) enable Progressive Web Applications to function without network access. Research by Google's Web Fundamentals team demonstrates that PWA sync patterns using background sync events can achieve reliable data synchronization in intermittent connectivity scenarios.
+
+The 2024 Feni district floods in Bangladesh, where 92\% of mobile towers failed, provide direct evidence that offline capability is not optional for disaster relief coordination technology. ReliefMesh extends standard PWA patterns with a conflict-aware sync engine that detects and logs synchronization conflicts for manual review.
+
+\section{Role-Based Access Control in Humanitarian Systems}
+
+RBAC is the dominant access control model in humanitarian information systems. Sandhu et al.\ (1996) established the formal RBAC model, which has been adapted for humanitarian contexts where different actors (government, NGO, public) require different data access levels. Naive humanitarian platforms implement a binary distinction (admin vs.\ viewer), but ReliefMesh implements four roles with jurisdiction-scoped data access --- UP Officials see only their assigned union, Upazila Officers see all unions under their upazila, NGO Workers see only their registered distributions, and Public Viewers see only aggregated data.
+
+\section{Duplicate Detection in Relief Distribution}
+
+Duplicate aid distribution is a well-documented problem in humanitarian response. Research on post-Cyclone Aila reconstruction found that household-level allocation suffered from considerable irregularities driven by political connections. Simple rule-based duplicate detection --- checking whether the same household received the same item category within a configurable time window --- has been shown to be effective in field deployments. ReliefMesh implements a 7-day lookback window with override capability, logging all override events with officer ID and reason for audit.
+
+\section{Geographic Need Assessment}
+
+Sphere Handbook standards provide internationally recognized minimum standards for humanitarian response, including per-person daily ration quantities (e.g., 400g rice per person per day). In Bangladesh, the Department of Disaster Management defines administrative hierarchies (Division $\rightarrow$ District $\rightarrow$ Upazila $\rightarrow$ Union $\rightarrow$ Ward) for relief targeting. ReliefMesh combines these by computing ward-level need from household census data (family size, age brackets) multiplied by Sphere-standard per-person-per-day rates, producing a calculated relief requirement that can be overridden by authorized officers based on ground reality.
+
+\section{Summary}
+
+Existing solutions in disaster coordination, offline-first PWA, RBAC, and need assessment each address parts of the problem but no single platform combines them for the Bangladesh Union Parishad context. ReliefMesh fills this gap by integrating offline-first data entry, role-based access control, duplicate detection, geographic need assessment, and public transparency into a single lightweight web application designed for local government use.

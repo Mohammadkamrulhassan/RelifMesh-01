@@ -1,0 +1,44 @@
+% ==================================================================
+% CHAPTER 5: LIMITATIONS AND FUTURE WORK
+% ==================================================================
+\chapter{Limitations and Future Work}
+
+\section{Limitations}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{No real disaster deployment:} The system was tested in a university lab environment, not during an actual disaster. Real-world conditions (power outages, variable mobile coverage, stressed users) may expose issues not found in testing.
+
+    \item \textbf{Limited geographic scope:} The current implementation targets a single Union Parishad level. Scaling to multiple UPs and Upazilas requires additional jurisdiction management and inter-UP coordination features.
+
+    \item \textbf{No NID verification:} Household registration accepts National ID numbers but does not verify them against the national NID database, relying on manual verification by UP officials.
+
+    \item \textbf{No push notifications:} The system does not currently support push notifications for critical alerts (e.g., duplicate detection warnings, new distributions in the area), which could improve real-time coordination.
+
+    \item \textbf{Limited offline sync conflict resolution:} The current implementation uses last-write-wins for automatic conflict resolution, which may not be appropriate for all data types. Manual conflict resolution UI is partially implemented.
+
+    \item \textbf{No native mobile app:} While the PWA is installable and works on mobile browsers, a native app could provide better camera integration, GPS accuracy, and offline performance on low-end devices.
+
+    \item \textbf{No real-time collaboration:} Multiple officers cannot simultaneously edit the same household record. Concurrent edits may result in data loss if not caught by the sync engine.
+
+    \item \textbf{Limited analytics:} The public dashboard provides basic aggregation but lacks advanced analytics such as trend forecasting, coverage gap analysis, or resource optimization recommendations.
+\end{enumerate}
+
+\section{Future Work}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{Multi-UP coordination:} Extend the jurisdiction model to support cross-Union Parishad coordination and Upazila-level aggregation across multiple UPs.
+
+    \item \textbf{NID verification integration:} Integrate with Bangladesh's national NID database API for automated household identity verification.
+
+    \item \textbf{Push notification system:} Implement Web Push notifications for critical alerts, distribution updates, and sync status changes.
+
+    \item \textbf{Native mobile apps:} Develop React Native or Flutter mobile apps for better camera, GPS, and offline performance on field devices.
+
+    \item \textbf{Real-time collaboration:} Implement operational transformation or CRDT-based conflict resolution for concurrent editing support.
+
+    \item \textbf{Advanced analytics:} Add trend forecasting, coverage gap analysis, resource optimization recommendations, and predictive modeling for relief demand.
+
+    \item \textbf{Multi-language support:} Extend the UI beyond Bengali to support English, Chittagonian, and other regional languages.
+
+    \item \textbf{Integration with national disaster systems:} Connect with Bangladesh's Department of Disaster Management (DDM) systems for data sharing and coordination.
+\end{enumerate}

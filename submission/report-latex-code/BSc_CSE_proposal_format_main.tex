@@ -1,0 +1,71 @@
+%% ============================================================
+%% BSc Thesis Proposal Template — Overleaf Edition
+%% Department of Computer Science and Engineering
+%% Rangamati Science and Technology University (RMSTU)
+%% Course: CSE-4101 (Thesis/Research — 1 Credit Hour)
+%% 4th Year, 1st Semester
+%% ============================================================
+%% How to use:
+%%   1. Edit config/info.tex with your personal details
+%%   2. Fill in each section file inside sections/
+%%   3. Compile with pdflatex (Overleaf does this automatically)
+%% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+%% ===== Load all packages and configuration =====
+\input{config/packages}
+\input{config/styles}
+\input{config/info}
+\input{config/commands}
+
+%% ==================== DOCUMENT ====================
+\begin{document}
+
+%% ----- Cover Page -----
+\input{pages/coverpage}
+
+%% ----- Front Matter (roman numerals) -----
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+\input{pages/approval}
+\input{pages/declaration}
+\input{pages/acknowledgement}
+
+\tableofcontents
+\newpage
+
+\listoftables
+\newpage
+
+\listoffigures
+\newpage
+
+\input{pages/acronyms}
+\newpage
+
+%% ----- Main Content (arabic numerals) -----
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{sections/00_proposal_summary}
+\input{sections/01_introduction}
+\input{sections/02_problem_statement}
+\input{sections/03_research_questions}
+\input{sections/04_research_objectives}
+\input{sections/05_rationale}
+\input{sections/06_literature_review}
+\input{sections/07_research_gap}
+\input{sections/08_methodology}
+\input{sections/09_expected_outcomes}
+\input{sections/10_work_plan}
+\input{sections/11_budget}
+
+%% ----- References -----
+\input{sections/references}
+
+%% ----- Appendices -----
+\input{sections/appendices}
+
+\end{document}

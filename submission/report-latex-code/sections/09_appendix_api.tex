@@ -1,0 +1,91 @@
+% ==================================================================
+% APPENDIX B: API ENDPOINTS
+% ==================================================================
+\chapter{API Endpoints}
+\label{app:api}
+
+\section{Authentication}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{POST /api/auth/register} -- Register new user
+    \item \texttt{POST /api/auth/login} -- Login and receive JWT
+    \item \texttt{GET /api/auth/me} -- Get current user profile
+\end{itemize}
+
+\section{Households}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/households} -- List households (filtered by role/jurisdiction)
+    \item \texttt{POST /api/households} -- Register new household
+    \item \texttt{GET /api/households/:id} -- Get household details
+    \item \texttt{PUT /api/households/:id} -- Update household
+    \item \texttt{DELETE /api/households/:id} -- Delete household
+\end{itemize}
+
+\section{Distributions}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/distributions} -- List distributions
+    \item \texttt{POST /api/distributions} -- Log new distribution
+    \item \texttt{GET /api/distributions/:id} -- Get distribution details
+    \item \texttt{PUT /api/distributions/:id} -- Update distribution
+    \item \texttt{DELETE /api/distributions/:id} -- Delete distribution
+\end{itemize}
+
+\section{Duplicates}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/duplicates} -- List flagged duplicates
+    \item \texttt{POST /api/duplicates/:id/override} -- Override flagged duplicate
+\end{itemize}
+
+\section{Need Calculation}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/need-calc} -- Get need calculations
+    \item \texttt{POST /api/need-calc} -- Calculate need for household
+    \item \texttt{PUT /api/need-calc/:id/override} -- Override calculated need
+\end{itemize}
+
+\section{Heatmap}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/heatmap} -- Get heatmap data (ward-level aggregation)
+\end{itemize}
+
+\section{Inventory}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/inventory} -- List inventory items
+    \item \texttt{POST /api/inventory} -- Add inventory item
+    \item \texttt{PUT /api/inventory/:id} -- Update inventory item
+    \item \texttt{POST /api/inventory/:id/movement} -- Record stock movement
+\end{itemize}
+
+\section{Pledges}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/pledges} -- List pledges
+    \item \texttt{POST /api/pledges} -- Create new pledge
+    \item \texttt{PUT /api/pledges/:id} -- Update pledge status
+\end{itemize}
+
+\section{Feedback}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/feedback} -- List feedback submissions
+    \item \texttt{POST /api/feedback} -- Submit feedback
+    \item \texttt{PUT /api/feedback/:id/flag} -- Flag feedback
+    \item \texttt{POST /api/feedback/:id/reply} -- Reply to feedback
+\end{itemize}
+
+\section{Reports}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/reports/distributions/pdf} -- Export distributions as PDF
+    \item \texttt{GET /api/reports/distributions/csv} -- Export distributions as CSV
+    \item \texttt{GET /api/reports/households/pdf} -- Export households as PDF
+    \item \texttt{GET /api/reports/households/csv} -- Export households as CSV
+\end{itemize}
+
+\section{Dashboard}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{GET /api/dashboard/stats} -- Get aggregated statistics
+    \item \texttt{GET /api/dashboard/public} -- Get public statistics (no auth required)
+\end{itemize}
+
+\section{Sync}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \texttt{POST /api/sync/batch} -- Batch sync offline data
+    \item \texttt{GET /api/sync/status} -- Get sync status
+\end{itemize}

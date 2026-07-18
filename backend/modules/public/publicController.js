@@ -59,7 +59,7 @@ async function recentActivities(req, res, next) {
       .lean()
 
     const recentRequests = await ReliefRequest.find()
-      .populate('userId', 'name email')
+      .populate('citizenId', 'name email')
       .sort({ createdAt: -1 })
       .limit(5)
       .lean()

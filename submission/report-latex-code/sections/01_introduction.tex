@@ -1,0 +1,70 @@
+% ==================================================================
+% CHAPTER 1: INTRODUCTION
+% ==================================================================
+\chapter{Introduction}
+
+\section{Overview}
+
+Bangladesh is among the world's most disaster-prone nations. Floods affect approximately one-third of the country annually, and the Bengal coast faces cyclones with alarming regularity. During these events, relief distribution at the local level suffers from a fundamental coordination problem: multiple agencies (Union Parishad, Upazila administration, NGOs, military, volunteer groups) distribute aid independently with no shared registry, leading to some households receiving aid multiple times while others receive nothing at all.
+
+This project, \textbf{ReliefMesh}, is a full-stack, offline-first Progressive Web Application that provides a shared coordination platform for disaster relief at the Union Parishad (UP) level. It enables officials to register affected households with GPS coordinates and photographs, log item-level relief distributions, detect and warn against duplicate aid, and provide a public-facing dashboard for transparency. The system is designed for the connectivity-constrained environments typical of flood-affected areas in Bangladesh, where mobile towers often go down during the critical first 72 hours of a disaster.
+
+\vspace{-0.2cm}
+
+\section{Motivation}
+
+The motivation for ReliefMesh stems from recurring pain points observed in Bangladesh's disaster relief coordination system:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Duplicate distribution:} Multiple agencies distribute to the same household because there is no shared registry.
+    \item \textbf{Missed households:} Families in geographically isolated areas are skipped entirely with no audit trail.
+    \item \textbf{No real-time tracking:} Relief logs are recorded on paper; consolidation happens days or weeks later.
+    \item \textbf{Inter-agency opacity:} NGOs and government teams plan independently with rarely a shared objective.
+    \item \textbf{Accountability gaps:} Political networks influence who receives aid; allocation records are missing.
+    \item \textbf{Offline environments:} Flood-hit areas lose internet and power, making cloud-only systems unusable.
+    \item \textbf{No visibility into remaining need:} No one can see which wards still need relief versus which are served.
+    \item \textbf{No volunteer coordination:} Individual donors have no channel to coordinate with official channels.
+\end{itemize}
+
+\vspace{-0.2cm}
+
+\section{Problem Statement}
+
+During flood and cyclone events in Bangladesh, three groups experience direct harm from poor coordination. \textbf{Affected households} face unequal aid distribution --- some receive aid multiple times while others receive nothing. \textbf{Union Parishad officials} operate without real-time visibility into what other teams are distributing in the same area. \textbf{District and Upazila administrators} cannot verify ground-level distribution without physical field visits.
+
+The August 2024 eastern Bangladesh floods affected an estimated 4.5--5.8 million people across 11 districts. Feni district alone experienced approximately 92\% of its mobile towers going down, cutting off communication to all six upazilas. This validates the project's offline-first design constraint: a cloud-only system would have been entirely unusable when needed most.
+
+\vspace{-0.2cm}
+
+\section{Project Objectives}
+
+\begin{enumerate}
+    \item \textbf{Household registration:} Register affected households with GPS and photo, targeting 50+ test households.
+    \item \textbf{Duplicate detection:} Flag same-category relief within 7 days, targeting 90\%+ accuracy.
+    \item \textbf{Offline-first operation:} Data entry with auto-sync, targeting 95\%+ sync success rate.
+    \item \textbf{Public dashboard:} Aggregated distribution stats loading within 3 seconds on 3G.
+    \item \textbf{RBAC:} Support four user roles with correct access enforcement.
+    \item \textbf{Need assessment:} Compute per-household relief need using Sphere-standard ration rates.
+    \item \textbf{Public heatmap:} Show served versus remaining-need areas with ward-level drill-down.
+\end{enumerate}
+
+\vspace{-0.2cm}
+
+\section{Project Scope}
+
+\textbf{In-scope:} Household registration with GPS and photo, relief distribution logging, duplicate detection engine, multi-role authentication, offline-first data entry with sync, conflict resolution, public dashboard, authority hierarchy enforcement, report export (PDF/CSV), feedback submission, inventory tracking, geographic need mapping with heatmap, and multi-source relief pledge coordination.
+
+\textbf{Out-of-scope:} Financial transactions, warehouse procurement, AI-based forecasting, national NID database integration, native mobile apps, real-time satellite GIS, multi-language UI beyond Bengali labels.
+
+\section{Report Organization}
+
+This report is organized as follows: Chapter~2 reviews relevant literature on disaster coordination systems and offline-first architectures. Chapter~3 presents the methodology, including requirements engineering, system modeling, database design, and architecture. Chapter~4 discusses results and implementation outcomes. Chapter~5 identifies limitations and future work. Chapter~6 concludes the report.
+
+\section{Contributions}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Design and implementation of a complete offline-first PWA for disaster relief coordination, enabling field data entry without network connectivity through IndexedDB queuing and background sync.
+    \item Design of a rule-based duplicate detection engine that flags same-household same-category relief within a configurable 7-day lookback window, with authorized override logging.
+    \item Implementation of a geographic need-assessment engine using Sphere-standard per-person ration rates with vulnerability multipliers (elderly/disabled: 1.2x).
+    \item A four-role permission architecture (UP Official, Upazila Officer, NGO Worker, Public Viewer) with jurisdiction-scoped data access, enforced at both route and database levels.
+\end{enumerate}
