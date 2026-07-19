@@ -82,7 +82,7 @@ export default function OverviewPage() {
           </p>
           <div style={figureBox}>
 {`+--------------------------------------------------+
-|             RELIFMESH SYSTEM                      |
+|             RELIEFMESH SYSTEM                      |
 |  Disaster Relief Coordination Platform           |
 +--------------------------------------------------+
 |  Frontend (React 18 + Vite + Leaflet)            |
@@ -177,7 +177,7 @@ export default function OverviewPage() {
           <div style={figureBox}>
 {`
 ┌───────────────────────────────────────────┐
-│            RELIFMESH SYSTEM              │
+│            RELIEFMESH SYSTEM              │
 │                                           │
 │  ┌──────────┐  ┌──────────┐  ┌─────────┐ │
 │  │  Citizen │  │Coordinator│  │  Admin  │ │
@@ -233,7 +233,7 @@ export default function OverviewPage() {
           <div style={figureBox}>
 {`
 ┌─────────────────────────────────────────────────────┐
-│                 RELIFMESH SYSTEM                    │
+│                 RELIEFMESH SYSTEM                    │
 │                                                     │
 │  ┌─────────────┐   ┌──────────────┐   ┌──────────┐│
 │  │   Citizen   │   │ Coordinator  │   │  Admin   ││

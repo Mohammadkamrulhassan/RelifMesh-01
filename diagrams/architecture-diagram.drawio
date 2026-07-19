@@ -56,8 +56,8 @@
         <mxCell id="mongo" value="MongoDB&#10;(NoSQL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="60" y="660" width="100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="collections" value="Collections: users,&#10;households, distributions,&#10;relief_requests, feedback,&lt;br&gt;item_categories,&lt;br&gt;jurisdictions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="180" y="655" width="130" height="80" as="geometry" />
+        <mxCell id="collections" value="Collections (13):&#10;users, households,&#10;distribution_logs,&#10;relief_requests, feedback,&#10;item_categories,&#10;jurisdictions,&#10;geographic_areas,&#10;need_assessments,&#10;relief_pledges,&#10;inventories,&#10;duplicate_alerts,&#10;sync_conflicts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="170" y="635" width="150" height="160" as="geometry" />
         </mxCell>
 
         <!-- === CONNECTORS === -->

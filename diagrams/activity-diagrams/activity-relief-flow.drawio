@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="ReliefMesh" modified="2026-06-20T10:00:00.000Z">
   <diagram id="activity-relief-flow" name="Relief Request Activity Flow">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -9,146 +9,123 @@
         <!-- === SWIMLANES === -->
 
         <!-- Citizen lane -->
-        <mxCell id="lane-citizen" value="CITIZEN" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="20" y="20" width="300" height="800" as="geometry" />
+        <mxCell id="lane-citizen" value="CITIZEN" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#fff2cc;strokeColor=#d6b656;startSize=30;verticalAlign=top;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="400" height="1350" as="geometry" />
         </mxCell>
 
         <!-- System lane -->
-        <mxCell id="lane-system" value="SYSTEM" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="320" y="20" width="300" height="800" as="geometry" />
+        <mxCell id="lane-system" value="SYSTEM" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=30;verticalAlign=top;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="420" y="20" width="400" height="1350" as="geometry" />
         </mxCell>
 
         <!-- Official lane -->
-        <mxCell id="lane-official" value="OFFICIAL&#10;(UP/UPAZILA)" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="620" y="20" width="300" height="800" as="geometry" />
+        <mxCell id="lane-official" value="OFFICIAL (UP / UPAZILA)" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;verticalAlign=top;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="20" width="400" height="1350" as="geometry" />
         </mxCell>
 
-        <!-- NGO / DONOR lane -->
-        <mxCell id="lane-ngo" value="NGO / DONOR" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="920" y="20" width="300" height="800" as="geometry" />
+        <!-- NGO / Donor lane -->
+        <mxCell id="lane-ngo" value="NGO / DONOR" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#ffe6cc;strokeColor=#d79b00;startSize=30;verticalAlign=top;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="20" width="400" height="1350" as="geometry" />
         </mxCell>
 
         <!-- === CITIZEN ACTIVITIES === -->
 
-        <!-- Start -->
         <mxCell id="start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="150" y="60" width="20" height="20" as="geometry" />
+          <mxGeometry x="200" y="70" width="30" height="30" as="geometry" />
         </mxCell>
 
-        <!-- 1. Citizen registers -->
-        <mxCell id="act-register" value="Self-Register&#10;(name, email, phone, password)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="110" width="160" height="50" as="geometry" />
+        <mxCell id="act-register" value="Self-Register&#10;(name, email, phone, password)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="140" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- 2. Citizen logs in -->
-        <mxCell id="act-login" value="Login&#10;(email + password)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="210" width="160" height="50" as="geometry" />
+        <mxCell id="act-login" value="Login&#10;(email + password)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="260" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- 3. Submit relief request -->
-        <mxCell id="act-submit" value="Submit Relief Request&#10;(items, priority, location)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="320" width="160" height="50" as="geometry" />
+        <mxCell id="act-submit" value="Submit Relief Request&#10;(items, priority, location)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="400" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- 4. View status -->
-        <mxCell id="act-view" value="View Request Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="490" width="160" height="50" as="geometry" />
+        <mxCell id="act-view" value="View Request Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="700" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- End -->
         <mxCell id="end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="150" y="760" width="20" height="20" as="geometry" />
+          <mxGeometry x="200" y="1300" width="30" height="30" as="geometry" />
         </mxCell>
 
         <!-- === SYSTEM ACTIVITIES === -->
 
-        <!-- Register user -->
-        <mxCell id="sys-register" value="Create User&#10;(hash password, save)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="110" width="160" height="50" as="geometry" />
+        <mxCell id="sys-register" value="Create User&#10;(hash password, save)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="140" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Issue JWT -->
-        <mxCell id="sys-jwt" value="Issue JWT Token" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="160" width="160" height="50" as="geometry" />
+        <mxCell id="sys-jwt" value="Issue JWT Token" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="210" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Save request -->
-        <mxCell id="sys-save" value="Save Relief Request&#10;(status = PENDING)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="320" width="160" height="50" as="geometry" />
+        <mxCell id="sys-save" value="Save Relief Request&#10;(status = PENDING)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="400" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Notify officials -->
-        <mxCell id="sys-notify" value="Notify Officials&#10;(pending request count)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="390" width="160" height="50" as="geometry" />
+        <mxCell id="sys-notify" value="Notify Officials&#10;(pending request count)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="480" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Calculate Need Assessment -->
-        <mxCell id="sys-need" value="Calculate Need&#10;Assessment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="450" width="160" height="50" as="geometry" />
+        <mxCell id="sys-need" value="Calculate Need&#10;Assessment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="570" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Update status -->
-        <mxCell id="sys-update" value="Update Request&#10;Status + ReviewedBy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="490" width="160" height="50" as="geometry" />
+        <mxCell id="sys-update" value="Update Request&#10;Status + ReviewedBy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="700" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Save Pledge -->
-        <mxCell id="sys-pledge-save" value="Save Pledge from&#10;NGO/Donor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="530" width="160" height="50" as="geometry" />
+        <mxCell id="sys-pledge-save" value="Save Pledge from&#10;NGO/Donor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="880" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Auto-Update Pledge Status -->
-        <mxCell id="sys-pledge-status" value="Auto-Update&#10;Pledge Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="610" width="160" height="50" as="geometry" />
+        <mxCell id="sys-pledge-status" value="Auto-Update&#10;Pledge Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="960" width="200" height="50" as="geometry" />
         </mxCell>
 
         <!-- === OFFICIAL ACTIVITIES === -->
 
-        <!-- Login -->
-        <mxCell id="off-login" value="Login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="690" y="210" width="160" height="50" as="geometry" />
+        <mxCell id="off-login" value="Login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="260" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- View pending -->
-        <mxCell id="off-view" value="View Pending&#10;Relief Requests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="690" y="320" width="160" height="50" as="geometry" />
+        <mxCell id="off-view" value="View Pending&#10;Relief Requests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="400" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Review -->
-        <mxCell id="off-review" value="Review Request&#10;(Approve / Reject)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="690" y="390" width="160" height="50" as="geometry" />
+        <mxCell id="off-review" value="Review Request&#10;(Approve / Reject)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="500" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- View Need Assessment -->
-        <mxCell id="off-need" value="View Need&#10;Assessment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="690" y="450" width="160" height="50" as="geometry" />
+        <mxCell id="off-need" value="View Need&#10;Assessment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="570" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Set Override Quantities -->
-        <mxCell id="off-override" value="Set Override&#10;Quantities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="690" y="530" width="160" height="50" as="geometry" />
+        <mxCell id="off-override" value="Set Override&#10;Quantities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="880" width="200" height="50" as="geometry" />
         </mxCell>
 
         <!-- === NGO / DONOR ACTIVITIES === -->
 
-        <!-- Donor Login/Register -->
-        <mxCell id="ngo-login" value="Donor&#10;Login/Register" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="990" y="110" width="160" height="50" as="geometry" />
+        <mxCell id="ngo-login" value="Donor&#10;Login / Register" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="140" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Create Relief Pledge -->
-        <mxCell id="ngo-pledge" value="Create&#10;Relief Pledge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="990" y="210" width="160" height="50" as="geometry" />
+        <mxCell id="ngo-pledge" value="Create&#10;Relief Pledge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="260" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- Track Pledge Status -->
-        <mxCell id="ngo-track" value="Track&#10;Pledge Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="990" y="320" width="160" height="50" as="geometry" />
+        <mxCell id="ngo-track" value="Track&#10;Pledge Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="480" width="200" height="50" as="geometry" />
         </mxCell>
 
-        <!-- NGO End -->
         <mxCell id="ngo-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="1070" y="760" width="20" height="20" as="geometry" />
+          <mxGeometry x="1390" y="1300" width="30" height="30" as="geometry" />
         </mxCell>
 
         <!-- === FLOWS === -->
@@ -159,7 +136,7 @@
         </mxCell>
 
         <!-- register -> sys-register (cross-lane) -->
-        <mxCell id="f-reg-sys" value="POST /auth/register/citizen" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="act-register" target="sys-register">
+        <mxCell id="f-reg-sys" value="POST /v1/auth/register/citizen" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="act-register" target="sys-register">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -169,16 +146,13 @@
         </mxCell>
 
         <!-- sys-jwt -> act-login (back to citizen) -->
-        <mxCell id="f-jwt-login" value="JWT returned" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-jwt" target="act-login">
+        <mxCell id="f-jwt-login" value="JWT returned" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="sys-jwt" target="act-login">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- act-login -> off-login -->
-        <mxCell id="f-login-off" value="Login (all roles)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="240" y="235" as="sourcePoint" />
-            <mxPoint x="690" y="235" as="targetPoint" />
-          </mxGeometry>
+        <!-- act-login -> off-login (cross-lane) -->
+        <mxCell id="f-login-off" value="Login (all roles)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="act-login" target="off-login">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- act-login -> act-submit -->
@@ -187,7 +161,7 @@
         </mxCell>
 
         <!-- act-submit -> sys-save -->
-        <mxCell id="f-submit-save" value="POST /relief-requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="act-submit" target="sys-save">
+        <mxCell id="f-submit-save" value="POST /v1/relief-requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="act-submit" target="sys-save">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -197,7 +171,7 @@
         </mxCell>
 
         <!-- sys-notify -> off-view -->
-        <mxCell id="f-notify-view" value="Dashboard update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-notify" target="off-view">
+        <mxCell id="f-notify-view" value="Dashboard update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="sys-notify" target="off-view">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -212,12 +186,12 @@
         </mxCell>
 
         <!-- off-review -> sys-update -->
-        <mxCell id="f-review-update" value="PUT /relief-requests/admin/:id/review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-review" target="sys-update">
+        <mxCell id="f-review-update" value="PUT /v1/relief-requests/admin/:id/review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="off-review" target="sys-update">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- sys-update -> act-view -->
-        <mxCell id="f-update-view" value="Status updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-update" target="act-view">
+        <mxCell id="f-update-view" value="Status updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="sys-update" target="act-view">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -226,54 +200,52 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- === V2 FLOWS === -->
-
         <!-- sys-notify -> sys-need (within system) -->
         <mxCell id="f-notify-need" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sys-notify" target="sys-need">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- off-need -> sys-need (cross-lane: View Need Assessment -> Calculate Need Assessment) -->
-        <mxCell id="f-need-calc" value="POST /need/calculate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-need" target="sys-need">
+        <!-- off-need -> sys-need (cross-lane) -->
+        <mxCell id="f-need-calc" value="POST /v1/need/calculate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="off-need" target="sys-need">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- sys-need -> off-override (cross-lane: Assessment data) -->
-        <mxCell id="f-calc-override" value="Assessment data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-need" target="off-override">
+        <!-- sys-need -> off-override (cross-lane) -->
+        <mxCell id="f-calc-override" value="Assessment data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="sys-need" target="off-override">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- off-override -> sys-notify (cross-lane dashed: override triggers re-notify) -->
-        <mxCell id="f-override-notify" value="POST /need/:id/override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-override" target="sys-notify">
+        <!-- off-override -> sys-notify (cross-lane) -->
+        <mxCell id="f-override-notify" value="POST /v1/need/:id/override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="off-override" target="sys-notify">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- ngo-pledge -> sys-pledge-save (cross-lane: Create Relief Pledge -> Save Pledge) -->
-        <mxCell id="f-pledge-sys" value="POST /pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="ngo-pledge" target="sys-pledge-save">
+        <!-- ngo-pledge -> sys-pledge-save (cross-lane) -->
+        <mxCell id="f-pledge-sys" value="POST /v1/pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="ngo-pledge" target="sys-pledge-save">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- sys-pledge-save -> sys-pledge-status (within system) -->
+        <!-- sys-pledge-save -> sys-pledge-status -->
         <mxCell id="f-sys-pledge-auto" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sys-pledge-save" target="sys-pledge-status">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- sys-pledge-status -> ngo-track (cross-lane dashed: status update) -->
-        <mxCell id="f-auto-track" value="Pledge status update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="sys-pledge-status" target="ngo-track">
+        <!-- sys-pledge-status -> ngo-track -->
+        <mxCell id="f-auto-track" value="Pledge status update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="sys-pledge-status" target="ngo-track">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- off-override -> sys-pledge-save (cross-lane: Officer also creates pledges) -->
-        <mxCell id="f-override-pledge" value="Officer also&#10;creates pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="off-override" target="sys-pledge-save">
+        <!-- off-override -> sys-pledge-save (cross-lane) -->
+        <mxCell id="f-override-pledge" value="Officer also creates pledges" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="off-override" target="sys-pledge-save">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- ngo-login -> sys-jwt (cross-lane dashed: auth login) -->
-        <mxCell id="f-ngo-login-sys" value="POST /auth/login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="ngo-login" target="sys-jwt">
+        <!-- ngo-login -> sys-jwt (cross-lane) -->
+        <mxCell id="f-ngo-login-sys" value="POST /v1/auth/login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;" edge="1" parent="1" source="ngo-login" target="sys-jwt">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- ngo-track -> ngo-end (within NGO lane) -->
+        <!-- ngo-track -> ngo-end -->
         <mxCell id="f-track-end" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ngo-track" target="ngo-end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>

@@ -1,181 +1,207 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="ReliefMesh" modified="2026-06-10T10:00:00.000Z">
   <diagram id="sequence-relief" name="Sequence - Relief Request Flow">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="3200" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
 
-        <!-- Lifelines -->
-        <mxCell id="ll-citizen" value="Citizen" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: Citizen -->
+        <mxCell id="ll-citizen" value="Citizen" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="20" width="140" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-citizen" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="70" y="50" width="10" height="680" as="geometry" />
+          <mxGeometry x="150" y="60" width="10" height="3100" as="geometry" />
         </mxCell>
 
-        <mxCell id="ll-fe" value="Frontend" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="200" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: Frontend -->
+        <mxCell id="ll-fe" value="Frontend (React)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-fe" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="240" y="50" width="10" height="680" as="geometry" />
+          <mxGeometry x="480" y="60" width="10" height="3100" as="geometry" />
         </mxCell>
 
-        <mxCell id="ll-be" value="Backend" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="400" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: Backend -->
+        <mxCell id="ll-be" value="Backend (Express)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="720" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-be" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="440" y="50" width="10" height="680" as="geometry" />
+          <mxGeometry x="800" y="60" width="10" height="3100" as="geometry" />
         </mxCell>
 
-        <mxCell id="ll-db" value="MongoDB" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="620" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: MongoDB -->
+        <mxCell id="ll-db" value="MongoDB" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="20" width="140" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-db" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="660" y="50" width="10" height="680" as="geometry" />
+          <mxGeometry x="1110" y="60" width="10" height="3100" as="geometry" />
         </mxCell>
 
-        <mxCell id="ll-official" value="Official" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="830" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: Official -->
+        <mxCell id="ll-official" value="UP Official&#10;/ Upazila Officer" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-official" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="870" y="50" width="10" height="680" as="geometry" />
+          <mxGeometry x="1400" y="60" width="10" height="3100" as="geometry" />
         </mxCell>
 
-        <!-- === CITIZEN SUBMITS RELIEF REQUEST === -->
+        <!-- ========== SECTION 1: CITIZEN SUBMITS RELIEF REQUEST ========== -->
 
-        <!-- Citizen -> FE: fill form -->
-        <mxCell id="arrow1" value="1. Fill relief request form&#10;(items, priority, location)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-citizen" target="lifeline-fe">
+        <mxCell id="label-sec1" value="&lt;b&gt;&lt;i&gt;--- Citizen Submits Relief Request ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="100" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 1. Citizen -> FE -->
+        <mxCell id="arrow1" value="1. Fill relief request form&#10;(items, priority, location)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-citizen" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> BE: POST -->
-        <mxCell id="arrow2" value="2. POST /api/relief-requests&#10;(JWT in header)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
+        <!-- 2. FE -> BE -->
+        <mxCell id="arrow2" value="2. POST /v1/relief-requests&#10;(JWT in Authorization header)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE validates JWT -->
-        <mxCell id="act-auth" value="Verify JWT&#10;Extract citizenId" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
-          <mxGeometry x="410" y="120" width="80" height="40" as="geometry" />
+        <!-- BE activation: Verify JWT -->
+        <mxCell id="act-auth" value="Verify JWT&#10;Extract citizenId" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="770" y="200" width="110" height="40" as="geometry" />
         </mxCell>
 
-        <!-- BE -> DB: save -->
-        <mxCell id="arrow3" value="3. db.relief_requests.insertOne()" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
+        <!-- 3. BE -> DB -->
+        <mxCell id="arrow3" value="3. db.relief_requests.insertOne({citizenId, items, priority, location, status:'PENDING'})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- DB -> BE -->
-        <mxCell id="arrow4" value="4. Created" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
+        <!-- 4. DB -> BE -->
+        <mxCell id="arrow4" value="4. Created document" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;fontSize=12;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> FE -->
-        <mxCell id="arrow5" value="5. 201 Created" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
+        <!-- 5. BE -> FE -->
+        <mxCell id="arrow5" value="5. 201 Created + reliefRequest object" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> Citizen: show success -->
-        <mxCell id="arrow6" value="6. Show success + redirect&#10;to My Requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-citizen">
+        <!-- 6. FE -> Citizen -->
+        <mxCell id="arrow6" value="6. Show success toast + redirect to My Requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-citizen">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- === OFFICIAL VIEWS PENDING REQUESTS === -->
+        <!-- ========== SECTION 2: OFFICIAL VIEWS PENDING REQUESTS ========== -->
 
-        <mxCell id="label-admin" value="&lt;b&gt;&lt;i&gt;--- Official Reviews Request ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="270" y="260" width="200" height="30" as="geometry" />
+        <mxCell id="label-sec2" value="&lt;b&gt;&lt;i&gt;--- Official Reviews Pending Requests ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="440" width="350" height="30" as="geometry" />
         </mxCell>
 
-        <!-- Official -> FE: view admin page -->
-        <mxCell id="arrow7" value="7. Navigate to&#10;Relief Requests Admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-official" target="lifeline-fe">
+        <!-- 7. Official -> FE -->
+        <mxCell id="arrow7" value="7. Navigate to Relief Requests Admin page" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-official" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> BE: GET pending -->
-        <mxCell id="arrow8" value="8. GET /api/relief-requests/admin&#10;(status=PENDING)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
+        <!-- 8. FE -> BE -->
+        <mxCell id="arrow8" value="8. GET /v1/relief-requests/admin?status=PENDING" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> DB -->
-        <mxCell id="arrow9" value="9. db.relief_requests.find({status:'PENDING'})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
+        <!-- 9. BE -> DB -->
+        <mxCell id="arrow9" value="9. db.relief_requests.find({status:'PENDING'}).populate('citizenId')" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- DB -> BE -->
-        <mxCell id="arrow10" value="10. List of requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
+        <!-- 10. DB -> BE -->
+        <mxCell id="arrow10" value="10. Cursor → array of request documents" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;fontSize=12;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> FE -->
-        <mxCell id="arrow11" value="11. 200 OK + requests[]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
+        <!-- 11. BE -> FE -->
+        <mxCell id="arrow11" value="11. 200 OK + reliefRequests[]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE shows list -->
-        <mxCell id="act-show" value="Render table&#10;of requests" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;rounded=1;" vertex="1" parent="1">
-          <mxGeometry x="205" y="390" width="70" height="40" as="geometry" />
+        <!-- FE activation: Render -->
+        <mxCell id="act-show" value="Render table&#10;of PENDING requests" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;rounded=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="445" y="650" width="120" height="40" as="geometry" />
         </mxCell>
 
-        <!-- === OFFICIAL MAKES DECISION === -->
-
-        <!-- Official clicks Approve/Reject -->
-        <mxCell id="arrow12" value="12. Click Approve/Reject" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-official" target="lifeline-fe">
+        <!-- 12. FE -> Official -->
+        <mxCell id="arrow12" value="12. Display requests table with Approve / Reject buttons" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-official">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> BE: PUT review -->
-        <mxCell id="arrow13" value="13. PUT /api/relief-requests/&#10;admin/:id/review&#10;{status, reviewNotes}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
+        <!-- ========== SECTION 3: OFFICIAL MAKES DECISION ========== -->
+
+        <mxCell id="label-sec3" value="&lt;b&gt;&lt;i&gt;--- Official Approves / Rejects Request ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="790" width="350" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 13. Official -> FE -->
+        <mxCell id="arrow13" value="13. Click Approve or Reject, add reviewNotes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-official" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> DB: update -->
-        <mxCell id="arrow14" value="14. db.relief_requests&#10;.updateOne({status, reviewedBy,&#10;reviewedAt, reviewNotes})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
+        <!-- 14. FE -> BE -->
+        <mxCell id="arrow14" value="14. PUT /v1/relief-requests/admin/:id/review&#10;{status: 'APPROVED'|'REJECTED', reviewNotes}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- DB -> BE -->
-        <mxCell id="arrow15" value="15. Updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
+        <!-- BE activation: process review -->
+        <mxCell id="act-review" value="Validate status enum&#10;Set reviewedBy, reviewedAt&#10;Save reviewNotes" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="765" y="920" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- 15. BE -> DB -->
+        <mxCell id="arrow15" value="15. db.relief_requests.updateOne({_id},&#10;{status, reviewedBy, reviewedAt, reviewNotes})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> FE -->
-        <mxCell id="arrow16" value="16. 200 OK" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
+        <!-- 16. DB -> BE -->
+        <mxCell id="arrow16" value="16. {nModified: 1}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;fontSize=12;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> Official: success -->
-        <mxCell id="arrow17" value="17. Show success +&#10;refresh list" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-official">
+        <!-- 17. BE -> FE -->
+        <mxCell id="arrow17" value="17. 200 OK + updated reliefRequest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- === CITIZEN SEES UPDATED STATUS === -->
-
-        <!-- Citizen -> FE: view status -->
-        <mxCell id="arrow18" value="18. Check My Requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-citizen" target="lifeline-fe">
+        <!-- 18. FE -> Official -->
+        <mxCell id="arrow18" value="18. Show success + refresh filtered list" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-official">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> BE -->
-        <mxCell id="arrow19" value="19. GET /api/relief-requests/mine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
+        <!-- ========== SECTION 4: CITIZEN SEES UPDATED STATUS ========== -->
+
+        <mxCell id="label-sec4" value="&lt;b&gt;&lt;i&gt;--- Citizen Checks Updated Status ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="1210" width="320" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 19. Citizen -> FE -->
+        <mxCell id="arrow19" value="19. Navigate to My Relief Requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-citizen" target="lifeline-fe">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> DB -->
-        <mxCell id="arrow20" value="20. Find by citizenId" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
+        <!-- 20. FE -> BE -->
+        <mxCell id="arrow20" value="20. GET /v1/relief-requests/mine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- DB -> BE -->
-        <mxCell id="arrow21" value="21. Requests with status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
+        <!-- 21. BE -> DB -->
+        <mxCell id="arrow21" value="21. db.relief_requests.find({citizenId}).sort({createdAt:-1})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-db">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- BE -> FE -->
-        <mxCell id="arrow22" value="22. 200 OK" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
+        <!-- 22. DB -> BE -->
+        <mxCell id="arrow22" value="22. Cursor → request documents with status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;fontSize=12;" edge="1" parent="1" source="lifeline-db" target="lifeline-be">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- FE -> Citizen -->
-        <mxCell id="arrow23" value="23. Show updated status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-fe" target="lifeline-citizen">
+        <!-- 23. BE -> FE -->
+        <mxCell id="arrow23" value="23. 200 OK + reliefRequests[]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-be" target="lifeline-fe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 24. FE -> Citizen -->
+        <mxCell id="arrow24" value="24. Render My Requests list with status badges&#10;(PENDING / APPROVED / REJECTED)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-fe" target="lifeline-citizen">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 

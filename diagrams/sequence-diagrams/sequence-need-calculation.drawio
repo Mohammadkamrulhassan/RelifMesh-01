@@ -1,147 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="ReliefMesh" modified="2026-06-10T10:00:00.000Z">
   <diagram id="sequence-need-calc" name="Sequence - Need Calculation Flow (SD03)">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="2200" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
 
-        <!-- Lifeline: Upazila Officer (Actor) -->
-        <mxCell id="ll-officer" value="Upazila Officer" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="20" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: Upazila Officer -->
+        <mxCell id="ll-officer" value="Upazila Officer" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="60" y="20" width="200" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-officer" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="60" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="160" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
-        <!-- Lifeline: NeedDashboard (UI) -->
-        <mxCell id="ll-dashboard" value="NeedDashboard" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="180" y="20" width="80" height="30" as="geometry" />
+        <!-- Lifeline: NeedDashboard -->
+        <mxCell id="ll-dashboard" value="NeedDashboard&#10;(UI)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-dashboard" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="220" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="430" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
         <!-- Lifeline: NeedController -->
-        <mxCell id="ll-controller" value="NeedController" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="340" y="20" width="90" height="30" as="geometry" />
+        <mxCell id="ll-controller" value="NeedController&#10;(Express)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="640" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-controller" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="385" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="720" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
         <!-- Lifeline: GeographicArea -->
-        <mxCell id="ll-geo" value="GeographicArea" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="480" y="20" width="80" height="30" as="geometry" />
+        <mxCell id="ll-geo" value="GeographicArea&#10;(Model)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="930" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-geo" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="520" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="1010" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
         <!-- Lifeline: Household -->
-        <mxCell id="ll-household" value="Household" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="630" y="20" width="70" height="30" as="geometry" />
+        <mxCell id="ll-household" value="Household&#10;(Model)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-household" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="665" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="1300" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
         <!-- Lifeline: ItemCategory -->
-        <mxCell id="ll-itemcat" value="ItemCategory" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="760" y="20" width="70" height="30" as="geometry" />
+        <mxCell id="ll-itemcat" value="ItemCategory&#10;(Model)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-itemcat" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="795" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="1590" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
         <!-- Lifeline: NeedAssessment -->
-        <mxCell id="ll-assessment" value="NeedAssessment" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="900" y="20" width="80" height="30" as="geometry" />
+        <mxCell id="ll-assessment" value="NeedAssessment&#10;(Model)" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="20" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lifeline-assessment" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;noLabel=1;rotation=0;" vertex="1" parent="1">
-          <mxGeometry x="940" y="50" width="10" height="720" as="geometry" />
+          <mxGeometry x="1880" y="60" width="10" height="2100" as="geometry" />
         </mxCell>
 
-        <!-- === NEED CALCULATION FLOW === -->
+        <!-- ========== SECTION 1: NEED CALCULATION FLOW ========== -->
+
+        <mxCell id="label-sec1" value="&lt;b&gt;&lt;i&gt;--- Calculate Ward Needs ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="600" y="110" width="250" height="30" as="geometry" />
+        </mxCell>
 
         <!-- 1. Officer -> Dashboard -->
-        <mxCell id="arrow1" value="1. Selects ward &amp;&#10;coverage days" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-officer" target="lifeline-dashboard">
+        <mxCell id="arrow1" value="1. Selects ward (geographicArea) &amp; coverage days" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-officer" target="lifeline-dashboard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 2. Dashboard -> Controller -->
-        <mxCell id="arrow2" value="2. POST /need/calculate&#10;(areaId, days)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-controller">
+        <mxCell id="arrow2" value="2. POST /v1/need/calculate&#10;{areaId, days}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-controller">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Controller activation: Calculate needs -->
-        <mxCell id="act-calc" value="Coordinate need&#10;calculation" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
-          <mxGeometry x="350" y="150" width="80" height="180" as="geometry" />
+        <!-- Controller activation -->
+        <mxCell id="act-coord" value="Coordinate&#10;need calculation" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="690" y="220" width="120" height="40" as="geometry" />
         </mxCell>
 
         <!-- 3. Controller -> GeographicArea -->
-        <mxCell id="arrow3" value="3. findById(areaId)&#10;→ verify level=WARD" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-geo">
+        <mxCell id="arrow3" value="3. GeographicArea.findById(areaId)&#10;-> verify level === 'WARD'" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-geo">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 4. Controller -> Household -->
-        <mxCell id="arrow4" value="4. aggregate(&#10;$match:jurisdictionId,&#10;$group:demographics)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-household">
+        <mxCell id="arrow4" value="4. Household.aggregate([&#10;  {$match: {jurisdictionId}},&#10;  {$group: {_id: '$demographics', count: {$sum: 1}}}])" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-household">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 5. Controller -> ItemCategory -->
-        <mxCell id="arrow5" value="5. find({isActive:true})&#10;→ get per-person rates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-itemcat">
+        <mxCell id="arrow5" value="5. ItemCategory.find({isActive:true})&#10;-> get perPersonRates[]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-itemcat">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 6. Controller -> NeedAssessment -->
-        <mxCell id="arrow6" value="6. loop: calculate_qty&#10;= pop × rate × days&#10;→ findOneAndUpdate(upsert)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-assessment">
+        <mxCell id="arrow6" value="6. loop: effectiveQty = pop * rate * days&#10;NeedAssessment.findOneAndUpdate(&#10;  {areaId, itemId}, {effectiveQty}, {upsert:true})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-assessment">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 7. Controller -> Dashboard (return) -->
-        <mxCell id="arrow7" value="7. return assessments[]&#10;with effective_qty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-dashboard">
+        <mxCell id="arrow7" value="7. 200 OK + assessments[] with effectiveQty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-dashboard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 8. Dashboard -> Officer -->
-        <mxCell id="arrow8" value="8. display ward table&#10;with item breakdown" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-officer">
+        <mxCell id="arrow8" value="8. Display ward table with item breakdown&#10;(food, water, shelter per demographic)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-officer">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- === OVERRIDE PATH BREAK === -->
+        <!-- ========== SECTION 2: OVERRIDE PATH ========== -->
 
-        <mxCell id="label-override" value="&lt;b&gt;&lt;i&gt;--- Override Path ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="400" y="420" width="220" height="30" as="geometry" />
+        <mxCell id="label-sec2" value="&lt;b&gt;&lt;i&gt;--- Officer Overrides Calculated Qty ---&lt;/i&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="600" y="750" width="320" height="30" as="geometry" />
         </mxCell>
 
         <!-- 9. Officer -> Dashboard -->
-        <mxCell id="arrow9" value="9. clicks Override &amp;&#10;enters new qty + reason" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-officer" target="lifeline-dashboard">
+        <mxCell id="arrow9" value="9. Clicks Override, enters new qty + reason" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-officer" target="lifeline-dashboard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 10. Dashboard -> Controller -->
-        <mxCell id="arrow10" value="10. POST /need/:id/override&#10;(qty, reason)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-controller">
+        <mxCell id="arrow10" value="10. POST /v1/need/:id/override&#10;{overrideQty, reason}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-controller">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Controller action: Process override -->
-        <mxCell id="act-override" value="Process override" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
-          <mxGeometry x="355" y="495" width="70" height="30" as="geometry" />
+        <!-- Controller activation: override -->
+        <mxCell id="act-override" value="Process override&#10;Set overriddenBy" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="690" y="890" width="120" height="40" as="geometry" />
         </mxCell>
 
         <!-- 11. Controller -> NeedAssessment -->
-        <mxCell id="arrow11" value="11. findByIdAndUpdate&#10;with override_qty,&#10;overriddenBy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-assessment">
+        <mxCell id="arrow11" value="11. NeedAssessment.findByIdAndUpdate({&#10;  overrideQty, overriddenBy: userId,&#10;  overrideReason, overriddenAt: now})" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-assessment">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 12. Controller -> Dashboard (return) -->
-        <mxCell id="arrow12" value="12. return updated&#10;assessment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;" edge="1" parent="1" source="lifeline-controller" target="lifeline-dashboard">
+        <mxCell id="arrow12" value="12. 200 OK + updated assessment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;dashed=1;fontSize=12;" edge="1" parent="1" source="lifeline-controller" target="lifeline-dashboard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- 13. Dashboard -> Officer -->
-        <mxCell id="arrow13" value="13. show updated&#10;effective_qty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-officer">
+        <mxCell id="arrow13" value="13. Show updated effectiveQty&#10;with override reason" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;fontSize=12;" edge="1" parent="1" source="lifeline-dashboard" target="lifeline-officer">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
