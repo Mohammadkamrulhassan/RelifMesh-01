@@ -1,95 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="ReliefMesh" modified="2026-06-10T10:00:00.000Z">
-  <diagram id="architecture" name="System Architecture">
-    <mxGraphModel dx="1262" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2026-07-19T00:00:00.000Z" agent="5.0" etag="" version="24.0.0" type="device">
+  <diagram id="reliefmesh-architecture" name="System Architecture">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
 
-        <!-- === CLIENTS TIER === -->
-        <mxCell id="tier-client" value="&lt;b&gt;CLIENT TIER (Frontend)&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#fff2cc;strokeColor=#d6b656;startSize=30;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="30" y="20" width="300" height="200" as="geometry" />
+        <!-- ============================================================ -->
+        <!-- PRESENTATION TIER SWIMLANE                                   -->
+        <!-- ============================================================ -->
+        <mxCell id="lane-presentation" value="PRESENTATION TIER" style="shape=swimlane;startSize=30;horizontal=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1a1a2e;swimlaneLine=1;rounded=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="50" y="60" width="1300" height="240" as="geometry" />
         </mxCell>
 
-        <mxCell id="react-app" value="React SPA&#10;(Vite)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="60" y="80" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="router" value="React Router&#10;(Auth Guards)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="60" y="150" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="icons" value="SVG Icons&#10;(Lucide)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="200" y="80" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="api" value="Axios API&#10;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="200" y="150" width="100" height="50" as="geometry" />
+        <!-- React SPA -->
+        <mxCell id="react-spa" value="&lt;b&gt;React SPA&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Vite + React 18&lt;br&gt;React Router&lt;br&gt;Leaflet Maps&lt;br&gt;shadcn/ui&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;glass=0;align=center;" vertex="1" parent="lane-presentation">
+          <mxGeometry x="100" y="40" width="220" height="120" as="geometry" />
         </mxCell>
 
-        <!-- === API GATEWAY TIER === -->
-        <mxCell id="tier-api" value="&lt;b&gt;API GATEWAY (Backend)&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=30;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="30" y="280" width="300" height="260" as="geometry" />
+        <!-- Vite Build -->
+        <mxCell id="vite-build" value="&lt;b&gt;Vite Build&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;HMR / Dev Server&lt;br&gt;Tree Shaking&lt;br&gt;Code Splitting&lt;br&gt;Asset Pipeline&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-presentation">
+          <mxGeometry x="450" y="40" width="220" height="120" as="geometry" />
         </mxCell>
 
-        <mxCell id="express" value="Express.js&#10;(Node.js)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="60" y="330" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="middleware" value="Auth JWT&#10;Middleware" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="60" y="400" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="routes" value="Route Modules&#10;(Auth, Households, etc.)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="200" y="330" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="controllers" value="Controllers&#10;(Business Logic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="200" y="400" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="models" value="Mongoose&#10;Models" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="60" y="470" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="validators" value="Validation&#10;(Zod/Manual)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="200" y="470" width="100" height="50" as="geometry" />
+        <!-- Router -->
+        <mxCell id="router" value="&lt;b&gt;Router&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Client-side Routing&lt;br&gt;Route Guards&lt;br&gt;Lazy Loading&lt;br&gt;History API&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-presentation">
+          <mxGeometry x="800" y="40" width="220" height="120" as="geometry" />
         </mxCell>
 
-        <!-- === DATA TIER === -->
-        <mxCell id="tier-data" value="&lt;b&gt;DATA TIER&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="30" y="600" width="300" height="200" as="geometry" />
+        <!-- ============================================================ -->
+        <!-- APPLICATION TIER SWIMLANE                                    -->
+        <!-- ============================================================ -->
+        <mxCell id="lane-application" value="APPLICATION TIER" style="shape=swimlane;startSize=30;horizontal=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1a1a2e;swimlaneLine=1;rounded=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="50" y="360" width="1300" height="240" as="geometry" />
         </mxCell>
 
-        <mxCell id="mongo" value="MongoDB&#10;(NoSQL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="60" y="660" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="collections" value="Collections (13):&#10;users, households,&#10;distribution_logs,&#10;relief_requests, feedback,&#10;item_categories,&#10;jurisdictions,&#10;geographic_areas,&#10;need_assessments,&#10;relief_pledges,&#10;inventories,&#10;duplicate_alerts,&#10;sync_conflicts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="170" y="635" width="150" height="160" as="geometry" />
+        <!-- API Routes -->
+        <mxCell id="api-routes" value="&lt;b&gt;API Routes&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Next.js API Routes&lt;br&gt;Express Endpoints&lt;br&gt;REST Controllers&lt;br&gt;Input Validation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-application">
+          <mxGeometry x="50" y="40" width="250" height="140" as="geometry" />
         </mxCell>
 
-        <!-- === CONNECTORS === -->
+        <!-- AI Engine -->
+        <mxCell id="ai-engine" value="&lt;b&gt;AI Engine&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Need Calculation&lt;br&gt;Priority Scoring&lt;br&gt;Allocation Optimization&lt;br&gt;Resource Matching&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-application">
+          <mxGeometry x="400" y="40" width="250" height="140" as="geometry" />
+        </mxCell>
 
-        <!-- Client -> API (HTTP) -->
-        <mxCell id="conn-client-api" value="HTTP/JSON" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;strokeWidth=2;" edge="1" parent="1">
+        <!-- Auth -->
+        <mxCell id="auth" value="&lt;b&gt;Auth&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;JWT Tokens&lt;br&gt;Role-based Access&lt;br&gt;Session Management&lt;br&gt;Middleware&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-application">
+          <mxGeometry x="750" y="40" width="200" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- WebSocket -->
+        <mxCell id="websocket" value="&lt;b&gt;WebSocket&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Real-time Events&lt;br&gt;Notifications&lt;br&gt;Live Updates&lt;br&gt;Connection Pool&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-application">
+          <mxGeometry x="1050" y="40" width="200" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- DATA TIER SWIMLANE                                           -->
+        <!-- ============================================================ -->
+        <mxCell id="lane-data" value="DATA TIER" style="shape=swimlane;startSize=30;horizontal=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1a1a2e;swimlaneLine=1;rounded=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="50" y="660" width="1300" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- PostgreSQL -->
+        <mxCell id="postgresql" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Primary Database&lt;br&gt;Relational Data&lt;br&gt;ACID Transactions&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#ffffff;strokeColor=#d6b656;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-data">
+          <mxGeometry x="50" y="40" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- MongoDB -->
+        <mxCell id="mongodb" value="&lt;b&gt;MongoDB&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Document Store&lt;br&gt;Flexible Schema&lt;br&gt;JSON Documents&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#ffffff;strokeColor=#d6b656;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-data">
+          <mxGeometry x="400" y="40" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Redis -->
+        <mxCell id="redis" value="&lt;b&gt;Redis&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Cache Layer&lt;br&gt;Session Store&lt;br&gt;Pub/Sub&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#ffffff;strokeColor=#d6b656;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-data">
+          <mxGeometry x="750" y="40" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- File Storage -->
+        <mxCell id="file-storage" value="&lt;b&gt;File Storage&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;S3 / Local Uploads&lt;br&gt;Media Assets&lt;br&gt;Document Files&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#ffffff;strokeColor=#d6b656;strokeWidth=1.5;fontSize=12;verticalAlign=middle;shadow=1;align=center;" vertex="1" parent="lane-data">
+          <mxGeometry x="1050" y="40" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- CONNECTIONS — Presentation → Application                      -->
+        <!-- ============================================================ -->
+
+        <!-- React SPA → API Routes -->
+        <mxCell id="edge-spa-api" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#6c8ebf;strokeWidth=2;fontSize=10;fontColor=#6c8ebf;labelBackgroundColor=#ffffff;" edge="1" source="react-spa" target="api-routes" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- React SPA → Auth -->
+        <mxCell id="edge-spa-auth" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#6c8ebf;strokeWidth=2;fontSize=10;fontColor=#6c8ebf;labelBackgroundColor=#ffffff;" edge="1" source="react-spa" target="auth" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="180" y="220" as="sourcePoint" />
-            <mxPoint x="180" y="280" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="370" y="160" />
+              <mxPoint x="370" y="220" />
+              <mxPoint x="440" y="220" />
+              <mxPoint x="440" y="300" />
+              <mxPoint x="720" y="300" />
+              <mxPoint x="720" y="430" />
+            </Array>
           </mxGeometry>
         </mxCell>
 
-        <!-- API -> Data (Mongoose) -->
-        <mxCell id="conn-api-data" value="Mongoose ODM" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;strokeWidth=2;" edge="1" parent="1">
+        <!-- ============================================================ -->
+        <!-- CONNECTIONS — Application → Data                              -->
+        <!-- ============================================================ -->
+
+        <!-- API Routes → PostgreSQL -->
+        <mxCell id="edge-api-pg" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#82b366;strokeWidth=2;fontSize=10;fontColor=#82b366;labelBackgroundColor=#ffffff;" edge="1" source="api-routes" target="postgresql" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- API Routes → MongoDB -->
+        <mxCell id="edge-api-mongo" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#82b366;strokeWidth=2;fontSize=10;fontColor=#82b366;labelBackgroundColor=#ffffff;" edge="1" source="api-routes" target="mongodb" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="180" y="540" as="sourcePoint" />
-            <mxPoint x="180" y="600" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="250" y="540" />
+              <mxPoint x="250" y="610" />
+              <mxPoint x="525" y="610" />
+              <mxPoint x="525" y="700" />
+            </Array>
           </mxGeometry>
         </mxCell>
 
-        <!-- === LEGEND === -->
-        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry x="430" y="20" width="200" height="140" as="geometry" />
+        <!-- API Routes → Redis -->
+        <mxCell id="edge-api-redis" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#d6b656;strokeWidth=2;fontSize=10;fontColor=#d6b656;labelBackgroundColor=#ffffff;" edge="1" source="api-routes" target="redis" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="370" y="540" />
+              <mxPoint x="370" y="630" />
+              <mxPoint x="850" y="630" />
+              <mxPoint x="850" y="700" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="legend-client" value="Frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="450" y="50" width="80" height="20" as="geometry" />
+
+        <!-- AI Engine → PostgreSQL -->
+        <mxCell id="edge-ai-pg" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#82b366;strokeWidth=2;fontSize=10;fontColor=#82b366;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" source="ai-engine" target="postgresql" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="540" />
+              <mxPoint x="470" y="620" />
+              <mxPoint x="300" y="620" />
+              <mxPoint x="300" y="750" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="legend-api" value="Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="450" y="80" width="80" height="20" as="geometry" />
+
+        <!-- AI Engine → MongoDB -->
+        <mxCell id="edge-ai-mongo" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#82b366;strokeWidth=2;fontSize=10;fontColor=#82b366;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" source="ai-engine" target="mongodb" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="legend-data" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="450" y="110" width="80" height="20" as="geometry" />
+
+        <!-- Auth → PostgreSQL -->
+        <mxCell id="edge-auth-pg" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#82b366;strokeWidth=2;fontSize=10;fontColor=#82b366;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" source="auth" target="postgresql" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="540" />
+              <mxPoint x="820" y="590" />
+              <mxPoint x="330" y="590" />
+              <mxPoint x="330" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- WebSocket → Redis -->
+        <mxCell id="edge-ws-redis" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#d6b656;strokeWidth=2;fontSize=10;fontColor=#d6b656;labelBackgroundColor=#ffffff;" edge="1" source="websocket" target="redis" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="540" />
+              <mxPoint x="1150" y="590" />
+              <mxPoint x="900" y="590" />
+              <mxPoint x="900" y="700" />
+            </Array>
+          </mxGeometry>
         </mxCell>
 
       </root>

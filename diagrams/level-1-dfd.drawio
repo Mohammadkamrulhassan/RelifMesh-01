@@ -1,452 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="ReliefMesh" modified="2026-07-19T12:00:00.000Z">
-  <diagram id="level1-dfd" name="Level 1 Data Flow Diagram">
-    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="2000" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2026-07-19T12:00:00.000Z" agent="5.0" version="21.0.0">
+  <diagram id="level1-dfd" name="Level-1 DFD — ReliefMesh">
+    <mxGraphModel dx="3200" dy="2400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="2000" math="0" shadow="0">
       <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
 
-        <!-- ===== PROCESSES (bubbles) ===== -->
-
-        <!-- P1: Authenticate & User Mgmt (top-left) -->
-        <mxCell id="p1" value="P1&lt;br&gt;Authenticate &amp;&lt;br&gt;User Mgmt" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="40" width="170" height="110" as="geometry" />
+        <!-- ==================== TITLE ==================== -->
+        <mxCell id="title" value="Level-1 Data Flow Diagram — ReliefMesh Disaster Relief System" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=22;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="900" y="15" width="520" height="40" as="geometry"/>
         </mxCell>
 
-        <!-- P2: Manage Households (left-2) -->
-        <mxCell id="p2" value="P2&lt;br&gt;Manage&lt;br&gt;Households" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="220" width="170" height="110" as="geometry" />
+        <!-- ==================== EXTERNAL ENTITIES ==================== -->
+
+        <!-- Donor (Left Top) -->
+        <mxCell id="e_donor" value="Donor" style="shape=mxgraph.flowchart.annotation_2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="85" width="120" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P3: Manage Distributions (left-3) -->
-        <mxCell id="p3" value="P3&lt;br&gt;Manage&lt;br&gt;Distributions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="400" width="170" height="110" as="geometry" />
+        <!-- Citizen (Left Bottom) -->
+        <mxCell id="e_citizen" value="Citizen" style="shape=mxgraph.flowchart.annotation_2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="475" width="120" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P10: Manage Inventory (left-4) -->
-        <mxCell id="p10" value="P10&lt;br&gt;Manage&lt;br&gt;Inventory" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="580" width="170" height="110" as="geometry" />
+        <!-- Admin (Right Top) -->
+        <mxCell id="e_admin" value="Admin" style="shape=mxgraph.flowchart.annotation_2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="85" width="120" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P4: Manage Relief Requests (center-left) -->
-        <mxCell id="p4" value="P4&lt;br&gt;Manage&lt;br&gt;Relief Requests" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="320" y="40" width="170" height="110" as="geometry" />
+        <!-- Officer (Right Bottom) -->
+        <mxCell id="e_officer" value="Officer" style="shape=mxgraph.flowchart.annotation_2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="475" width="120" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P5: Dashboard & Reports (center) -->
-        <mxCell id="p5" value="P5&lt;br&gt;Dashboard &amp;&lt;br&gt;Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="320" y="220" width="170" height="110" as="geometry" />
+        <!-- ==================== PROCESSES ==================== -->
+
+        <!-- ===== Column 1 (x=500) ===== -->
+
+        <!-- P3: Donation Management (y=100) -->
+        <mxCell id="p3" value="P3&lt;br&gt;Donation Mgmt" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="435" y="75" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P6: Manage Feedback (center-bottom) -->
-        <mxCell id="p6" value="P6&lt;br&gt;Manage&lt;br&gt;Feedback" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="320" y="400" width="170" height="110" as="geometry" />
+        <!-- P1: Relief Request (y=400) -->
+        <mxCell id="p1" value="P1&lt;br&gt;Relief Request" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="435" y="375" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P7: Manage Geographic Areas (center-right-top) -->
-        <mxCell id="p7" value="P7&lt;br&gt;Manage&lt;br&gt;Geographic Areas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="600" y="40" width="170" height="110" as="geometry" />
+        <!-- P2: User Authentication (y=580) -->
+        <mxCell id="p2" value="P2&lt;br&gt;User Auth" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="435" y="555" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P8: Need Assessment (center-right-middle) -->
-        <mxCell id="p8" value="P8&lt;br&gt;Need&lt;br&gt;Assessment" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="600" y="220" width="170" height="110" as="geometry" />
+        <!-- ===== Column 2 (x=1000) ===== -->
+
+        <!-- P6: Campaign Management (y=100) -->
+        <mxCell id="p6" value="P6&lt;br&gt;Campaign Mgmt" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="935" y="75" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P9: Manage Relief Pledges (center-right-bottom) -->
-        <mxCell id="p9" value="P9&lt;br&gt;Manage&lt;br&gt;Relief Pledges" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="600" y="400" width="170" height="110" as="geometry" />
+        <!-- P5: Need Assessment (y=250) -->
+        <mxCell id="p5" value="P5&lt;br&gt;Need Assessment" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="935" y="225" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- ===== DATA STORES (cylinders) ===== -->
-
-        <!-- D1: Users (top-center) -->
-        <mxCell id="d1" value="D1&lt;br&gt;Users" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="920" y="40" width="130" height="80" as="geometry" />
+        <!-- P4: Distribution Plan (y=400) -->
+        <mxCell id="p4" value="P4&lt;br&gt;Distribution Plan" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="935" y="375" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D7: GeographicAreas (top-right) -->
-        <mxCell id="d7" value="D7&lt;br&gt;Geographic&lt;br&gt;Areas" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="40" width="130" height="80" as="geometry" />
+        <!-- P7: Inventory Management (y=580) -->
+        <mxCell id="p7" value="P7&lt;br&gt;Inventory Mgmt" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="935" y="555" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D2: Households (row 2) -->
-        <mxCell id="d2" value="D2&lt;br&gt;Households" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="920" y="180" width="130" height="80" as="geometry" />
+        <!-- ===== Column 3 (x=1500) ===== -->
+
+        <!-- P9: Reporting (y=100) -->
+        <mxCell id="p9" value="P9&lt;br&gt;Reporting" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1435" y="75" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D3: DistributionLogs (row 2-right) -->
-        <mxCell id="d3" value="D3&lt;br&gt;Distribution&lt;br&gt;Logs" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="180" width="130" height="80" as="geometry" />
+        <!-- P8: Tracking (y=400) -->
+        <mxCell id="p8" value="P8&lt;br&gt;Tracking" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1435" y="375" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D4: ReliefRequests (row 3) -->
-        <mxCell id="d4" value="D4&lt;br&gt;Relief&lt;br&gt;Requests" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="920" y="320" width="130" height="80" as="geometry" />
+        <!-- P10: Notification (y=580) -->
+        <mxCell id="p10" value="P10&lt;br&gt;Notification" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1435" y="555" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D5: Feedback (row 3-right) -->
-        <mxCell id="d5" value="D5&lt;br&gt;Feedback" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="320" width="130" height="80" as="geometry" />
+        <!-- ==================== DATA STORES ==================== -->
+
+        <!-- ===== Column 1 (x=760) ===== -->
+
+        <!-- D3: Donations (y=100) -->
+        <mxCell id="d3" value="D3: Donations" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="75" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D6: ItemCategories (row 4) -->
-        <mxCell id="d6" value="D6&lt;br&gt;Item&lt;br&gt;Categories" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="920" y="460" width="130" height="80" as="geometry" />
+        <!-- D4: Households (y=250) -->
+        <mxCell id="d4" value="D4: Households" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="225" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D8: NeedAssessments (row 4-right) -->
-        <mxCell id="d8" value="D8&lt;br&gt;Need&lt;br&gt;Assessments" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="460" width="130" height="80" as="geometry" />
+        <!-- D2: Relief Requests (y=400) -->
+        <mxCell id="d2" value="D2: Relief Requests" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="375" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D9: ReliefPledges (row 5) -->
-        <mxCell id="d9" value="D9&lt;br&gt;Relief&lt;br&gt;Pledges" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="920" y="600" width="130" height="80" as="geometry" />
+        <!-- D1: Users (y=580) -->
+        <mxCell id="d1" value="D1: Users" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="555" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D10: Inventories (row 5-right) -->
-        <mxCell id="d10" value="D10&lt;br&gt;Inventories" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="600" width="130" height="80" as="geometry" />
+        <!-- ===== Column 2 (x=1260) ===== -->
+
+        <!-- D7: Campaigns (y=100) -->
+        <mxCell id="d7" value="D7: Campaigns" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="75" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- D11: SyncConflicts (row 6) -->
-        <mxCell id="d11" value="D11&lt;br&gt;Sync&lt;br&gt;Conflicts" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="920" y="740" width="130" height="80" as="geometry" />
+        <!-- D8: Allocations (y=250) -->
+        <mxCell id="d8" value="D8: Allocations" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="225" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- ===== EXTERNAL ENTITIES (hexagons) ===== -->
-
-        <!-- UPAZILA OFFICER (top-right) -->
-        <mxCell id="ee-upazila" value="UPAZILA&lt;br&gt;OFFICER" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="40" width="160" height="80" as="geometry" />
+        <!-- D5: Distribution Plans (y=400) -->
+        <mxCell id="d5" value="D5: Distribution Plans" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="375" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- UP OFFICIAL (right-2) -->
-        <mxCell id="ee-up" value="UP&lt;br&gt;OFFICIAL" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="220" width="160" height="80" as="geometry" />
+        <!-- D6: Inventory (y=580) -->
+        <mxCell id="d6" value="D6: Inventory" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="555" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- NGO WORKER (right-3) -->
-        <mxCell id="ee-ngo" value="NGO&lt;br&gt;WORKER" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="400" width="160" height="80" as="geometry" />
+        <!-- ===== Column 3 (x=1760) ===== -->
+
+        <!-- D10: Analytics (y=100) -->
+        <mxCell id="d10" value="D10: Analytics" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="75" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- CITIZEN (right-4) -->
-        <mxCell id="ee-citizen" value="CITIZEN" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="580" width="160" height="80" as="geometry" />
+        <!-- D11: Feedback (y=250) -->
+        <mxCell id="d11" value="D11: Feedback" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="225" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- ===== DATA FLOWS ===== -->
-
-        <!-- P1 <-> D1 (auth/user data) -->
-        <mxCell id="f-p1-d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="95" as="sourcePoint" />
-            <mxPoint x="920" y="80" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p1-d1-label" value="user data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p1-d1" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- D9: Notifications (y=580) -->
+        <mxCell id="d9" value="D9: Notifications" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="555" width="80" height="50" as="geometry"/>
         </mxCell>
 
-        <!-- P2 <-> D2 (household data) -->
-        <mxCell id="f-p2-d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="275" as="sourcePoint" />
-            <mxPoint x="920" y="220" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p2-d2-label" value="household data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p2-d2" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- ==================== DATA FLOWS ==================== -->
+
+        <!-- 1. Citizen → P1: Relief Request -->
+        <mxCell id="f1" value="Relief Request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="e_citizen" target="p1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P3 <-> D3 (distribution data) -->
-        <mxCell id="f-p3-d3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="455" as="sourcePoint" />
-            <mxPoint x="1140" y="220" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p3-d3-label" value="distribution data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p3-d3" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 2. Citizen → P2: Login / Register -->
+        <mxCell id="f2" value="Login / Register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="e_citizen" target="p2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P4 <-> D4 (relief request data) -->
-        <mxCell id="f-p4-d4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="95" as="sourcePoint" />
-            <mxPoint x="920" y="360" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p4-d4-label" value="request data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p4-d4" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 3. Donor → P3: Donation Pledge -->
+        <mxCell id="f3" value="Donation Pledge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="e_donor" target="p3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P5 -> D2 (reads household for dashboard) -->
-        <mxCell id="f-p5-d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="405" y="330" as="sourcePoint" />
-            <mxPoint x="985" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p5-d2-label" value="reads household" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p5-d2" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 4. P1 → D2: Request Data -->
+        <mxCell id="f4" value="Request Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p1" target="d2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P5 -> D3 (reads distributions for dashboard) -->
-        <mxCell id="f-p5-d3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="275" as="sourcePoint" />
-            <mxPoint x="1205" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p5-d3-label" value="reads distribution" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p5-d3" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 5. P2 → D1: User Data -->
+        <mxCell id="f5" value="User Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p2" target="d1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P5 -> D4 (reads requests for dashboard) -->
-        <mxCell id="f-p5-d4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="295" as="sourcePoint" />
-            <mxPoint x="985" y="360" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p5-d4-label" value="reads requests" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p5-d4" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 6. P3 → D3: Donation Data -->
+        <mxCell id="f6" value="Donation Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p3" target="d3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P5 -> D8 (reads need assessment data) -->
-        <mxCell id="f-p5-d8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="315" as="sourcePoint" />
-            <mxPoint x="1205" y="500" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p5-d8-label" value="need data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p5-d8" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 7. P5 → D4: Household Data -->
+        <mxCell id="f7" value="Household Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p5" target="d4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P5 -> D9 (reads pledge data) -->
-        <mxCell id="f-p5-d9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="335" as="sourcePoint" />
-            <mxPoint x="985" y="640" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p5-d9-label" value="pledge data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p5-d9" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 8. P5 → P4: Needs Data -->
+        <mxCell id="f8" value="Needs Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p5" target="p4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P6 <-> D5 (feedback data) -->
-        <mxCell id="f-p6-d5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="455" as="sourcePoint" />
-            <mxPoint x="1140" y="360" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p6-d5-label" value="feedback data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p6-d5" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 9. P4 → D5: Distribution Plans -->
+        <mxCell id="f9" value="Distribution Plans" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p4" target="d5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P7 <-> D7 (geographic area data) -->
-        <mxCell id="f-p7-d7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="95" as="sourcePoint" />
-            <mxPoint x="1140" y="80" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p7-d7-label" value="area data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p7-d7" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 10. P7 → D6: Inventory Data -->
+        <mxCell id="f10" value="Inventory Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p7" target="d6" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P8 <-> D8 (need assessment data) -->
-        <mxCell id="f-p8-d8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="275" as="sourcePoint" />
-            <mxPoint x="1140" y="500" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p8-d8-label" value="need data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p8-d8" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 11. P6 → D7: Campaign Data -->
+        <mxCell id="f11" value="Campaign Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p6" target="d7" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P8 -> D2 (reads household for calculation) -->
-        <mxCell id="f-p8-d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="685" y="330" as="sourcePoint" />
-            <mxPoint x="985" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p8-d2-label" value="reads household" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p8-d2" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 12. P4 → D8: Allocation Data -->
+        <mxCell id="f12" value="Allocation Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p4" target="d8" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P8 -> D6 (reads item category rates) -->
-        <mxCell id="f-p8-d6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="295" as="sourcePoint" />
-            <mxPoint x="985" y="500" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p8-d6-label" value="reads rates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p8-d6" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 13. P8 → D9: Notification Data -->
+        <mxCell id="f13" value="Notification Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p8" target="d9" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P9 <-> D9 (relief pledge data) -->
-        <mxCell id="f-p9-d9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="455" as="sourcePoint" />
-            <mxPoint x="920" y="640" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p9-d9-label" value="pledge data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p9-d9" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 14. P9 → D10: Analytics Data -->
+        <mxCell id="f14" value="Analytics Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p9" target="d10" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P9 -> D3 (writes fulfillment to distribution logs) -->
-        <mxCell id="f-p9-d3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="435" as="sourcePoint" />
-            <mxPoint x="1205" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p9-d3-label" value="writes fulfillment" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p9-d3" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 15. P2 → P1: User Verified -->
+        <mxCell id="f15" value="User Verified" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p2" target="p1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P10 <-> D10 (inventory data) -->
-        <mxCell id="f-p10-d10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="635" as="sourcePoint" />
-            <mxPoint x="1140" y="640" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p10-d10-label" value="inventory data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p10-d10" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 16. P3 → P6: Campaign Funds -->
+        <mxCell id="f16" value="Campaign Funds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p3" target="p6" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P10 -> D3 (reads distribution logs for stock) -->
-        <mxCell id="f-p10-d3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="615" as="sourcePoint" />
-            <mxPoint x="1205" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p10-d3-label" value="reads distribution" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p10-d3" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 17. P5 → P8: Tracking Needs -->
+        <mxCell id="f17" value="Tracking Needs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p5" target="p8" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P3 -> D11 (sync conflicts from distributions) -->
-        <mxCell id="f-p3-d11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=none;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="475" as="sourcePoint" />
-            <mxPoint x="985" y="780" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p3-d11-label" value="sync conflicts" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p3-d11" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 18. P8 → Officer: Distribution Assignment -->
+        <mxCell id="f18" value="Distribution Assignment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p8" target="e_officer" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- ===== PROCESS TO EXTERNAL ENTITY FLOWS ===== -->
-
-        <!-- P1 <-> UPAZILA OFFICER (login, register) -->
-        <mxCell id="f-p1-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="80" as="sourcePoint" />
-            <mxPoint x="1460" y="80" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p1-e1-label" value="Login, Register" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p1-e1" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 19. P9 → Admin: Reports -->
+        <mxCell id="f19" value="Reports" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p9" target="e_admin" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P2 <-> UP OFFICIAL (manage households) -->
-        <mxCell id="f-p2-e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="260" as="sourcePoint" />
-            <mxPoint x="1460" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p2-e2-label" value="Manage households" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p2-e2" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 20. P10 → D9: Alert Data -->
+        <mxCell id="f20" value="Alert Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p10" target="d9" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- P3 <-> NGO WORKER (distributions) -->
-        <mxCell id="f-p3-e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="440" as="sourcePoint" />
-            <mxPoint x="1460" y="440" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p3-e3-label" value="Manage distributions" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p3-e3" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- P4 <-> CITIZEN (submit request, check status) -->
-        <mxCell id="f-p4-e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="405" y="95" as="sourcePoint" />
-            <mxPoint x="1540" y="620" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p4-e4-label" value="Request, Status" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p4-e4" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- P7 <-> UPAZILA OFFICER (manage geographic areas) -->
-        <mxCell id="f-p7-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="80" as="sourcePoint" />
-            <mxPoint x="1460" y="100" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p7-e1-label" value="Manage areas" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p7-e1" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- P8 <-> UPAZILA OFFICER (trigger calculation, override) -->
-        <mxCell id="f-p8-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="260" as="sourcePoint" />
-            <mxPoint x="1460" y="120" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p8-e1-label" value="Trigger calc, Override" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p8-e1" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- P9 <-> NGO WORKER (create pledges) -->
-        <mxCell id="f-p9-e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="440" as="sourcePoint" />
-            <mxPoint x="1460" y="440" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p9-e3-label" value="Create pledges" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p9-e3" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- P9 <-> UPAZILA OFFICER (pledge fulfillment) -->
-        <mxCell id="f-p9-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="685" y="435" as="sourcePoint" />
-            <mxPoint x="1460" y="140" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p9-e1-label" value="Pledge fulfillment" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p9-e1" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- P10 <-> UPAZILA OFFICER (manage inventory) -->
-        <mxCell id="f-p10-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;startArrow=blockThin;startFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="620" as="sourcePoint" />
-            <mxPoint x="1460" y="160" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="f-p10-e1-label" value="Manage inventory" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" parent="f-p10-e1" connectable="0">
-          <mxGeometry x="-0.1" y="-12" relative="1" as="geometry" />
+        <!-- 21. P8 → P10: Status Update -->
+        <mxCell id="f21" value="Status Update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1.5;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;" edge="1" source="p8" target="p10" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
       </root>

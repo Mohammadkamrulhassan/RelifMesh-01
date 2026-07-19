@@ -1,349 +1,442 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="ReliefMesh" modified="2026-07-19T11:30:00.000Z">
-  <diagram id="class-diagram" name="Class Diagram">
-    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3600" pageHeight="2400" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2026-07-19T00:00:00.000Z" agent="Claude" version="24.0.0" type="device">
+  <diagram name="ReliefMesh Class Diagram" id="class-diagram">
+    <mxGraphModel dx="3600" dy="2400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="2000" math="0" shadow="0">
       <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
 
-        <!-- ===== CLASSES ===== -->
+        <!-- ============================================ -->
+        <!-- ROW 1 (y=60): User, Household, ReliefRequest -->
+        <!-- ============================================ -->
 
-        <!-- User (top-center) -->
-        <mxCell id="class-user" value="&lt;b&gt;User&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- name: String&lt;br&gt;- email: String (unique)&lt;br&gt;- passwordHash: String&lt;br&gt;- role: Enum [UP_OFFICIAL, UPAZILA_OFFICER, NGO_WORKER, CITIZEN]&lt;br&gt;- jurisdictionId: ObjectId?&lt;br&gt;- phone: String?&lt;br&gt;- address: String?&lt;br&gt;- isActive: Boolean&lt;hr&gt;+ register()&lt;br&gt;+ login()&lt;br&gt;+ getProfile()" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1500" y="40" width="320" height="220" as="geometry" />
+        <!-- ======== User ======== -->
+        <mxCell id="user" value="User" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="60" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="user_attrs" value="- userId : String&#10;- name : String&#10;- email : String&#10;- phone : String&#10;- role : Enum {Admin, Officer, Volunteer, Donor}&#10;- location : String&#10;- createdAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="user">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="user_methods" value="+ register() : void&#10;+ login() : AuthToken&#10;+ updateProfile() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="user">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- Household (left-top) -->
-        <mxCell id="class-household" value="&lt;b&gt;Household&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- headName: String&lt;br&gt;- nid: String&lt;br&gt;- gps: {lat, lng}&lt;br&gt;- familySize: Number&lt;br&gt;- familyMembers: [{name, age, gender}]&lt;br&gt;- vulnerabilityFlags: Object{elderly,disabled,pregnant}&lt;br&gt;- children_0_5: Number&lt;br&gt;- over_60: Number&lt;br&gt;- adults_18_59: Number&lt;br&gt;- jurisdictionId: ObjectId (GeographicArea)&lt;br&gt;- registeredBy: ObjectId (User)&lt;hr&gt;+ create()&lt;br&gt;+ list()&lt;br&gt;+ getById()&lt;br&gt;+ update()" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="40" y="380" width="320" height="320" as="geometry" />
+        <!-- ======== Household ======== -->
+        <mxCell id="household" value="Household" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="800" y="60" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="household_attrs" value="- householdId : String&#10;- headName : String&#10;- memberCount : int&#10;- location : String&#10;- vulnerabilityScore : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="household">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="household_methods" value="+ addMember() : void&#10;+ getDetails() : Household" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="household">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- DistributionLog (left-middle) -->
-        <mxCell id="class-distribution" value="&lt;b&gt;DistributionLog&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- householdId: ObjectId (ref Household)&lt;br&gt;- officerId: ObjectId (ref User)&lt;br&gt;- itemCategoryId: ObjectId (ref ItemCategory)&lt;br&gt;- pledgeId: ObjectId? (ref ReliefPledge)&lt;br&gt;- quantity: Number&lt;br&gt;- unit: String&lt;br&gt;- gps: {lat, lng}&lt;br&gt;- photoUrl: String?&lt;br&gt;- distributedAt: Date&lt;br&gt;- syncStatus: Enum [PENDING, SYNCED, CONFLICT]&lt;br&gt;- isOverride: Boolean&lt;br&gt;- overrideReason: String?&lt;hr&gt;+ create()&lt;br&gt;+ list()&lt;br&gt;+ getById()&lt;br&gt;+ update()&lt;br&gt;+ remove()" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="40" y="820" width="320" height="320" as="geometry" />
+        <!-- ======== ReliefRequest ======== -->
+        <mxCell id="request" value="ReliefRequest" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="60" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="request_attrs" value="- requestId : String&#10;- userId : String&#10;- householdId : String&#10;- status : Enum {Pending, Approved, Rejected}&#10;- priority : Enum {Low, Medium, High, Critical}&#10;- description : Text&#10;- createdAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="request">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="request_methods" value="+ submit() : void&#10;+ track() : Status&#10;+ cancel() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="request">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- ReliefRequest (center-left) -->
-        <mxCell id="class-reliefrequest" value="&lt;b&gt;ReliefRequest&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- citizenId: ObjectId (ref User)&lt;br&gt;- householdId: ObjectId? (ref Household)&lt;br&gt;- description: String?&lt;br&gt;- items: [{itemCategoryId, quantity, unit}]&lt;br&gt;- status: Enum [PENDING, APPROVED, REJECTED, FULFILLED]&lt;br&gt;- priority: Enum [LOW, MEDIUM, HIGH, URGENT]&lt;br&gt;- location: {lat, lng, address}&lt;br&gt;- jurisdictionId: ObjectId? (ref GeographicArea)&lt;br&gt;- reviewedBy: ObjectId? (ref User)&lt;br&gt;- reviewedAt: Date?&lt;br&gt;- reviewNotes: String?&lt;hr&gt;+ submit()&lt;br&gt;+ listMyRequests()&lt;br&gt;+ review()&lt;br&gt;+ cancel()" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="560" y="820" width="320" height="320" as="geometry" />
+        <!-- =============================================== -->
+        <!-- ROW 2 (y=560): ReliefCampaign, Donation, CampaignResource -->
+        <!-- =============================================== -->
+
+        <!-- ======== ReliefCampaign ======== -->
+        <mxCell id="campaign" value="ReliefCampaign" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="560" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="campaign_attrs" value="- campaignId : String&#10;- title : String&#10;- goal : Decimal&#10;- raised : Decimal&#10;- status : Enum {Active, Closed, Paused}&#10;- startDate : Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="campaign">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="campaign_methods" value="+ create() : void&#10;+ update() : void&#10;+ close() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="campaign">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- Feedback (right-top) -->
-        <mxCell id="class-feedback" value="&lt;b&gt;Feedback&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- householdId: ObjectId? (ref Household)&lt;br&gt;- submittedBy: ObjectId? (ref User)&lt;br&gt;- name: String&lt;br&gt;- contact: String?&lt;br&gt;- category: Enum [COMPLAINT, SUGGESTION, INQUIRY, APPRECIATION, OTHER]&lt;br&gt;- message: String&lt;br&gt;- isRead: Boolean&lt;br&gt;- response: String?&lt;br&gt;- respondedBy: ObjectId? (ref User)&lt;br&gt;- respondedAt: Date?&lt;br&gt;- createdAt: Date&lt;hr&gt;+ submit()&lt;br&gt;+ list()&lt;br&gt;+ respond()" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="2680" y="380" width="320" height="280" as="geometry" />
+        <!-- ======== Donation ======== -->
+        <mxCell id="donation" value="Donation" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="800" y="560" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="donation_attrs" value="- donationId : String&#10;- campaignId : String&#10;- donorId : String&#10;- amount : Decimal&#10;- date : DateTime&#10;- method : Enum {Cash, Online, Bank}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="donation">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="donation_methods" value="+ pledge() : void&#10;+ confirm() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="donation">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- ItemCategory (right-middle) -->
-        <mxCell id="class-itemcategory" value="&lt;b&gt;ItemCategory&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- name: String&lt;br&gt;- unit: String&lt;br&gt;- per_person_per_day_qty: Number&lt;br&gt;- parentCategoryId: ObjectId? (self-ref)&lt;br&gt;- isActive: Boolean" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="2680" y="820" width="300" height="180" as="geometry" />
+        <!-- ======== CampaignResource ======== -->
+        <mxCell id="campresource" value="CampaignResource" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="560" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="campresource_attrs" value="- resourceId : String&#10;- campaignId : String&#10;- name : String&#10;- quantity : int&#10;- type : Enum {Food, Water, Medicine, Shelter}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="campresource">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="campresource_methods" value="+ add() : void&#10;+ remove() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="campresource">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- GeographicArea (center) -->
-        <mxCell id="class-geographicarea" value="&lt;b&gt;GeographicArea&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- name: String&lt;br&gt;- level: enum{DIVISION,DISTRICT,UPAZILA,UNION,WARD}&lt;br&gt;- parentId: ObjectId&lt;br&gt;- coordinates: {lat,lng}&lt;br&gt;- population: Number&lt;br&gt;- isActive: Boolean&lt;hr&gt;+ getChildren(): GeographicArea[]&lt;br&gt;+ getHierarchy(level): GeographicArea[]&lt;br&gt;+ getAncestors(): GeographicArea[]" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1500" y="380" width="340" height="250" as="geometry" />
+        <!-- ================================================== -->
+        <!-- ROW 3 (y=1060): NeedsAssessment, Allocation, Inventory -->
+        <!-- ================================================== -->
+
+        <!-- ======== NeedsAssessment ======== -->
+        <mxCell id="assessment" value="NeedsAssessment" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1060" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="assessment_attrs" value="- assessmentId : String&#10;- householdId : String&#10;- officerId : String&#10;- score : float&#10;- date : Date&#10;- factors : JSON" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="assessment">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="assessment_methods" value="+ calculate() : float&#10;+ approve() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="assessment">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- NeedAssessment (center-bottom) -->
-        <mxCell id="class-needassessment" value="&lt;b&gt;NeedAssessment&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- areaId: ObjectId&lt;br&gt;- itemCategoryId: ObjectId&lt;br&gt;- calculated_qty: Number&lt;br&gt;- override_qty: Number&lt;br&gt;- override_reason: String&lt;br&gt;- overriddenBy: ObjectId&lt;br&gt;- coverageDays: Number&lt;br&gt;- demographics: Object{totalPopulation,children_0_5,over_60,adults_18_59}&lt;br&gt;- calculated_at: Date&lt;br&gt;+ effective_qty (virtual): Number&lt;hr&gt;+ calculate(areaId, days): NeedAssessment[]&lt;br&gt;+ setOverride(id, qty, reason): NeedAssessment" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1500" y="820" width="340" height="300" as="geometry" />
+        <!-- ======== Allocation ======== -->
+        <mxCell id="allocation" value="Allocation" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="800" y="1060" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="allocation_attrs" value="- allocationId : String&#10;- requestId : String&#10;- itemId : String&#10;- quantity : int&#10;- status : Enum {Pending, Confirmed, Shipped}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="allocation">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="allocation_methods" value="+ allocate() : void&#10;+ confirm() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="allocation">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- ReliefPledge (right-bottom) -->
-        <mxCell id="class-reliefpledge" value="&lt;b&gt;ReliefPledge&lt;/b&gt;&lt;hr&gt;- _id: ObjectId&lt;br&gt;- source_type: enum{GOVERNMENT,NGO,INDIVIDUAL,CORPORATE}&lt;br&gt;- source_name: String&lt;br&gt;- source_contact: String&lt;br&gt;- areaId: ObjectId&lt;br&gt;- itemCategoryId: ObjectId&lt;br&gt;- total_qty: Number&lt;br&gt;- distributed_qty: Number&lt;br&gt;- status: enum{PENDING,IN_FULFILLMENT,COMPLETED,CANCELLED}&lt;br&gt;- pledgedBy: ObjectId&lt;br&gt;- fulfilled_date: Date&lt;br&gt;+ remaining_qty (virtual): Number&lt;hr&gt;+ updateStatus(newStatus): ReliefPledge&lt;br&gt;+ getMyPledges(userId): ReliefPledge[]" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="2680" y="1120" width="320" height="300" as="geometry" />
+        <!-- ======== Inventory ======== -->
+        <mxCell id="inventory" value="Inventory" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="1060" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="inventory_attrs" value="- itemId : String&#10;- name : String&#10;- category : Enum {Food, Water, Medical, Shelter}&#10;- quantity : int&#10;- location : String&#10;- unitCost : Decimal" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="inventory">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="inventory_methods" value="+ add() : void&#10;+ update() : void&#10;+ transfer() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="inventory">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- Jurisdiction (deprecated, bottom-left) -->
-        <mxCell id="class-jurisdiction" value="&lt;i&gt;&lt;b&gt;Jurisdiction&lt;/b&gt;&lt;/i&gt;&lt;hr&gt;&lt;i&gt;[DEPRECATED]&lt;/i&gt;&lt;br&gt;- _id: ObjectId&lt;br&gt;- name: String&lt;br&gt;- level: Enum [DISTRICT, UPAZILA, UNION]&lt;br&gt;- parentId: ObjectId?" style="shape=rect;rounded=1;whiteSpace=wrap;html=1;overflow=hidden;fillColor=#f5f5f5;strokeColor=#999999;dashed=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="40" y="1280" width="260" height="140" as="geometry" />
+        <!-- ========================================================= -->
+        <!-- ROW 4 (y=1560): Distribution, DistributionItem, Feedback  -->
+        <!-- ========================================================= -->
+
+        <!-- ======== Distribution ======== -->
+        <mxCell id="distribution" value="Distribution" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1560" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="distribution_attrs" value="- distributionId : String&#10;- allocationId : String&#10;- officerId : String&#10;- date : DateTime&#10;- status : Enum {Planned, InTransit, Delivered}&#10;- proof : File" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="distribution">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="distribution_methods" value="+ plan() : void&#10;+ execute() : void&#10;+ confirm() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="distribution">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
         </mxCell>
 
-        <!-- ===== ASSOCIATIONS ===== -->
+        <!-- ======== DistributionItem ======== -->
+        <mxCell id="distitem" value="DistributionItem" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="800" y="1560" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="distitem_attrs" value="- itemId : String&#10;- distributionId : String&#10;- name : String&#10;- quantity : int&#10;- unit : String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="distitem">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="distitem_methods" value="+ add() : void&#10;+ remove() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="distitem">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
+        </mxCell>
 
-        <!-- User → Household (registeredBy) -->
-        <mxCell id="assoc-user-hh" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1500" y="150" as="sourcePoint" />
-            <mxPoint x="360" y="540" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1400" y="150" />
-              <mxPoint x="1400" y="280" />
-              <mxPoint x="200" y="280" />
-              <mxPoint x="200" y="350" />
-            </Array>
+        <!-- ======== Feedback ======== -->
+        <mxCell id="feedback" value="Feedback" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="1560" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="feedback_attrs" value="- feedbackId : String&#10;- userId : String&#10;- distributionId : String&#10;- rating : int {1-5}&#10;- comment : Text&#10;- date : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="feedback">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="feedback_methods" value="+ submit() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="feedback">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================= -->
+        <!-- ROW 5 (y=2060): Notification, AuditLog        -->
+        <!-- ============================================= -->
+
+        <!-- ======== Notification ======== -->
+        <mxCell id="notification" value="Notification" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="2060" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="notification_attrs" value="- notifId : String&#10;- userId : String&#10;- type : Enum {Request, Donation, Distribution}&#10;- message : Text&#10;- read : Boolean&#10;- createdAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="notification">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="notification_methods" value="+ send() : void&#10;+ markRead() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="notification">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
+        </mxCell>
+
+        <!-- ======== AuditLog ======== -->
+        <mxCell id="auditlog" value="AuditLog" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneLine=1;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="800" y="2060" width="320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="auditlog_attrs" value="- logId : String&#10;- userId : String&#10;- action : Enum {Create, Update, Delete, View}&#10;- entity : String&#10;- entityId : String&#10;- timestamp : DateTime&#10;- details : JSON" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="auditlog">
+          <mxGeometry y="30" width="320" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="auditlog_methods" value="+ log() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontColor=#333333;" vertex="1" parent="auditlog">
+          <mxGeometry y="115" width="320" height="85" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================= -->
+        <!-- ASSOCIATIONS                                   -->
+        <!-- ============================================= -->
+
+        <!-- 1. User "1" — "*" Household -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="user" target="household" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e1">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-user-hh-label" value="registeredBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-user-hh" connectable="0">
-          <mxGeometry x="-0.2" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- User → DistributionLog (officerId) -->
-        <mxCell id="assoc-user-dist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1500" y="180" as="sourcePoint" />
-            <mxPoint x="360" y="980" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1360" y="180" />
-              <mxPoint x="1360" y="280" />
-              <mxPoint x="100" y="280" />
-              <mxPoint x="100" y="790" />
-            </Array>
+        <mxCell id="e1_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e1">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-user-dist-label" value="officerId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-user-dist" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- User → ReliefRequest (citizenId) -->
-        <mxCell id="assoc-user-rr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1500" y="210" as="sourcePoint" />
-            <mxPoint x="720" y="820" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1320" y="210" />
-              <mxPoint x="1320" y="280" />
-              <mxPoint x="640" y="280" />
-              <mxPoint x="640" y="790" />
-            </Array>
+        <!-- 2. User "1" — "*" ReliefRequest -->
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="user" target="request" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e2">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-user-rr-label" value="citizenId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-user-rr" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- User → Feedback (submittedBy) -->
-        <mxCell id="assoc-user-fb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1820" y="150" as="sourcePoint" />
-            <mxPoint x="2680" y="520" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="2000" y="150" />
-              <mxPoint x="2000" y="280" />
-              <mxPoint x="2580" y="280" />
-              <mxPoint x="2580" y="350" />
-            </Array>
+        <mxCell id="e2_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e2">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-user-fb-label" value="submittedBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-user-fb" connectable="0">
-          <mxGeometry x="-0.2" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- User → NeedAssessment (overriddenBy) -->
-        <mxCell id="assoc-na-user" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1500" y="260" as="sourcePoint" />
-            <mxPoint x="1670" y="820" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1860" y="260" />
-              <mxPoint x="1860" y="350" />
-              <mxPoint x="1750" y="350" />
-              <mxPoint x="1750" y="790" />
-            </Array>
+        <!-- 3. Household "1" — "*" ReliefRequest -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" source="household" target="request" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-na-user-label" value="overriddenBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-na-user" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- User → ReliefPledge (pledgedBy) -->
-        <mxCell id="assoc-rp-user" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1820" y="260" as="sourcePoint" />
-            <mxPoint x="2840" y="1120" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="2040" y="260" />
-              <mxPoint x="2040" y="350" />
-              <mxPoint x="2600" y="350" />
-              <mxPoint x="2600" y="1090" />
-            </Array>
+        <mxCell id="e3_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-rp-user-label" value="pledgedBy" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-rp-user" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- Household → DistributionLog (householdId) -->
-        <mxCell id="assoc-hh-dist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="200" y="700" as="sourcePoint" />
-            <mxPoint x="200" y="820" as="targetPoint" />
+        <!-- 4. User "1" — "*" ReliefCampaign -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="user" target="campaign" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e4">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-hh-dist-label" value="householdId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-hh-dist" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- Household → GeographicArea (jurisdictionId) -->
-        <mxCell id="assoc-hh-ga" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="360" y="540" as="sourcePoint" />
-            <mxPoint x="1500" y="540" as="targetPoint" />
+        <mxCell id="e4_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e4">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-hh-ga-label" value="jurisdictionId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-hh-ga" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- Household → Jurisdiction (legacy, deprecated) -->
-        <mxCell id="assoc-hh-jur" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;strokeWidth=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="200" y="700" as="sourcePoint" />
-            <mxPoint x="200" y="1280" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="420" y="700" />
-              <mxPoint x="420" y="1250" />
-            </Array>
+        <!-- 5. ReliefCampaign "1" — "*" Donation -->
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="campaign" target="donation" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e5">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-hh-jur-label" value="jurisdictionId (legacy)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-hh-jur" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- DistributionLog → ItemCategory (itemCategoryId) -->
-        <mxCell id="assoc-dist-ic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="360" y="980" as="sourcePoint" />
-            <mxPoint x="2680" y="910" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1200" y="980" />
-              <mxPoint x="1200" y="910" />
-            </Array>
+        <mxCell id="e5_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e5">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-dist-ic-label" value="itemCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-dist-ic" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- ReliefRequest → Household (householdId) -->
-        <mxCell id="assoc-rr-hh" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="560" y="980" as="sourcePoint" />
-            <mxPoint x="360" y="540" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="480" y="980" />
-              <mxPoint x="480" y="760" />
-            </Array>
+        <!-- 6. Donation "*" — "1" User -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0;exitY=0.3;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" source="donation" target="user" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6_src" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e6">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-rr-hh-label" value="householdId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-rr-hh" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- ReliefRequest → GeographicArea (jurisdictionId) -->
-        <mxCell id="assoc-rr-ga" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="720" y="820" as="sourcePoint" />
-            <mxPoint x="1500" y="580" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="880" y="820" />
-              <mxPoint x="880" y="760" />
-            </Array>
+        <mxCell id="e6_tgt" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e6">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-rr-ga-label" value="jurisdictionId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-rr-ga" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- GeographicArea self-reference (parentId) -->
-        <mxCell id="assoc-ga-self" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1670" y="630" as="sourcePoint" />
-            <mxPoint x="1670" y="630" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1670" y="680" />
-              <mxPoint x="1800" y="680" />
-              <mxPoint x="1800" y="720" />
-              <mxPoint x="1540" y="720" />
-              <mxPoint x="1540" y="680" />
-              <mxPoint x="1670" y="680" />
-            </Array>
+        <!-- 7. ReliefCampaign "1" — "*" CampaignResource -->
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="campaign" target="campresource" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e7">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-ga-self-label" value="parentId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-ga-self" connectable="0">
-          <mxGeometry x="0.1" y="18" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- GeographicArea → NeedAssessment (areaId) -->
-        <mxCell id="assoc-ga-na" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1670" y="630" as="sourcePoint" />
-            <mxPoint x="1670" y="820" as="targetPoint" />
+        <mxCell id="e7_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e7">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-ga-na-label" value="areaId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-ga-na" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- GeographicArea → ReliefPledge (areaId) -->
-        <mxCell id="assoc-ga-rp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1840" y="540" as="sourcePoint" />
-            <mxPoint x="2680" y="1270" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="1960" y="540" />
-              <mxPoint x="1960" y="1090" />
-              <mxPoint x="2580" y="1090" />
-            </Array>
+        <!-- 8. User "1" — "*" NeedsAssessment -->
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="user" target="assessment" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e8">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-ga-rp-label" value="areaId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-ga-rp" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- NeedAssessment → ItemCategory (itemCategoryId) -->
-        <mxCell id="assoc-na-ic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1840" y="970" as="sourcePoint" />
-            <mxPoint x="2680" y="910" as="targetPoint" />
+        <mxCell id="e8_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e8">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-na-ic-label" value="itemCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-na-ic" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- ReliefPledge → ItemCategory (itemCategoryId) -->
-        <mxCell id="assoc-rp-ic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2840" y="1120" as="sourcePoint" />
-            <mxPoint x="2830" y="1000" as="targetPoint" />
+        <!-- 9. Household "1" — "*" NeedsAssessment -->
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="household" target="assessment" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e9">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-rp-ic-label" value="itemCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-rp-ic" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- ReliefPledge → DistributionLog (pledgeId) -->
-        <mxCell id="assoc-rp-dist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2680" y="1270" as="sourcePoint" />
-            <mxPoint x="360" y="980" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="2520" y="1270" />
-              <mxPoint x="2520" y="1400" />
-              <mxPoint x="120" y="1400" />
-              <mxPoint x="120" y="1140" />
-            </Array>
+        <mxCell id="e9_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e9">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-rp-dist-label" value="pledgeId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-rp-dist" connectable="0">
-          <mxGeometry x="-0.1" y="-15" relative="1" as="geometry" />
-        </mxCell>
 
-        <!-- ItemCategory self-reference (parentCategoryId) -->
-        <mxCell id="assoc-ic-self" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;startArrow=open;startFill=0;endSize=12;startSize=12;dashed=1;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2830" y="1000" as="sourcePoint" />
-            <mxPoint x="2830" y="1000" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="2940" y="1000" />
-              <mxPoint x="2940" y="780" />
-              <mxPoint x="2720" y="780" />
-              <mxPoint x="2720" y="1000" />
-            </Array>
+        <!-- 10. User "1" — "*" Allocation -->
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="user" target="allocation" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e10">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
           </mxGeometry>
         </mxCell>
-        <mxCell id="assoc-ic-self-label" value="parentCategoryId" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" parent="assoc-ic-self" connectable="0">
-          <mxGeometry x="0.1" y="18" relative="1" as="geometry" />
+        <mxCell id="e10_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e10">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 11. ReliefRequest "1" — "*" Allocation -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" source="request" target="allocation" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e11">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e11">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 12. Allocation "1" — "*" Distribution -->
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="allocation" target="distribution" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e12">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e12">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 13. Distribution "1" — "*" DistributionItem -->
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="distribution" target="distitem" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e13">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e13">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 14. User "1" — "*" Feedback -->
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="user" target="feedback" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e14">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e14">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 15. Distribution "1" — "*" Feedback -->
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="distribution" target="feedback" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e15">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e15">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 16. User "1" — "*" Notification -->
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="user" target="notification" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e16">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e16">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 17. User "1" — "*" AuditLog -->
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="user" target="auditlog" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17_src" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e17">
+          <mxGeometry x="-0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17_tgt" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" parent="e17">
+          <mxGeometry x="0.8" y="0" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
         </mxCell>
 
       </root>
