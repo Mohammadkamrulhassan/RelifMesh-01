@@ -1,0 +1,176 @@
+<mxfile host="65bd71144e">
+    <diagram id="activity-relief-flow" name="Activity Diagram — Relief Distribution Flow">
+        <mxGraphModel dx="617" dy="371" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1750" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="act-title" value="&lt;b&gt;Activity Diagram — Relief Distribution Flow&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="10" width="440" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="pool" value="" style="swimlane;horizontal=0;startSize=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="50" width="1160" height="1530" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane-fieldworker" value="Field Worker&#xa;(UP Official / NGO Worker)" style="swimlane;horizontal=0;html=1;fillColor=#dae8fc;swimlaneFillColor=#ffffff;startSize=40;" parent="pool" vertex="1">
+                    <mxGeometry width="290" height="1530" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-start" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;" parent="lane-fieldworker" vertex="1">
+                    <mxGeometry x="130" y="50" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s1" value="Initiate distribution" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" parent="lane-fieldworker" vertex="1">
+                    <mxGeometry x="40" y="110" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s2" value="Select household +&#xa;add items/quantities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" parent="lane-fieldworker" vertex="1">
+                    <mxGeometry x="40" y="200" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-fieldworker" source="act-start" target="act-s1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-fieldworker" source="act-s1" target="act-s2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane-system" value="System" style="swimlane;horizontal=0;html=1;fillColor=#fff2cc;swimlaneFillColor=#ffffff;" parent="pool" vertex="1">
+                    <mxGeometry x="290" width="290" height="1530" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s3" value="Check for duplicates&#xa;(same NID + phone + area,&#xa;within 7-day window)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="40" y="290" width="210" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dec1" value="Duplicate&#xa;found?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="80" y="380" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s4" value="Create DuplicateAlert&#xa;(pending status, snapshot data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="40" y="480" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s6" value="Create DistributionLog&#xa;• isDuplicate=false (first time), or&#xa;• isDuplicate=true + duplicateOf" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="40" y="700" width="210" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s7" value="Update Inventory&#xa;(decrement stock per item)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="40" y="790" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s8" value="Update Household status&#xa;(set to &#39;assisted&#39;)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="40" y="870" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dec3" value="Device&#xa;offline?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" parent="lane-system" vertex="1">
+                    <mxGeometry x="80" y="960" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-system" source="act-s3" target="act-dec1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae5" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;" parent="lane-system" source="act-dec1" target="act-s4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-system" source="act-s6" target="act-s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-system" source="act-s7" target="act-s8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-system" source="act-s8" target="act-dec3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane-officer" value="Upazila Officer" style="swimlane;horizontal=0;html=1;fillColor=#d5e8d4;swimlaneFillColor=#ffffff;" parent="pool" vertex="1">
+                    <mxGeometry x="580" width="290" height="1530" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s5" value="Review DuplicateAlert" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" parent="lane-officer" vertex="1">
+                    <mxGeometry x="40" y="480" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dec2" value="Resolution?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" parent="lane-officer" vertex="1">
+                    <mxGeometry x="65" y="570" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-final-dismiss" value="" style="ellipse;html=1;shape=doubleEllipse;fillColor=#000000;strokeColor=#000000;" parent="lane-officer" vertex="1">
+                    <mxGeometry x="115" y="700" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dismiss-label" value="Booking dismissed /&#xa;no distribution recorded" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#888888;" parent="lane-officer" vertex="1">
+                    <mxGeometry x="20" y="740" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-officer" source="act-s5" target="act-dec2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae-dismiss" value="Dismiss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;" parent="lane-officer" source="act-dec2" target="act-final-dismiss" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane-sync" value="Sync Engine&#xa;(client/server)" style="swimlane;horizontal=0;html=1;fillColor=#e1d5e7;swimlaneFillColor=#ffffff;" parent="pool" vertex="1">
+                    <mxGeometry x="870" width="290" height="1530" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s9" value="Store in localStorage&#xa;(pending sync queue)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" parent="lane-sync" vertex="1">
+                    <mxGeometry x="40" y="970" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s10" value="On reconnect: push to server&#xa;(POST /v1/sync/push)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" parent="lane-sync" vertex="1">
+                    <mxGeometry x="40" y="1040" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dec4" value="Conflict&#xa;with server?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" parent="lane-sync" vertex="1">
+                    <mxGeometry x="80" y="1120" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s11" value="Create SyncConflict record&#xa;(server wins — last-writer-wins)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="lane-sync" vertex="1">
+                    <mxGeometry x="40" y="1220" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-s12" value="Record saved successfully&#xa;(server timestamp)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" parent="lane-sync" vertex="1">
+                    <mxGeometry x="40" y="1330" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-end" value="" style="ellipse;html=1;shape=doubleEllipse;fillColor=#000000;strokeColor=#000000;" parent="lane-sync" vertex="1">
+                    <mxGeometry x="130" y="1420" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-sync" source="act-s9" target="act-s10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-sync" source="act-s10" target="act-dec4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae16" value="Conflict" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;" parent="lane-sync" source="act-dec4" target="act-s11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae17" value="No conflict" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;" parent="lane-sync" source="act-dec4" target="act-s12" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="290" y="1155"/>
+                            <mxPoint x="290" y="1355"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ae19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-sync" source="act-s11" target="act-s12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" parent="lane-sync" source="act-s12" target="act-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="act-s2" target="act-s3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae9" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;exitX=1;exitY=0.5;entryX=1;entryY=0;" parent="1" source="act-dec1" target="act-s6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="380" y="415"/>
+                            <mxPoint x="380" y="732"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ae6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="act-s4" target="act-s5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae8" value="Override&#xa;(proceed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;exitX=1;exitY=0.5;entryX=1;entryY=0.5;" parent="1" source="act-dec2" target="act-s6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="740" y="605"/>
+                            <mxPoint x="740" y="732"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ae13" value="Offline" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="act-dec3" target="act-s9" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="890" y="1045"/>
+                            <mxPoint x="890" y="1045"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ae18" value="Online" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="act-dec3" target="act-s12" edge="1">
+                    <mxGeometry x="0.023" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="1405"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

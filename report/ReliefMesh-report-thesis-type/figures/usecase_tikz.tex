@@ -1,0 +1,73 @@
+% Use Case Diagram - TikZ content only (no standalone wrapper)
+
+% Define a reusable stick-figure actor
+% #1 = name (node name), #2 = x position, #3 = y position (bottom of figure), #4 = label text
+\newcommand{\actor}[4]{%
+  % head
+  \node[circle, draw, thick, minimum size=0.45cm, inner sep=0pt] (#1_head) at (#2, #3+0.9) {};
+  % neck
+  \draw[thick] (#2, #3+0.675) -- (#2, #3+0.35);
+  % arms
+  \draw[thick] (#2-0.35, #3+0.55) -- (#2+0.35, #3+0.55);
+  % body
+  \draw[thick] (#2, #3+0.35) -- (#2, #3);
+  % legs
+  \draw[thick] (#2, #3) -- (#2-0.3, #3-0.35);
+  \draw[thick] (#2, #3) -- (#2+0.3, #3-0.35);
+  % label
+  \node[below=4pt, font=\small\sffamily, align=center] at (#2, #3-0.35) {#4};
+}
+
+\begin{tikzpicture}[
+  font=\sffamily,
+  usecase/.style={
+    ellipse, draw=black, thick, fill=white,
+    minimum width=3.0cm, minimum height=1.0cm,
+    align=center, font=\small, text width=2.8cm, inner sep=3pt
+  },
+  boundary/.style={
+    draw=black, thick, rounded corners=10pt, fill=gray!10,
+    minimum width=15.5cm, minimum height=15cm,
+    align=center, inner sep=15pt
+  },
+  assoc/.style={draw=black, thick},
+  include/.style={dashed, ->, thick, draw=black, -{Stealth[length=2.5mm, width=2.5mm]}},
+  extend/.style={dashed, ->, thick, draw=black, -{Stealth[length=2.5mm, width=2.5mm]}}
+]
+
+\node[boundary, label={[anchor=north west, yshift=10pt, xshift=10pt, font=\small\sffamily, text width=5cm, align=left]north west:{\small$\langle\langle$}Subsystem{\small$\rangle\rangle$\quad ReliefMesh Coordination System}] (boundary) at (0, -1) {};
+
+% Actors
+\actor{up}{-8.5}{6.5}{UP Official}
+\actor{ngo}{-8.5}{1.5}{NGO Worker}
+\actor{admin}{8.5}{3.5}{Upazila Officer}
+\actor{pub}{8.5}{-2.5}{Public Viewer}
+
+\node[usecase] (uc1) at (-3.0, 6.5) {Register\\Household};
+\node[usecase] (uc2) at (3.0, 6.5)  {Log\\Distribution};
+\node[usecase] (uc4) at (-3.0, 2.5) {Log NGO\\Distribution};
+\node[usecase] (uc3) at (3.0, 2.5)  {Override\\Duplicate};
+\node[usecase] (uc5) at (-3.0, -1.5) {View All\\Unions};
+\node[usecase] (uc6) at (3.0, -1.5)  {Generate\\Reports};
+\node[usecase] (uc7) at (-3.0, -5.5) {View\\Dashboard};
+\node[usecase] (uc8) at (3.0, -5.5)  {View\\Heatmap};
+
+\node[usecase] (inc1) at (-4.5, -9.0) {Validate\\Household};
+\node[usecase] (inc2) at (5.5, -9.0)  {Check\\Duplicate};
+
+\draw[assoc] (-8.5, 6.5) -- (uc1);
+\draw[assoc] (-8.5, 6.5) -- (uc2);
+\draw[assoc] (-8.5, 6.5) -- (uc4);
+\draw[assoc] (-8.5, 1.5) -- (uc4);
+\draw[assoc] (8.5, 3.5) -- (uc3);
+\draw[assoc] (8.5, 3.5) -- (uc5);
+\draw[assoc] (8.5, 3.5) -- (uc6);
+\draw[assoc] (8.5, -2.5) -- (uc7);
+\draw[assoc] (8.5, -2.5) -- (uc8);
+
+\draw[include] (uc2.south) |- (inc1.north) node[midway, left, font=\small\sffamily] {<<include>>};
+\draw[include] (uc2.south) -| (inc2.north) node[midway, above, font=\small\sffamily] {<<include>>};
+\draw[include] (uc4.south) -| (inc2.north) node[pos=0.35, above, font=\small\sffamily] {<<include>>};
+\draw[extend] (uc3.north) -- (uc2.south) node[midway, right, font=\small\sffamily] {<<extend>>};
+
+\end{tikzpicture}
