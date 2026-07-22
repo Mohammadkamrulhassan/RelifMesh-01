@@ -51,30 +51,31 @@ ReliefMesh solves this with an offline-first platform for Union Parishad officia
 ```
 ReliefMesh/
 │
-├── frontend/        # React PWA (Vite + Tailwind + localforage)
-│  ├── public/       # Static assets, manifest, icons
-│  └── src/
-│    ├── modules/    # Per-feature page components
-│    ├── components/ # Reusable UI components
-│    ├── services/   # API client, auth, offline sync
-│    ├── hooks/      # Custom React hooks
-│    ├── constants/  # Nav items, enums
-│    ├── utils/      # Formatters, validators
-│    └── styles/     # Global styles
+├── prototype/
+│   ├── frontend/     # React PWA (Vite + Tailwind + localforage)
+│   │  ├── public/    # Static assets, manifest, icons
+│   │  └── src/
+│   │    ├── modules/    # Per-feature page components
+│   │    ├── components/ # Reusable UI components
+│   │    ├── services/   # API client, auth, offline sync
+│   │    ├── hooks/      # Custom React hooks
+│   │    ├── constants/  # Nav items, enums
+│   │    ├── utils/      # Formatters, validators
+│   │    └── styles/     # Global styles
+│   │
+│   └── backend/      # Node.js + Express REST API
+│      ├── modules/     # Feature modules (auth, households, distributions, etc.)
+│      ├── middleware/   # Auth, validation, error handling
+│      ├── config/      # Environment config
+│      ├── db/          # Migrations and seeds
+│      └── tests/       # Helpers
 │
-├── backend/        # Node.js + Express REST API
-│  ├── modules/     # Feature modules (auth, households, distributions, etc.)
-│  ├── middleware/   # Auth, validation, error handling
-│  ├── config/      # Environment config
-│  ├── db/          # Migrations and seeds
-│  └── tests/       # Helpers
-│
-├── documentation/  # 14 SAD module deliverables (Sections 3.1–3.14)
-├── diagrams/       # draw.io / UML / ERD files
-├── designs/        # Figma exports (wireframes, mockups)
-├── reports/        # PM artifacts (meeting minutes, weekly progress)
-├── submission/     # Final deliverables (demo video, slides)
-└── assets/         # Shared media
+├── report/            # Final reports (LaTeX + PDF)
+├── diagrams/          # draw.io / UML / ERD files
+├── database/          # SQL schema and sample data
+├── screenshots/       # Wireframes and app screenshots
+├── tests/             # Integration and unit tests
+└── README.md
 ```
 
 ---
@@ -119,15 +120,15 @@ All protected endpoints use `Authorization: Bearer <token>` header.
 
 ```bash
 # Backend
-cd backend
-cp ../.env.example .env  # fill in your values
+cd prototype/backend
+cp .env.example .env  # fill in your values
 npm install
 npm run migrate
 npm run seed
 npm run dev
 
 # Frontend (separate terminal)
-cd frontend
+cd prototype/frontend
 npm install
 npm run dev
 ```
